@@ -92,6 +92,10 @@ public class AI_Controller : MonoBehaviour
             }
         }
 
+        //Get the speed in MPH
+        double mphSpeed = (drivingControl.currentSpeed * 3600) * 0.000621371;
+        Debug.Log("drivingControl.currentSpeed: " + (int)mphSpeed + "mph");
+
         //float accel = 0.5f; //original value
         float accel = 0.5f;
         float steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drivingControl.currentSpeed);
