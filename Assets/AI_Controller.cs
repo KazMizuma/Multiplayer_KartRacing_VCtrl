@@ -94,7 +94,13 @@ public class AI_Controller : MonoBehaviour
 
         //Get the speed in MPH
         double mphSpeed = (drivingControl.currentSpeed * 3600) * 0.000621371;
-        Debug.Log("drivingControl.currentSpeed: " + (int)mphSpeed + "mph");
+        Debug.Log("drivingControl.currentSpeed: " + (int)mphSpeed + " MPH");
+
+        //Get the distance to the next waypoint
+        Debug.Log("distanceToTarget: " + (int)distanceToTarget + " Meters");
+        double distanceInMile = distanceToTarget * 0.000621371;
+        decimal distanceInMileInDecimal = (decimal)distanceInMile;
+        Debug.Log("distanceInMile: " + decimal.Round(distanceInMileInDecimal, 4) + " Miles");
 
         //float accel = 0.5f; //original value
         float accel = 0.5f;
