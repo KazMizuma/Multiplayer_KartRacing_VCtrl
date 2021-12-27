@@ -150,6 +150,7 @@ public class drivingControl : MonoBehaviour
             {
                 wheelColliders[i].motorTorque = thrustTorque;
                 //Debug.Log("wheelColliders[" + i + "] " + wheelColliders[i] + " for motorTorque");
+                Debug.Log("wheelColliders[i].motorTorque: " + thrustTorque);
                 wheelColliders[i].brakeTorque = brake;
             }
             else

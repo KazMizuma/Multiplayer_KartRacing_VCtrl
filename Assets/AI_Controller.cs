@@ -12,8 +12,8 @@ public class AI_Controller : MonoBehaviour
     bool roundTrip = false;
     //float accel = 0.25f; //these values need to be updated to get the car going and keep it under control
     //float brake = 0f;
-    public float publicAccel; // = 0.15f;
-    public float publicBrake; // = 0.5f;
+    public float publicAccel; // = 0.25f;
+    public float publicBrake; // = 0.05f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class AI_Controller : MonoBehaviour
 
         float distanceToTarget = Vector3.Distance(target, drivingControl.rb.gameObject.transform.position);
 
-        //Finding out the angle to the next target, waypoint to waypoint, version 1
+        //Finding out the angle to the next target, waypoint to waypoint, version 1; MY AI CODE!
         //Does Not Quite Work because POV is World based
         //Debug.Log("next waypoint is " + wayPoints.waypoints[currentPoint].name);
         //if (currentPoint != 0) //avoiding subtracting -1 from currentPoint[0]
@@ -55,24 +55,56 @@ public class AI_Controller : MonoBehaviour
         //    }
         //}
 
-        //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2
+        //Bringing the following to here at the top!
+        //float accel = 0.5f; //original value
+        float accel = 0.5f;
+        float steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drivingControl.currentSpeed);
+        //Debug.Log("targetAngle & steeringSensitivity: " + targetAngle + " & " + steeringSensitivity);
+        //Debug.Log(" drivingControl.currentSpeed " + drivingControl.currentSpeed + " Sign of it = " + Mathf.Sign(drivingControl.currentSpeed));
+        float brake = 0;
+
+        //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
         //Works well, POV is that of drivingControl.rb.gameObject.transform.position
         Debug.Log("next waypoint is " + wayPoints.waypoints[currentPoint].name);
         Debug.Log("targetAngle is " + targetAngle);
+        double mphSpeed = (drivingControl.currentSpeed * 3600) * 0.000621371;
+        int mphSpeedInt = (int)mphSpeed;
         switch (Mathf.Abs(targetAngle))
         {
             case float f when Mathf.Abs(targetAngle) > 50:
-                Debug.Log("Sharp Curv, more than 50: " + Mathf.Abs(targetAngle));
+                Debug.Log("Sharp Curv, more than 50 targetAngle: " + Mathf.Abs(targetAngle));
+                accel = 0.1f;
+                brake = 0.06f;
                 break;
             case float f when Mathf.Abs(targetAngle) > 25:
-                Debug.Log("Curv, more than 25: " + Mathf.Abs(targetAngle));
+                Debug.Log("Curv, more than 25 targetAngle: " + Mathf.Abs(targetAngle));
+                accel = 0.3f;
+                brake = 0.02f;
                 break;
             default:
-                Debug.Log("Straight, 25 or less: " + Mathf.Abs(targetAngle));
+                Debug.Log("Straight, 25 or less targetAngle: " + Mathf.Abs(targetAngle));
+
+                switch (mphSpeedInt)
+                {
+                    case int i when mphSpeedInt < 60:
+                        Debug.Log("bring it up to 60mph!");
+                        accel = 0.8f;
+                        brake = 0;
+                        break;
+                    case int i when mphSpeedInt > 80:
+                        Debug.Log("bring the shit down below 80!");
+                        accel = publicAccel;
+                        brake = publicBrake;
+                        break;
+                    default:
+                        // 60 < the current speed > 80
+                        break;
+                }
+
                 break;
         }
 
-        //Find out the next waypoint's y position to be at uphill or downhill
+        //Find out the next waypoint's y position to be at uphill or downhill; MY AI CODE!
         if (currentPoint != 0) //avoiding subtracting -1 from currentPoint[0]
         {
             float nextWaypoint = wayPoints.waypoints[currentPoint].transform.position.y;
@@ -82,9 +114,13 @@ public class AI_Controller : MonoBehaviour
             {
                 case float f when yDifference > 1.5:
                     Debug.Log("the target on uphill: " + yDifference);
+                    accel = 0.7f;
+                    brake = 0;
                     break;
                 case float f when yDifference < -1.5:
                     Debug.Log("the target on downhill: " + yDifference);
+                    accel = 0.01f;
+                    brake = 0.1F;
                     break;
                 default:
                     Debug.Log("the target on flat ground: " + yDifference);
@@ -93,21 +129,22 @@ public class AI_Controller : MonoBehaviour
         }
 
         //Get the speed in MPH
-        double mphSpeed = (drivingControl.currentSpeed * 3600) * 0.000621371;
-        Debug.Log("drivingControl.currentSpeed: " + (int)mphSpeed + " MPH");
+        //double mphSpeed = (drivingControl.currentSpeed * 3600) * 0.000621371;
+        Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH");
 
         //Get the distance to the next waypoint
         Debug.Log("distanceToTarget: " + (int)distanceToTarget + " Meters");
         double distanceInMile = distanceToTarget * 0.000621371;
         decimal distanceInMileInDecimal = (decimal)distanceInMile;
-        Debug.Log("distanceInMile: " + decimal.Round(distanceInMileInDecimal, 4) + " Miles");
+        Debug.Log("distanceInMileInDecimal Rounded 4: " + decimal.Round(distanceInMileInDecimal, 4) + " Miles");
 
-        //float accel = 0.5f; //original value
-        float accel = 0.5f;
-        float steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drivingControl.currentSpeed);
-        //Debug.Log("targetAngle & steeringSensitivity: " + targetAngle + " & " + steeringSensitivity);
-        //Debug.Log(" drivingControl.currentSpeed " + drivingControl.currentSpeed + " Sign of it = " + Mathf.Sign(drivingControl.currentSpeed));
-        float brake = 0;
+        //Commenting out to bring the following to the top!
+        ////float accel = 0.5f; //original value
+        //float accel = 0.5f;
+        //float steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drivingControl.currentSpeed);
+        ////Debug.Log("targetAngle & steeringSensitivity: " + targetAngle + " & " + steeringSensitivity);
+        ////Debug.Log(" drivingControl.currentSpeed " + drivingControl.currentSpeed + " Sign of it = " + Mathf.Sign(drivingControl.currentSpeed));
+        //float brake = 0;
 
         if (distanceToTarget < 5)
         {
@@ -117,13 +154,16 @@ public class AI_Controller : MonoBehaviour
                 Debug.Log("First time approaching the point [" + currentPoint + "]");
                 Debug.Log("publicAccel & publicBrake: " + publicAccel + "; " + publicBrake);
                 //accel = 0.5f; //original value
-                accel = 0.4f; //trying new value
-                brake = 0;
+
+                //COMMENTING OUT TO TRY OUT MY AI CODE!
+                //accel = 0.4f; //trying new value
+                //brake = 0;
             }
             else //making a round trip
             {
-                accel = publicAccel;
-                brake = publicBrake;
+                //COMMENTING OUT TO TRY OUT MY AI CODE!
+                //accel = publicAccel;
+                //brake = publicBrake;
                 //Debug.Log("publicAccel & publicBrake: " + publicAccel + "; " + publicBrake);
             }
         }
@@ -140,9 +180,11 @@ public class AI_Controller : MonoBehaviour
                 currentPoint = 0;
                 Debug.Log("target is back to the origin [" + currentPoint + "]");
                 //steeringSensitivity = 0.008f; maybe no need to lower the value
-                accel = publicAccel;
-                brake = publicBrake;
-                Debug.Log("accel = publicAccel & brake = publicBrake: " + publicAccel + " " + publicBrake);
+
+                //COMMENTING OUT TO TRY OUT MY AI CODE!
+                //accel = publicAccel;
+                //brake = publicBrake;
+                //Debug.Log("accel = publicAccel & brake = publicBrake: " + publicAccel + " " + publicBrake);
             }
 
             target = wayPoints.waypoints[currentPoint].transform.position;
@@ -177,7 +219,7 @@ public class AI_Controller : MonoBehaviour
             //}
         }
 
-        //Debug.Log("drivingControl.Go(" + accel + ", " + steeringSensitivity + ", " + brake + ")");
+        Debug.Log("drivingControl.Go(" + accel + ", " + steer + ", " + brake + ")");
         drivingControl.Go(accel, steer, brake); //running Go regardless of distanceToTarget here
         drivingControl.CheckSkidding();
         drivingControl.calculateEngineSound();
