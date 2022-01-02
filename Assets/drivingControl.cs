@@ -150,7 +150,7 @@ public class drivingControl : MonoBehaviour
             {
                 wheelColliders[i].motorTorque = thrustTorque;
                 //Debug.Log("wheelColliders[" + i + "] " + wheelColliders[i] + " for motorTorque");
-                Debug.Log("wheelColliders[i].motorTorque: " + thrustTorque);
+                //Debug.Log("wheelColliders[i].motorTorque: " + thrustTorque);
                 wheelColliders[i].brakeTorque = brake;
             }
             else
@@ -164,6 +164,9 @@ public class drivingControl : MonoBehaviour
             wheelMeshes[i].transform.localRotation = quat;
             //Debug.Log(wheelColliders[i] + " wheelColliders[i]");
         }
+
+        Debug.Log("wheelColliders[i].motorTorque: " + thrustTorque);
+        Debug.Log("wheelColliders[i].brakeTorque: " + brake);
 
         if (brake != 0)
         {

@@ -63,12 +63,22 @@ public class AI_Controller : MonoBehaviour
         //Debug.Log(" drivingControl.currentSpeed " + drivingControl.currentSpeed + " Sign of it = " + Mathf.Sign(drivingControl.currentSpeed));
         float brake = 0;
 
-        //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
-        //Works well, POV is that of drivingControl.rb.gameObject.transform.position
+        //Get the distance to the next waypoint
+        //Debug.Log("distanceToTarget: " + (int)distanceToTarget + " Meters");
+        //double distanceInMile = distanceToTarget * 0.000621371;
+        //decimal distanceInMileInDecimal = (decimal)distanceInMile;
+        //Debug.Log("distanceInMileInDecimal Rounded 4: " + decimal.Round(distanceInMileInDecimal, 4) + " Miles");
+
         Debug.Log("next waypoint is " + wayPoints.waypoints[currentPoint].name);
-        Debug.Log("targetAngle is " + targetAngle);
+        //Debug.Log("targetAngle is " + targetAngle);
+
+        //Get the speed in MPH
         double mphSpeed = (drivingControl.currentSpeed * 3600) * 0.000621371;
         int mphSpeedInt = (int)mphSpeed;
+        //Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH");
+
+        //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
+        //Works well, POV is that of drivingControl.rb.gameObject.transform.position
         switch (Mathf.Abs(targetAngle))
         {
             case float f when Mathf.Abs(targetAngle) > 50:
@@ -83,7 +93,7 @@ public class AI_Controller : MonoBehaviour
                 break;
             default:
                 Debug.Log("Straight, 25 or less targetAngle: " + Mathf.Abs(targetAngle));
-
+                Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
                 switch (mphSpeedInt)
                 {
                     case int i when mphSpeedInt < 60:
@@ -97,10 +107,9 @@ public class AI_Controller : MonoBehaviour
                         brake = publicBrake;
                         break;
                     default:
-                        // 60 < the current speed > 80
+                        // the current speed is between 60 and 80mph
                         break;
                 }
-
                 break;
         }
 
@@ -127,16 +136,6 @@ public class AI_Controller : MonoBehaviour
                     break;
             }
         }
-
-        //Get the speed in MPH
-        //double mphSpeed = (drivingControl.currentSpeed * 3600) * 0.000621371;
-        Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH");
-
-        //Get the distance to the next waypoint
-        Debug.Log("distanceToTarget: " + (int)distanceToTarget + " Meters");
-        double distanceInMile = distanceToTarget * 0.000621371;
-        decimal distanceInMileInDecimal = (decimal)distanceInMile;
-        Debug.Log("distanceInMileInDecimal Rounded 4: " + decimal.Round(distanceInMileInDecimal, 4) + " Miles");
 
         //Commenting out to bring the following to the top!
         ////float accel = 0.5f; //original value
