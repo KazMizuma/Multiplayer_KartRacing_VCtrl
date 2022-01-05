@@ -14,15 +14,26 @@ public class Raycasting : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
+
         Ray hittingRay = new Ray(gameObject.transform.position, gameObject.transform.forward);
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 2.5f, Color.green);
 
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 3f, Color.green);
+        Ray gettingHitRay = new Ray(gameObject.transform.position, -gameObject.transform.forward);
+        Debug.DrawRay(gameObject.transform.position, -gameObject.transform.forward * 2.5f, Color.white);
 
-        if (Physics.Raycast(hittingRay, out hit, 3f))
+        if (Physics.Raycast(hittingRay, out hit, 2.5f))
         {
             if (hit.transform.gameObject.tag == "Car")
             {
-                Debug.Log("HIT THE " + hit.transform.gameObject.name + "!!!");
+                Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + "!!!");
+            }
+        }
+
+        if (Physics.Raycast(gettingHitRay, out hit, 2.5f))
+        {
+            if (hit.transform.gameObject.tag == "Car")
+            {
+                Debug.Log(transform.gameObject.name + " GETTING HIT BY " + hit.transform.gameObject.name + "!!!");
             }
         }
     }
