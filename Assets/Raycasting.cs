@@ -68,6 +68,22 @@ public class Raycasting : MonoBehaviour
             var rightVec3 = rotation * rotationAngleAxSides * Vector3.right ; // Adding the rays on the right
             var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
 
+            // Color coding the rays
+            switch (i)
+            {
+                case int r when i < 5:
+                    Gizmos.color = Color.green;
+                    break;
+                case int r when i > 4 && i < 13:
+                    Gizmos.color = Color.white;
+                    break;
+                case int r when i > 12 && i < 18:
+                    Gizmos.color = Color.red;
+                    break;
+                default:
+                    break;
+            }
+
             Gizmos.DrawRay(this.transform.position, forwardVec3 * 3.5f);
             Ray hittingRay = new Ray(this.transform.position, forwardVec3 * 3.5f); //Combining my code to detect frontal collision
 
