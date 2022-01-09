@@ -216,6 +216,17 @@ MonoBehaviour:
   - {fileID: 4658416780690380675}
   maxSteerAngle: 30
   maxBrakeTorque: 2500
+  skidSound: {fileID: 0}
+  tireSkidPrefab: {fileID: 0}
+  smokePrefab: {fileID: 0}
+  brakeLight: {fileID: 0}
+  AccelHigh: {fileID: 0}
+  rb: {fileID: 0}
+  gearLength: 0
+  lowPitch: 1
+  highPitch: 6
+  numGear: 5
+  maxSpeed: 200
 --- !u!1 &3713192016967164979
 GameObject:
   m_ObjectHideFlags: 0
