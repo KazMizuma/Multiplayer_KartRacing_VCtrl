@@ -82,17 +82,17 @@ public class AI_Controller : MonoBehaviour
         switch (Mathf.Abs(targetAngle))
         {
             case float f when Mathf.Abs(targetAngle) > 50:
-                Debug.Log("Sharp Curv, more than 50 targetAngle: " + Mathf.Abs(targetAngle));
+                Debug.Log("Sharp Curv, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
                 accel = 0.1f;
                 brake = 0.06f;
                 break;
             case float f when Mathf.Abs(targetAngle) > 25:
-                Debug.Log("Curv, more than 25 targetAngle: " + Mathf.Abs(targetAngle));
+                Debug.Log("Curv, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
                 accel = 0.3f;
                 brake = 0.02f;
                 break;
             default:
-                Debug.Log("Straight, 25 or less targetAngle: " + Mathf.Abs(targetAngle));
+                Debug.Log("Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
                 Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
                 switch (mphSpeedInt)
                 {
