@@ -117,9 +117,9 @@ public class Raycasting : MonoBehaviour
             //Combining my code, detecting frontal collision with another car
             if (Physics.Raycast(hittingRay, out hit, 3.5f))
             {
-                if (hit.transform.gameObject.tag == "Car")
+                if (hit.transform.gameObject.tag == "Car" && i > 6 && i < 11)
                 {
-                    Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " WITH MY FRONT!!!");
+                    Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " DIRECTLY AHEAD!!!");
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                 }
             }
