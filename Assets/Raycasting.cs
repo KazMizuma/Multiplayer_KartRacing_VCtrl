@@ -78,7 +78,7 @@ public class Raycasting : MonoBehaviour
             var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
 
             var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
-            var rearCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.back; // Rays for rear half
+            var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
 
             // Color coding the rays
             switch (i)
@@ -119,7 +119,7 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + "!!!");
+                    Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " WITH MY FRONT!!!");
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                 }
             }
@@ -129,26 +129,44 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " GETTING HIT BY " + hit.transform.gameObject.name + "!!!");
+                    Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " WITH MY REAR!!!");
                 }
             }
 
-            //Combining my code, detecting right side collision with another car
+            //Combining my code, detecting right mid-side collision with another car
             if (Physics.Raycast(hitRightRay, out hit, 1.5f))
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " ON MY RIGHT!!!");
+                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " WITH MY RIGHT!!!");
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + " ON MY RIGHT!!!");
                 }
             }
 
-            //Combining my code, detecting left side collision with another car
+            //Combining my code, detecting left mid-side collision with another car
             if (Physics.Raycast(hitLeftRay, out hit, 1.5f))
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " ON MY LEFT!!!");
+                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " WITH MY LEFT!!!");
+                }
+            }
+
+            //Combining my code, detecting frontal-half collision with another car
+            if (Physics.Raycast(hitFrontHalfRay, out hit, 1.5f))
+            {
+                if (hit.transform.gameObject.tag == "Car")
+                {
+                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " WITH MY FRONTAL-HALF!!!");
+                }
+            }
+
+            //Combining my code, detecting  rear-half collision with another car
+            if (Physics.Raycast(hitRearHalfRay, out hit, 1.5f))
+            {
+                if (hit.transform.gameObject.tag == "Car")
+                {
+                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " WITH MY REAR-HALF!!!");
                 }
             }
         }
