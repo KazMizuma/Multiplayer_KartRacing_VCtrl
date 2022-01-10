@@ -117,19 +117,46 @@ public class Raycasting : MonoBehaviour
             //Combining my code, detecting frontal collision with another car
             if (Physics.Raycast(hittingRay, out hit, 3.5f))
             {
-                if (hit.transform.gameObject.tag == "Car" && i > 6 && i < 11)
+                if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " DIRECTLY AHEAD!!!");
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
+                    switch (i)
+                    {
+                        case int r when i < 7: //Gizmos.color = Color.green; // Starting from the left, 6 on the left
+                            Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " ON THE LEFT AHEAD!!!");
+                            break;
+                        case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
+                            Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " DIRECTLY AHEAD!!!");
+                            break;
+                        case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the right, 6 on the right
+                            Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " ON THE RIGHT AHEAD!!!");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
-            //Combining my code, detecting rear end collision with another car
+            //Combining my code, detecting rear-end collision with another car
             if (Physics.Raycast(gettingHitRay, out hit, 2.75f))
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " WITH MY REAR!!!");
+                    //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
+                    switch (i)
+                    {
+                        case int r when i < 7: //Gizmos.color = Color.green; // Starting from the right (facing forward), 6 on the right
+                            Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " WITH THE RIGHT REAR!!!");
+                            break;
+                        case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight behind (from relative point), 4 in the middle
+                            Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " DIRECTLY BEHIND!!!");
+                            break;
+                        case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the left (facing forward), 6 on the left
+                            Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " WITH THE LEFT REAR!!!");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -138,8 +165,11 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " WITH MY RIGHT!!!");
-                    //Debug.Log(this.transform.position + " HIT " + hit.transform.position + " ON MY RIGHT!!!");
+                    //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
+                    if (i > 6 && i < 11)
+                    {
+                        Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " DIRECTLY ON THE RIGHT!!!");
+                    }
                 }
             }
 
@@ -148,7 +178,11 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " WITH MY LEFT!!!");
+                    //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
+                    if (i > 6 && i < 11)
+                    {
+                        Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " DIRECTLY ON THE LEFT!!!");
+                    }
                 }
             }
 
@@ -157,7 +191,21 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " WITH MY FRONTAL-HALF!!!");
+                    //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
+                    switch (i)
+                    {
+                        case int r when i < 7: //Gizmos.color = Color.green; // Starting from the left, 6 on the left
+                            Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " ON THE LEFT FRONT!!!");
+                            break;
+                        case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
+                            Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " DIRECTLY FRONT!!!");
+                            break;
+                        case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the right, 6 on the right
+                            Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " ON THE RIGHT FRONT!!!");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -166,7 +214,21 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + " WITH MY REAR-HALF!!!");
+                    //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
+                    switch (i)
+                    {
+                        case int r when i < 7: //Gizmos.color = Color.green; // Starting from the right (facing forward), 6 on the right
+                            Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " WITH THE RIGHT REAR!!!");
+                            break;
+                        case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight behind (from relative point), 4 in the middle
+                            Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " DIRECTLY BEHIND!!!");
+                            break;
+                        case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the left (facing forward), 6 on the left
+                            Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " WITH THE LEFT REAR!!!");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
