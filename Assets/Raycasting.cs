@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Raycasting : MonoBehaviour
 {
-    public float targetVelocity = 10.0f;
+    //public float targetVelocity = 10.0f; // World of Zero's, I'm not using it
     public int numberOfRays = 17;
     public float angle = 30.0f;
     public GameObject frontRotation; // Rays for front half
@@ -51,7 +51,7 @@ public class Raycasting : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // World of Zero's Raycasting and Object Avoidance Algorithm  https://youtu.be/SVazwHyfB7g?t=944
+        // Using the method of fanning rays from World of Zero's Raycasting and Object Avoidance Algorithm  https://youtu.be/SVazwHyfB7g?t=944
 
         RaycastHit hit; // Combining my code
         //Ray hittingRay = new Ray(gameObject.transform.position, gameObject.transform.forward);
@@ -80,7 +80,7 @@ public class Raycasting : MonoBehaviour
             var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
             var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
 
-            // Color coding the rays
+            // Combining my code, color coding the rays
             switch (i)
             {
                 case int r when i < 7:
