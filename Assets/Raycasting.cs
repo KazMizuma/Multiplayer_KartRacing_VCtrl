@@ -10,10 +10,12 @@ public class Raycasting : MonoBehaviour
     public GameObject frontRotation; // Rays for front half
     public GameObject rearRotation; // Rays for rear half 
 
+    //AI_Controller ai_controller; // To call accel & brake values
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //ai_controller = this.transform.parent.GetComponent<AI_Controller>(); // To call accel & brake values
     }
 
     // Update is called once per frame
@@ -47,10 +49,7 @@ public class Raycasting : MonoBehaviour
         //    }
         //}
         ////My Raycasting Ends//
-    }
 
-    private void OnDrawGizmos()
-    {
         // Using the method of fanning rays from World of Zero's Raycasting and Object Avoidance Algorithm  https://youtu.be/SVazwHyfB7g?t=944
 
         RaycastHit hit; // Combining my code
@@ -65,54 +64,31 @@ public class Raycasting : MonoBehaviour
 
             var rotationFrontHalf = frontRotation.transform.rotation; // Rays for front half
             var rotationRearHalf = rearRotation.transform.rotation; // Rays for rear half
-
             var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * angle - 15, this.transform.up); // For the front and back
             var rotationAngleAxSides = Quaternion.AngleAxis(i / (float)numberOfRays * 160 - 80, this.transform.up); // For the sides
-
             var rotationAngleAxFront = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, frontRotation.transform.up); // Rays for front half
             var rotationAngleAxRear = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, rearRotation.transform.up); // Rays for rear half
 
             var forwardVec3 = rotation * rotationAngleAx * Vector3.forward;
             var backwardVec3 = rotation * rotationAngleAx * Vector3.back; // Adding the rays on the back
-            var rightVec3 = rotation * rotationAngleAxSides * Vector3.right ; // Adding the rays on the right
+            var rightVec3 = rotation * rotationAngleAxSides * Vector3.right; // Adding the rays on the right
             var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
-
             var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
             var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
 
-            // Combining my code, color coding the rays
-            switch (i)
-            {
-                case int r when i < 7:
-                    Gizmos.color = Color.green; // Starting from the left, 6 on the left
-                    break;
-                case int r when i > 6 && i < 11: 
-                    Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
-                    break;
-                case int r when i > 10 && i < 18:
-                    Gizmos.color = Color.red; // Ending at the right, 6 on the right
-                    break;
-                default:
-                    break;
-            }
-
-            Gizmos.DrawRay(this.transform.position, forwardVec3 * 3.5f);
             Ray hittingRay = new Ray(this.transform.position, forwardVec3 * 3.5f); //Combining my code to detect frontal collision
-
-            Gizmos.DrawRay(this.transform.position, backwardVec3 * 2.75f); // Adding the rays on the back
             Ray gettingHitRay = new Ray(this.transform.position, backwardVec3 * 2.75f); //Combining my code to detect rear end collision
-
-            Gizmos.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
             Ray hitRightRay = new Ray(this.transform.position, rightVec3 * 1.5f); // Combining my code to detect right side collision
-
-            Gizmos.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
             Ray hitLeftRay = new Ray(this.transform.position, leftVec3 * 1.5f); // Combining my code to detect left side collision
-
-            Gizmos.DrawRay(frontRotation.transform.position, frontCubeVec3 * 1.5f); // Rays for front half
             Ray hitFrontHalfRay = new Ray(frontRotation.transform.position, frontCubeVec3 * 1.5f);
-
-            Gizmos.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
             Ray hitRearHalfRay = new Ray(rearRotation.transform.position, rearCubeVec3 * 1.5f);
+
+            //Debug.DrawRay(this.transform.position, forwardVec3 * 3.5f);
+            //Debug.DrawRay(this.transform.position, backwardVec3 * 2.75f); // Adding the rays on the back
+            //Debug.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
+            //Debug.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
+            //Debug.DrawRay(frontRotation.transform.position, frontCubeVec3 * 1.5f); // Rays for front half
+            //Debug.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
 
             //Combining my code, detecting frontal collision with another car
             if (Physics.Raycast(hittingRay, out hit, 3.5f))
@@ -231,6 +207,50 @@ public class Raycasting : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    private void OnDrawGizmos() // Following vars are redundant with the ones in Update but needed to color code the rays accordingly
+    {
+        for (int i = 1; i < numberOfRays; i++)
+        {
+            var rotation = this.transform.rotation;
+
+            var rotationFrontHalf = frontRotation.transform.rotation; // Rays for front half
+            var rotationRearHalf = rearRotation.transform.rotation; // Rays for rear half
+            var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * angle - 15, this.transform.up); // For the front and back
+            var rotationAngleAxSides = Quaternion.AngleAxis(i / (float)numberOfRays * 160 - 80, this.transform.up); // For the sides
+            var rotationAngleAxFront = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, frontRotation.transform.up); // Rays for front half
+            var rotationAngleAxRear = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, rearRotation.transform.up); // Rays for rear half
+
+            var forwardVec3 = rotation * rotationAngleAx * Vector3.forward;
+            var backwardVec3 = rotation * rotationAngleAx * Vector3.back; // Adding the rays on the back
+            var rightVec3 = rotation * rotationAngleAxSides * Vector3.right; // Adding the rays on the right
+            var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
+            var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
+            var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
+
+            //Combining my code, color coding the rays
+            switch (i)
+            {
+                case int r when i < 7:
+                    Gizmos.color = Color.green; // Starting from the left, 6 on the left
+                    break;
+                case int r when i > 6 && i < 11:
+                    Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
+                    break;
+                case int r when i > 10 && i < 18:
+                    Gizmos.color = Color.red; // Ending at the right, 6 on the right
+                    break;
+                default:
+                    break;
+            }
+            Gizmos.DrawRay(this.transform.position, forwardVec3 * 3.5f);
+            Gizmos.DrawRay(this.transform.position, backwardVec3 * 2.75f); // Adding the rays on the back
+            Gizmos.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
+            Gizmos.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
+            Gizmos.DrawRay(frontRotation.transform.position, frontCubeVec3 * 1.5f); // Rays for front half
+            Gizmos.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
         }
     }
 }
