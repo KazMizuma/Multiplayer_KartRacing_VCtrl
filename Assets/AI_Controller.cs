@@ -6,19 +6,27 @@ public class AI_Controller : MonoBehaviour
 {
     public wayPoints wayPoints;
     drivingControl drivingControl;
+    Raycasting raycasting; //Accessing Raycasting script to control collisions
     public float steeringSensitivity = 0.01f;
     Vector3 target;
     int currentPoint = 0;
     bool roundTrip = false;
-    //float accel = 0.25f; //these values need to be updated to get the car going and keep it under control
-    //float brake = 0f;
-    public float publicAccel; // = 0.25f;
-    public float publicBrake; // = 0.05f;
+
+    // Making the values accessible from Raycasting.cs
+    //public float accel = 0.5f;
+    //public float steer = 0f; // = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drivingControl.currentSpeed);
+    //Debug.Log("targetAngle & steeringSensitivity: " + targetAngle + " & " + steeringSensitivity);
+    //Debug.Log(" drivingControl.currentSpeed " + drivingControl.currentSpeed + " Sign of it = " + Mathf.Sign(drivingControl.currentSpeed));
+    //public float brake = 0f;
+
+    public float publicAccel = 0.25f;
+    public float publicBrake = 0.05f;
 
     // Start is called before the first frame update
     void Start()
     {
         drivingControl = this.GetComponent<drivingControl>();
+        raycasting = this.transform.GetComponentInChildren<Raycasting>(); //Accessing Raycasting script to control collisions
         target = wayPoints.waypoints[currentPoint].transform.position;
     }
 
@@ -55,13 +63,14 @@ public class AI_Controller : MonoBehaviour
         //    }
         //}
 
-        //Bringing the following to here at the top!
+        // The following values need to be updated to get the car going and keep it under control
+        //Brought up here from below
         //float accel = 0.5f; //original value
         float accel = 0.5f;
         float steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drivingControl.currentSpeed);
         //Debug.Log("targetAngle & steeringSensitivity: " + targetAngle + " & " + steeringSensitivity);
         //Debug.Log(" drivingControl.currentSpeed " + drivingControl.currentSpeed + " Sign of it = " + Mathf.Sign(drivingControl.currentSpeed));
-        float brake = 0;
+        float brake = 0f;
 
         //Get the distance to the next waypoint
         //Debug.Log("distanceToTarget: " + (int)distanceToTarget + " Meters");
@@ -137,7 +146,7 @@ public class AI_Controller : MonoBehaviour
             }
         }
 
-        //Commenting out to bring the following to the top!
+        //Commenting out to bring the following above
         ////float accel = 0.5f; //original value
         //float accel = 0.5f;
         //float steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1) * Mathf.Sign(drivingControl.currentSpeed);
