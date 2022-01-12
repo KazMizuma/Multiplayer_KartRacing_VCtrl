@@ -9,11 +9,13 @@ public class drivingControl : MonoBehaviour
     public GameObject[] wheelMeshes;
     public float maxSteerAngle = 30;
     public float maxBrakeTorque = 1000;
+
     public AudioSource skidSound;
     public Transform tireSkidPrefab; //for startTireSkid and endTireSkid, tire skidding marking prefab
     Transform[] tireSkid = new Transform[4]; //for startTireSkid and endTireSkid, four tires, 
     public ParticleSystem smokePrefab; //tire skidding smoke prefab
     ParticleSystem[] skidSmoke = new ParticleSystem[4]; //for four tires to instantiate the prefab
+
     public GameObject brakeLight;
     public AudioSource AccelHigh;
     public Rigidbody rb;
@@ -126,7 +128,7 @@ public class drivingControl : MonoBehaviour
 
     public void Go(float accel, float steer, float brake)
     {
-        accel = Mathf.Clamp(accel, -1, 1);
+        accel = Mathf.Clamp(accel, -2, 2);
 
         float thrustTorque = 0;
         if (currentSpeed < maxSpeed)

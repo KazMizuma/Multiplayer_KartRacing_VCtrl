@@ -10,6 +10,10 @@ public class Raycasting : MonoBehaviour
     public GameObject frontRotation; // Rays for front half
     public GameObject rearRotation; // Rays for rear half 
 
+    public bool aboutToHitAhead = false; // For AI_Controller to grab
+    public bool isHittingFront = false;
+    public bool isHittingRear = false;
+
     //AI_Controller ai_controller; // To call accel & brake values
 
     // Start is called before the first frame update
@@ -58,6 +62,10 @@ public class Raycasting : MonoBehaviour
         //Ray gettingHitRay = new Ray(gameObject.transform.position, -gameObject.transform.forward);
         //Debug.DrawRay(gameObject.transform.position, -gameObject.transform.forward * 2.5f, Color.white);
 
+        aboutToHitAhead = false; // For AI_Controller to grab
+        isHittingFront = false;
+        isHittingRear = false;
+
         for (int i = 1; i < numberOfRays; i++)
         {
             var rotation = this.transform.rotation;
@@ -83,6 +91,7 @@ public class Raycasting : MonoBehaviour
             Ray hitFrontHalfRay = new Ray(frontRotation.transform.position, frontCubeVec3 * 1.5f);
             Ray hitRearHalfRay = new Ray(rearRotation.transform.position, rearCubeVec3 * 1.5f);
 
+            //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
             //Debug.DrawRay(this.transform.position, forwardVec3 * 3.5f);
             //Debug.DrawRay(this.transform.position, backwardVec3 * 2.75f); // Adding the rays on the back
             //Debug.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
@@ -95,6 +104,7 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
+                    aboutToHitAhead = true; // For AI_Controller to grab
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                     switch (i)
                     {
@@ -167,6 +177,7 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
+                    isHittingFront = true;
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                     switch (i)
                     {
@@ -190,6 +201,7 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
+                    isHittingRear = true;
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                     switch (i)
                     {
@@ -210,10 +222,11 @@ public class Raycasting : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos() // Following vars are redundant with the ones in Update but needed to color code the rays accordingly
+    private void OnDrawGizmos() // For debug purpose only, disable upon compiling!
     {
         for (int i = 1; i < numberOfRays; i++)
         {
+            // Following vars are redundant with the ones in Update but needed to color code the rays accordingly
             var rotation = this.transform.rotation;
 
             var rotationFrontHalf = frontRotation.transform.rotation; // Rays for front half
@@ -245,6 +258,8 @@ public class Raycasting : MonoBehaviour
                 default:
                     break;
             }
+
+            //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
             Gizmos.DrawRay(this.transform.position, forwardVec3 * 3.5f);
             Gizmos.DrawRay(this.transform.position, backwardVec3 * 2.75f); // Adding the rays on the back
             Gizmos.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
