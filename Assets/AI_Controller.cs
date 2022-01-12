@@ -86,6 +86,14 @@ public class AI_Controller : MonoBehaviour
         int mphSpeedInt = (int)mphSpeed;
         //Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH");
 
+        // Avoiding frontal collisions with other cars
+        if (raycasting.aboutToHitAhead == true)
+        {
+            Debug.Log("Avoiding Frontal Collisions!!!");
+            accel = 0.1f;
+            brake = 0.06f;
+        }
+
         //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
         //Works well, POV is that of drivingControl.rb.gameObject.transform.position
         switch (Mathf.Abs(targetAngle))
@@ -108,7 +116,7 @@ public class AI_Controller : MonoBehaviour
                     case int i when mphSpeedInt < 60:
                         Debug.Log("bring it up to 60mph!");
                         accel = 0.8f;
-                        brake = 0;
+                        brake = 0f;
                         break;
                     case int i when mphSpeedInt > 80:
                         Debug.Log("bring the shit down below 80!");
@@ -133,7 +141,7 @@ public class AI_Controller : MonoBehaviour
                 case float f when yDifference > 1.5:
                     Debug.Log("the target on uphill: " + yDifference);
                     accel = 0.7f;
-                    brake = 0;
+                    brake = 0f;
                     break;
                 case float f when yDifference < -1.5:
                     Debug.Log("the target on downhill: " + yDifference);
@@ -169,6 +177,7 @@ public class AI_Controller : MonoBehaviour
             }
             else //making a round trip
             {
+                Debug.Log("Making a round trip!");
                 //COMMENTING OUT TO TRY OUT MY AI CODE!
                 //accel = publicAccel;
                 //brake = publicBrake;
@@ -225,6 +234,26 @@ public class AI_Controller : MonoBehaviour
             //    Debug.Log("wayPoints.waypoints[currentPoint].tag is " + wayPoints.waypoints[currentPoint].tag);
             //    Debug.Log("Just say the tag " + wayPoints.waypoints[currentPoint].tag);
             //}
+        }
+
+        // Getting cars unstuck 
+        if (!(currentPoint == 0 && roundTrip == false)) 
+        {
+            if (mphSpeedInt == 0 && raycasting.isHittingFront == false)
+            {
+                Debug.Log("Moving Cars Forward After Getting Stuck!!!");
+                accel = 2f;
+                brake = 0f;
+            }
+            else if (mphSpeedInt == 0 && raycasting.isHittingFront == true)
+            {
+                if (raycasting.isHittingRear == false)
+                {
+                    Debug.Log("Moving Cars Backward After Getting Stuck!!!");
+                    accel = -2f;
+                    brake = 0f;
+                }
+            }
         }
 
         Debug.Log("drivingControl.Go(" + accel + ", " + steer + ", " + brake + ")");
