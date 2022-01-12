@@ -87,7 +87,7 @@ public class AI_Controller : MonoBehaviour
         //Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH");
 
         // Avoiding frontal collisions with other cars
-        if (raycasting.aboutToHitAhead == true)
+        if (raycasting.aboutToHitAhead == true && mphSpeedInt > 9)
         {
             Debug.Log("Avoiding Frontal Collisions!!!");
             accel = 0.1f;
@@ -96,42 +96,45 @@ public class AI_Controller : MonoBehaviour
 
         //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
         //Works well, POV is that of drivingControl.rb.gameObject.transform.position
-        switch (Mathf.Abs(targetAngle))
+        if (mphSpeedInt > 9)
         {
-            case float f when Mathf.Abs(targetAngle) > 50:
-                Debug.Log("Sharp Curv, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
-                accel = 0.1f;
-                brake = 0.06f;
-                break;
-            case float f when Mathf.Abs(targetAngle) > 25:
-                Debug.Log("Curv, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
-                accel = 0.3f;
-                brake = 0.02f;
-                break;
-            default:
-                Debug.Log("Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
-                Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
-                switch (mphSpeedInt)
-                {
-                    case int i when mphSpeedInt < 60:
-                        Debug.Log("bring it up to 60mph!");
-                        accel = 0.8f;
-                        brake = 0f;
-                        break;
-                    case int i when mphSpeedInt > 80:
-                        Debug.Log("bring the shit down below 80!");
-                        accel = publicAccel;
-                        brake = publicBrake;
-                        break;
-                    default:
-                        // the current speed is between 60 and 80mph
-                        break;
-                }
-                break;
+            switch (Mathf.Abs(targetAngle))
+            {
+                case float f when Mathf.Abs(targetAngle) > 50:
+                    Debug.Log("Sharp Curv, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
+                    accel = 0.1f;
+                    brake = 0.06f;
+                    break;
+                case float f when Mathf.Abs(targetAngle) > 25:
+                    Debug.Log("Curv, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
+                    accel = 0.3f;
+                    brake = 0.02f;
+                    break;
+                default:
+                    Debug.Log("Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
+                    Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
+                    switch (mphSpeedInt)
+                    {
+                        case int i when mphSpeedInt < 60:
+                            Debug.Log("bring it up to 60mph!");
+                            accel = 0.8f;
+                            brake = 0f;
+                            break;
+                        case int i when mphSpeedInt > 80:
+                            Debug.Log("bring the shit down below 80!");
+                            accel = publicAccel;
+                            brake = publicBrake;
+                            break;
+                        default:
+                            // the current speed is between 60 and 80mph
+                            break;
+                    }
+                    break;
+            }
         }
 
         //Find out the next waypoint's y position to be at uphill or downhill; MY AI CODE!
-        if (currentPoint != 0) //avoiding subtracting -1 from currentPoint[0]
+        if (mphSpeedInt > 9 && currentPoint != 0) //avoiding subtracting -1 from currentPoint[0]
         {
             float nextWaypoint = wayPoints.waypoints[currentPoint].transform.position.y;
             float currentWaypoint = wayPoints.waypoints[currentPoint-1].transform.position.y;
@@ -239,13 +242,13 @@ public class AI_Controller : MonoBehaviour
         // Getting cars unstuck 
         if (!(currentPoint == 0 && roundTrip == false)) 
         {
-            if (mphSpeedInt == 0 && raycasting.isHittingFront == false)
+            if (mphSpeedInt < 10 && raycasting.isHittingFront == false)
             {
                 Debug.Log("Moving Cars Forward After Getting Stuck!!!");
                 accel = 2f;
                 brake = 0f;
             }
-            else if (mphSpeedInt == 0 && raycasting.isHittingFront == true)
+            else if (mphSpeedInt < 10 && raycasting.isHittingFront == true)
             {
                 if (raycasting.isHittingRear == false)
                 {
