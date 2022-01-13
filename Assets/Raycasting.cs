@@ -10,16 +10,18 @@ public class Raycasting : MonoBehaviour
     public GameObject frontRotation; // Rays for front half
     public GameObject rearRotation; // Rays for rear half 
 
-    public bool aboutToHitAhead = false; // For AI_Controller to grab
+    public bool aboutToHitDirectlyAhead = false; // For AI_Controller to grab
     public bool isHittingFront = false;
     public bool isHittingRear = false;
 
-    //AI_Controller ai_controller; // To call accel & brake values
+    //AI_Controller ai_controller; // To access AI_Controller
+
+    //public Vector3 deltaPosition; // Trying World of Zero's avoidance method
 
     // Start is called before the first frame update
     void Start()
     {
-        //ai_controller = this.transform.parent.GetComponent<AI_Controller>(); // To call accel & brake values
+        //ai_controller = this.transform.parent.GetComponent<AI_Controller>(); // To access AI_Controller
     }
 
     // Update is called once per frame
@@ -62,7 +64,7 @@ public class Raycasting : MonoBehaviour
         //Ray gettingHitRay = new Ray(gameObject.transform.position, -gameObject.transform.forward);
         //Debug.DrawRay(gameObject.transform.position, -gameObject.transform.forward * 2.5f, Color.white);
 
-        aboutToHitAhead = false; // For AI_Controller to grab
+        aboutToHitDirectlyAhead = false; // For AI_Controller to grab
         isHittingFront = false;
         isHittingRear = false;
 
@@ -104,7 +106,10 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    aboutToHitAhead = true; // For AI_Controller to grab
+                    // Trying World of Zero's avoidance method - It Doesn't Work Well !!
+                    //deltaPosition -= (1.0f / 51) * ai_controller.mphSpeedInt * forwardVec3;
+                    //this.transform.position += deltaPosition * Time.deltaTime;
+
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                     switch (i)
                     {
@@ -112,6 +117,7 @@ public class Raycasting : MonoBehaviour
                             Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " ON THE LEFT AHEAD!!!");
                             break;
                         case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
+                            aboutToHitDirectlyAhead = true; // For AI_Controller to grab
                             Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " DIRECTLY AHEAD!!!");
                             break;
                         case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the right, 6 on the right

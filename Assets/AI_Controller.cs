@@ -22,6 +22,8 @@ public class AI_Controller : MonoBehaviour
     public float publicAccel = 0.25f;
     public float publicBrake = 0.05f;
 
+    public int mphSpeedInt; // For Raycasting to be able to access
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,15 +85,15 @@ public class AI_Controller : MonoBehaviour
 
         //Get the speed in MPH
         double mphSpeed = (drivingControl.currentSpeed * 3600) * 0.000621371;
-        int mphSpeedInt = (int)mphSpeed;
+        mphSpeedInt = (int)mphSpeed;
         //Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH");
 
         // Avoiding frontal collisions with other cars
-        if (raycasting.aboutToHitAhead == true && mphSpeedInt > 9)
+        if (raycasting.aboutToHitDirectlyAhead == true && mphSpeedInt > 9)
         {
             Debug.Log("Avoiding Frontal Collisions!!!");
             accel = 0.1f;
-            brake = 0.06f;
+            brake = 0.06f; 
         }
 
         //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
