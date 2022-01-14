@@ -88,6 +88,35 @@ public class AI_Controller : MonoBehaviour
         mphSpeedInt = (int)mphSpeed;
         //Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH");
 
+        /* For AI_Controller to grab
+        aboutToHitLeftAhead = false;
+        aboutToHitDirectlyAhead = false;
+        aboutToHitRightAhead = false;
+        //
+        aboutToGetHitRightRear = false;
+        aboutToGetHitRear = false;
+        aboutToGetHitLeftRear = false;
+        //
+        isHittingRightSide = false;
+        isHittingLeftSide = false;
+        //
+        isHittingLeft = false;
+        isHittingFront = false;
+        isHittingRight = false;
+        //
+        isHittingRightRear = false;
+        isHittingRear = false;
+        isHittingLeftRear = false;
+        */
+
+        //Testing Overtaking!!!
+        if (raycasting.aboutToHitRightAhead == true && mphSpeedInt > 9)
+        {
+            targetAngle = -10;
+            Debug.Log("targetAngle = " + targetAngle);
+            steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+        }
+
         // Avoiding frontal collisions with other cars
         if (raycasting.aboutToHitDirectlyAhead == true && mphSpeedInt > 9)
         {
@@ -167,7 +196,7 @@ public class AI_Controller : MonoBehaviour
         ////Debug.Log(" drivingControl.currentSpeed " + drivingControl.currentSpeed + " Sign of it = " + Mathf.Sign(drivingControl.currentSpeed));
         //float brake = 0;
 
-        if (distanceToTarget < 5)
+        if (distanceToTarget < 7)
         {
             //Debug.Log("distance to target is < 5 ");
             if (currentPoint == 0 && roundTrip == false) //first time approaching the point [0]
@@ -190,7 +219,7 @@ public class AI_Controller : MonoBehaviour
             }
         }
 
-        if (distanceToTarget < 2) //increase the value if gameObject circles around waypoint
+        if (distanceToTarget < 5) //increase the value if gameObject circles around waypoint
         {
             //Debug.Log("distance to target is < 2 ");
 

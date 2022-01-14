@@ -10,9 +10,25 @@ public class Raycasting : MonoBehaviour
     public GameObject frontRotation; // Rays for front half
     public GameObject rearRotation; // Rays for rear half 
 
-    public bool aboutToHitDirectlyAhead = false; // For AI_Controller to grab
+    // For AI_Controller to grab
+    public bool aboutToHitLeftAhead = false; 
+    public bool aboutToHitDirectlyAhead = false;
+    public bool aboutToHitRightAhead = false;
+    //
+    public bool aboutToGetHitRightRear = false;
+    public bool aboutToGetHitRear = false;
+    public bool aboutToGetHitLeftRear = false;
+    //
+    public bool isHittingRightSide = false;
+    public bool isHittingLeftSide = false;
+    //
+    public bool isHittingLeft = false;
     public bool isHittingFront = false;
+    public bool isHittingRight = false;
+    //
+    public bool isHittingRightRear = false;
     public bool isHittingRear = false;
+    public bool isHittingLeftRear = false;
 
     //AI_Controller ai_controller; // To access AI_Controller
 
@@ -64,9 +80,25 @@ public class Raycasting : MonoBehaviour
         //Ray gettingHitRay = new Ray(gameObject.transform.position, -gameObject.transform.forward);
         //Debug.DrawRay(gameObject.transform.position, -gameObject.transform.forward * 2.5f, Color.white);
 
-        aboutToHitDirectlyAhead = false; // For AI_Controller to grab
+        // For AI_Controller to grab
+        aboutToHitLeftAhead = false; 
+        aboutToHitDirectlyAhead = false;
+        aboutToHitRightAhead = false;
+        //
+        aboutToGetHitRightRear = false;
+        aboutToGetHitRear = false;
+        aboutToGetHitLeftRear = false;
+        //
+        isHittingRightSide = false;
+        isHittingLeftSide = false;
+        //
+        isHittingLeft = false;
         isHittingFront = false;
+        isHittingRight = false;
+        //
+        isHittingRightRear = false;
         isHittingRear = false;
+        isHittingLeftRear = false;
 
         for (int i = 1; i < numberOfRays; i++)
         {
@@ -86,23 +118,23 @@ public class Raycasting : MonoBehaviour
             var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
             var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
 
-            Ray hittingRay = new Ray(this.transform.position, forwardVec3 * 3.5f); //Combining my code to detect frontal collision
-            Ray gettingHitRay = new Ray(this.transform.position, backwardVec3 * 2.75f); //Combining my code to detect rear end collision
+            Ray hittingRay = new Ray(this.transform.position, forwardVec3 * 4f); //Combining my code to detect frontal collision
+            Ray gettingHitRay = new Ray(this.transform.position, backwardVec3 * 3.5f); //Combining my code to detect rear end collision
             Ray hitRightRay = new Ray(this.transform.position, rightVec3 * 1.5f); // Combining my code to detect right side collision
             Ray hitLeftRay = new Ray(this.transform.position, leftVec3 * 1.5f); // Combining my code to detect left side collision
             Ray hitFrontHalfRay = new Ray(frontRotation.transform.position, frontCubeVec3 * 1.5f);
             Ray hitRearHalfRay = new Ray(rearRotation.transform.position, rearCubeVec3 * 1.5f);
 
             //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
-            //Debug.DrawRay(this.transform.position, forwardVec3 * 3.5f);
-            //Debug.DrawRay(this.transform.position, backwardVec3 * 2.75f); // Adding the rays on the back
+            //Debug.DrawRay(this.transform.position, forwardVec3 * 4f);
+            //Debug.DrawRay(this.transform.position, backwardVec3 * 3.5f); // Adding the rays on the back
             //Debug.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
             //Debug.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
             //Debug.DrawRay(frontRotation.transform.position, frontCubeVec3 * 1.5f); // Rays for front half
             //Debug.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
 
             //Combining my code, detecting frontal collision with another car
-            if (Physics.Raycast(hittingRay, out hit, 3.5f))
+            if (Physics.Raycast(hittingRay, out hit, 4f))
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
@@ -114,13 +146,15 @@ public class Raycasting : MonoBehaviour
                     switch (i)
                     {
                         case int r when i < 7: //Gizmos.color = Color.green; // Starting from the left, 6 on the left
+                            aboutToHitLeftAhead = true; // For AI_Controller to grab
                             Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " ON THE LEFT AHEAD!!!");
                             break;
                         case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
-                            aboutToHitDirectlyAhead = true; // For AI_Controller to grab
+                            aboutToHitDirectlyAhead = true; 
                             Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " DIRECTLY AHEAD!!!");
                             break;
                         case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the right, 6 on the right
+                            aboutToHitRightAhead = true;
                             Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " ON THE RIGHT AHEAD!!!");
                             break;
                         default:
@@ -130,7 +164,7 @@ public class Raycasting : MonoBehaviour
             }
 
             //Combining my code, detecting rear-end collision with another car
-            if (Physics.Raycast(gettingHitRay, out hit, 2.75f))
+            if (Physics.Raycast(gettingHitRay, out hit, 3.5f))
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
@@ -138,13 +172,16 @@ public class Raycasting : MonoBehaviour
                     switch (i)
                     {
                         case int r when i < 7: //Gizmos.color = Color.green; // Starting from the right (facing forward), 6 on the right
-                            Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " WITH THE RIGHT REAR!!!");
+                            aboutToGetHitRightRear = true;
+                            Debug.Log(transform.gameObject.name + "'S RIGHT REAR IS ABOUT TO GET HIT BY " + hit.transform.gameObject.name + "!!!");
                             break;
                         case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight behind (from relative point), 4 in the middle
-                            Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " DIRECTLY BEHIND!!!");
+                            aboutToGetHitRear = true;
+                            Debug.Log(transform.gameObject.name + " IS ABOUT TO GET REAR ENDED BY " + hit.transform.gameObject.name + "!!!");
                             break;
                         case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the left (facing forward), 6 on the left
-                            Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " WITH THE LEFT REAR!!!");
+                            aboutToGetHitLeftRear = true;
+                            Debug.Log(transform.gameObject.name + "'S LEFT REAR IS ABOUT TO GET HIT BY " + hit.transform.gameObject.name + "!!!");
                             break;
                         default:
                             break;
@@ -160,6 +197,7 @@ public class Raycasting : MonoBehaviour
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                     if (i > 6 && i < 11)
                     {
+                        isHittingRightSide = true;
                         Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " DIRECTLY ON THE RIGHT!!!");
                     }
                 }
@@ -173,6 +211,7 @@ public class Raycasting : MonoBehaviour
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                     if (i > 6 && i < 11)
                     {
+                        isHittingLeftSide = true;
                         Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " DIRECTLY ON THE LEFT!!!");
                     }
                 }
@@ -183,17 +222,19 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    isHittingFront = true;
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                     switch (i)
                     {
                         case int r when i < 7: //Gizmos.color = Color.green; // Starting from the left, 6 on the left
+                            isHittingLeft = true;
                             Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " ON THE LEFT FRONT!!!");
                             break;
                         case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
+                            isHittingFront = true;
                             Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " DIRECTLY FRONT!!!");
                             break;
                         case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the right, 6 on the right
+                            isHittingRight = true;
                             Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " ON THE RIGHT FRONT!!!");
                             break;
                         default:
@@ -207,17 +248,19 @@ public class Raycasting : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "Car")
                 {
-                    isHittingRear = true;
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
                     switch (i)
                     {
                         case int r when i < 7: //Gizmos.color = Color.green; // Starting from the right (facing forward), 6 on the right
+                            isHittingRightRear = true;
                             Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " WITH THE RIGHT REAR!!!");
                             break;
                         case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight behind (from relative point), 4 in the middle
+                            isHittingRear = true;
                             Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " DIRECTLY BEHIND!!!");
                             break;
                         case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the left (facing forward), 6 on the left
+                            isHittingLeftRear = true;
                             Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " WITH THE LEFT REAR!!!");
                             break;
                         default:
@@ -266,8 +309,8 @@ public class Raycasting : MonoBehaviour
             }
 
             //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
-            Gizmos.DrawRay(this.transform.position, forwardVec3 * 3.5f);
-            Gizmos.DrawRay(this.transform.position, backwardVec3 * 2.75f); // Adding the rays on the back
+            Gizmos.DrawRay(this.transform.position, forwardVec3 * 4f);
+            Gizmos.DrawRay(this.transform.position, backwardVec3 * 3.5f); // Adding the rays on the back
             Gizmos.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
             Gizmos.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
             Gizmos.DrawRay(frontRotation.transform.position, frontCubeVec3 * 1.5f); // Rays for front half
