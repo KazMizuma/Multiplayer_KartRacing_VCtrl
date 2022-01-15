@@ -128,7 +128,7 @@ public class drivingControl : MonoBehaviour
 
     public void Go(float accel, float steer, float brake)
     {
-        accel = Mathf.Clamp(accel, -2, 2);
+        accel = Mathf.Clamp(accel, -3, 3);
 
         float thrustTorque = 0;
         if (currentSpeed < maxSpeed)
