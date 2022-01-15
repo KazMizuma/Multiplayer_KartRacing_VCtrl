@@ -163,10 +163,7 @@ public class AI_Controller : MonoBehaviour
         isHittingRightSide = false;
         isHittingLeftSide = false;
         //
-<<<<<<< HEAD
         isHittingFrontHalf = false;
-=======
->>>>>>> main
         isHittingLeft = false;
         isHittingFront = false;
         isHittingRight = false;
@@ -183,10 +180,6 @@ public class AI_Controller : MonoBehaviour
             {
                 targetAngle += 10;
                 Debug.Log("aboutToHitLeftAhead, targetAngle = " + targetAngle);
-<<<<<<< HEAD
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
->>>>>>> main
             }
             if (raycasting.aboutToHitDirectlyAhead == true) // Avoiding frontal collisions with other cars
             {
@@ -198,20 +191,12 @@ public class AI_Controller : MonoBehaviour
             {
                 targetAngle -= 10;
                 Debug.Log("aboutToHitRightAhead, targetAngle = " + targetAngle);
-<<<<<<< HEAD
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
->>>>>>> main
             }
             // About to get hit from rear
             if (raycasting.aboutToGetHitRightRear == true)
             {
                 targetAngle -= 10;
                 Debug.Log("aboutToGetHitRightRear, targetAngle = " + targetAngle);
-<<<<<<< HEAD
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
->>>>>>> main
             }
             if (raycasting.aboutToGetHitRear == true) // Avoiding getting rear ended with another car
             {
@@ -223,70 +208,41 @@ public class AI_Controller : MonoBehaviour
             {
                 targetAngle += 10;
                 Debug.Log("aboutToGetHitLeftRear, targetAngle = " + targetAngle);
-<<<<<<< HEAD
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
->>>>>>> main
             }
             // Hitting the side
             if (raycasting.isHittingRightSide == true)
             {
                 targetAngle -= 2;
                 Debug.Log("isHittingRightSide, targetAngle = " + targetAngle);
-<<<<<<< HEAD
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
->>>>>>> main
             }
             if (raycasting.isHittingLeftSide == true)
             {
                 targetAngle += 2;
                 Debug.Log("isHittingLeftSide, targetAngle = " + targetAngle);
-<<<<<<< HEAD
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
->>>>>>> main
             }
             // The front half is hitting
             if (raycasting.isHittingLeft == true)
             {
                 targetAngle += 5;
                 Debug.Log("isHittingLeft, targetAngle = " + targetAngle);
-<<<<<<< HEAD
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
->>>>>>> main
             }
             if (raycasting.isHittingRight == true)
             {
                 targetAngle -= 5;
                 Debug.Log("isHittingRight, targetAngle = " + targetAngle);
-<<<<<<< HEAD
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
->>>>>>> main
             }
             // The rear half is hitting
             if (raycasting.isHittingRightRear == true)
             {
                 targetAngle -= 5;
                 Debug.Log("isHittingRightRear, targetAngle = " + targetAngle);
-<<<<<<< HEAD
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
->>>>>>> main
             }
             if (raycasting.isHittingLeftRear == true)
             {
                 targetAngle += 5;
                 Debug.Log("isHittingLeftRear, targetAngle = " + targetAngle);
-<<<<<<< HEAD
             }
             steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
-=======
-                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
-            }
->>>>>>> main
         }
 
         //Commenting out to bring the following above
@@ -371,7 +327,6 @@ public class AI_Controller : MonoBehaviour
             //}
         }
 
-<<<<<<< HEAD
         // Getting Cars Unstuck 
         if (!(currentPoint == 0 && roundTrip == false) && mphSpeedInt < 10) // Not the starting point of the race
         {
@@ -402,33 +357,6 @@ public class AI_Controller : MonoBehaviour
                     targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
                     steer = Mathf.Clamp(targetAngle * steeringSensitivity, -2, 2); // Only for Getting Cars Unstuck am I using -2, 2 range
                     */
-=======
-        // Getting cars unstuck 
-        if (!(currentPoint == 0 && roundTrip == false)) // Not the starting point of the race
-        {
-            if (mphSpeedInt < 10 && raycasting.isHittingFront == false) // if no car ahead
-            {
-                Debug.Log("Moving Cars Forward After Getting Stuck!!!");
-                accel = 2f;
-                brake = 0f;
-            }
-            if (mphSpeedInt < 10 && raycasting.isHittingFront == true) // if there is a car directly ahead blocking...
-            {
-                if (raycasting.isHittingRear == false) // ...and no car blocking behind
-                {
-                    Debug.Log("Moving Cars Backward After Getting Stuck With Car!!!");
-                    accel = -2f;
-                    brake = 0f;
-                }
-            }
-            if (mphSpeedInt < 10 && raycasting.isHittingFrontHalf == true) // if there is a gameObject ahead blocking...
-            {
-                if (raycasting.isHittingRear == false) // ...and no car blocking behind
-                {
-                    Debug.Log("Moving Cars Backward After Getting Stuck With Object!!!");
-                    accel = -2f;
-                    brake = 0f;
->>>>>>> main
                 }
             } 
         }
