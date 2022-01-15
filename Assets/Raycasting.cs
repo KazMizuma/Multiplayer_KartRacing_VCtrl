@@ -22,6 +22,7 @@ public class Raycasting : MonoBehaviour
     public bool isHittingRightSide = false;
     public bool isHittingLeftSide = false;
     //
+    public bool isHittingFrontHalf = false;
     public bool isHittingLeft = false;
     public bool isHittingFront = false;
     public bool isHittingRight = false;
@@ -92,6 +93,7 @@ public class Raycasting : MonoBehaviour
         isHittingRightSide = false;
         isHittingLeftSide = false;
         //
+        isHittingFrontHalf = false;
         isHittingLeft = false;
         isHittingFront = false;
         isHittingRight = false;
@@ -220,6 +222,7 @@ public class Raycasting : MonoBehaviour
             //Combining my code, detecting frontal-half collision with another car
             if (Physics.Raycast(hitFrontHalfRay, out hit, 1.5f))
             {
+                isHittingFrontHalf = true;
                 if (hit.transform.gameObject.tag == "Car")
                 {
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");
