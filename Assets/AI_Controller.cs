@@ -88,43 +88,6 @@ public class AI_Controller : MonoBehaviour
         mphSpeedInt = (int)mphSpeed;
         //Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH");
 
-        /* For AI_Controller to grab
-        aboutToHitLeftAhead = false;
-        aboutToHitDirectlyAhead = false;
-        aboutToHitRightAhead = false;
-        //
-        aboutToGetHitRightRear = false;
-        aboutToGetHitRear = false;
-        aboutToGetHitLeftRear = false;
-        //
-        isHittingRightSide = false;
-        isHittingLeftSide = false;
-        //
-        isHittingLeft = false;
-        isHittingFront = false;
-        isHittingRight = false;
-        //
-        isHittingRightRear = false;
-        isHittingRear = false;
-        isHittingLeftRear = false;
-        */
-
-        //Testing Overtaking!!!
-        if (raycasting.aboutToHitRightAhead == true && mphSpeedInt > 9)
-        {
-            targetAngle = -10;
-            Debug.Log("targetAngle = " + targetAngle);
-            steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
-        }
-
-        // Avoiding frontal collisions with other cars
-        if (raycasting.aboutToHitDirectlyAhead == true && mphSpeedInt > 9)
-        {
-            Debug.Log("Avoiding Frontal Collisions!!!");
-            accel = 0.1f;
-            brake = 0.06f; 
-        }
-
         //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
         //Works well, POV is that of drivingControl.rb.gameObject.transform.position
         if (mphSpeedInt > 9)
@@ -185,6 +148,108 @@ public class AI_Controller : MonoBehaviour
                 default:
                     Debug.Log("the target on flat ground: " + yDifference);
                     break;
+            }
+        }
+
+        /* For AI_Controller to grab
+        aboutToHitLeftAhead = false;
+        aboutToHitDirectlyAhead = false;
+        aboutToHitRightAhead = false;
+        //
+        aboutToGetHitRightRear = false;
+        aboutToGetHitRear = false;
+        aboutToGetHitLeftRear = false;
+        //
+        isHittingRightSide = false;
+        isHittingLeftSide = false;
+        //
+        isHittingLeft = false;
+        isHittingFront = false;
+        isHittingRight = false;
+        //
+        isHittingRightRear = false;
+        isHittingRear = false;
+        isHittingLeftRear = false;
+        */
+        //Testing Overtaking, targetAngle += to turn right, -= to turn left 
+        if (mphSpeedInt > 9)
+        {
+            // About to hit ahead
+            if (raycasting.aboutToHitLeftAhead == true)
+            {
+                targetAngle += 10;
+                Debug.Log("aboutToHitLeftAhead, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+            }
+            if (raycasting.aboutToHitDirectlyAhead == true) // Avoiding frontal collisions with other cars
+            {
+                Debug.Log("Avoiding Frontal Collisions!!!");
+                accel = 0.4f;
+                brake = 0.01f;
+            }
+            if (raycasting.aboutToHitRightAhead == true)
+            {
+                targetAngle -= 10;
+                Debug.Log("aboutToHitRightAhead, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+            }
+            // About to get hit from rear
+            if (raycasting.aboutToGetHitRightRear == true)
+            {
+                targetAngle -= 10;
+                Debug.Log("aboutToGetHitRightRear, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+            }
+            if (raycasting.aboutToGetHitRear == true) // Avoiding getting rear ended with another car
+            {
+                Debug.Log("Avoiding Rear-End!!!");
+                accel = 0.6f;
+                brake = 0f;
+            }
+            if (raycasting.aboutToGetHitLeftRear == true)
+            {
+                targetAngle += 10;
+                Debug.Log("aboutToGetHitLeftRear, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+            }
+            // Hitting the side
+            if (raycasting.isHittingRightSide == true)
+            {
+                targetAngle -= 2;
+                Debug.Log("isHittingRightSide, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+            }
+            if (raycasting.isHittingLeftSide == true)
+            {
+                targetAngle += 2;
+                Debug.Log("isHittingLeftSide, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+            }
+            // The front half is hitting
+            if (raycasting.isHittingLeft == true)
+            {
+                targetAngle += 5;
+                Debug.Log("isHittingLeft, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+            }
+            if (raycasting.isHittingRight == true)
+            {
+                targetAngle -= 5;
+                Debug.Log("isHittingRight, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+            }
+            // The rear half is hitting
+            if (raycasting.isHittingRightRear == true)
+            {
+                targetAngle -= 5;
+                Debug.Log("isHittingRightRear, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
+            }
+            if (raycasting.isHittingLeftRear == true)
+            {
+                targetAngle += 5;
+                Debug.Log("isHittingLeftRear, targetAngle = " + targetAngle);
+                steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1);
             }
         }
 
@@ -271,23 +336,32 @@ public class AI_Controller : MonoBehaviour
         }
 
         // Getting cars unstuck 
-        if (!(currentPoint == 0 && roundTrip == false)) 
+        if (!(currentPoint == 0 && roundTrip == false)) // Not the starting point of the race
         {
-            if (mphSpeedInt < 10 && raycasting.isHittingFront == false)
+            if (mphSpeedInt < 10 && raycasting.isHittingFront == false) // if no car ahead
             {
                 Debug.Log("Moving Cars Forward After Getting Stuck!!!");
                 accel = 2f;
                 brake = 0f;
             }
-            else if (mphSpeedInt < 10 && raycasting.isHittingFront == true)
+            if (mphSpeedInt < 10 && raycasting.isHittingFront == true) // if there is a car directly ahead blocking...
             {
-                if (raycasting.isHittingRear == false)
+                if (raycasting.isHittingRear == false) // ...and no car blocking behind
                 {
-                    Debug.Log("Moving Cars Backward After Getting Stuck!!!");
+                    Debug.Log("Moving Cars Backward After Getting Stuck With Car!!!");
                     accel = -2f;
                     brake = 0f;
                 }
             }
+            if (mphSpeedInt < 10 && raycasting.isHittingFrontHalf == true) // if there is a gameObject ahead blocking...
+            {
+                if (raycasting.isHittingRear == false) // ...and no car blocking behind
+                {
+                    Debug.Log("Moving Cars Backward After Getting Stuck With Object!!!");
+                    accel = -2f;
+                    brake = 0f;
+                }
+            } 
         }
 
         Debug.Log("drivingControl.Go(" + accel + ", " + steer + ", " + brake + ")");
