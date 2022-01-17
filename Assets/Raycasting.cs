@@ -11,6 +11,7 @@ public class Raycasting : MonoBehaviour
     public GameObject rearRotation; // Rays for rear half 
 
     // For AI_Controller to grab
+    public bool aboutToHitAhead = false;
     public bool aboutToHitLeftAhead = false; 
     public bool aboutToHitDirectlyAhead = false;
     public bool aboutToHitRightAhead = false;
@@ -27,6 +28,7 @@ public class Raycasting : MonoBehaviour
     public bool isHittingFront = false;
     public bool isHittingRight = false;
     //
+    public bool isHittingRearHalf = false;
     public bool isHittingRightRear = false;
     public bool isHittingRear = false;
     public bool isHittingLeftRear = false;
@@ -82,6 +84,7 @@ public class Raycasting : MonoBehaviour
         //Debug.DrawRay(gameObject.transform.position, -gameObject.transform.forward * 2.5f, Color.white);
 
         // For AI_Controller to grab
+        aboutToHitAhead = false;
         aboutToHitLeftAhead = false; 
         aboutToHitDirectlyAhead = false;
         aboutToHitRightAhead = false;
@@ -98,6 +101,7 @@ public class Raycasting : MonoBehaviour
         isHittingFront = false;
         isHittingRight = false;
         //
+        isHittingRearHalf = false;
         isHittingRightRear = false;
         isHittingRear = false;
         isHittingLeftRear = false;
@@ -138,6 +142,7 @@ public class Raycasting : MonoBehaviour
             //Combining my code, detecting frontal collision with another car
             if (Physics.Raycast(hittingRay, out hit, 4f))
             {
+                aboutToHitAhead = true;
                 if (hit.transform.gameObject.tag == "Car")
                 {
                     // Trying World of Zero's avoidance method - It Doesn't Work Well !!
@@ -249,6 +254,7 @@ public class Raycasting : MonoBehaviour
             //Combining my code, detecting  rear-half collision with another car
             if (Physics.Raycast(hitRearHalfRay, out hit, 1.5f))
             {
+                isHittingRearHalf = true;
                 if (hit.transform.gameObject.tag == "Car")
                 {
                     //Debug.Log(this.transform.position + " HIT " + hit.transform.position + "!!!");

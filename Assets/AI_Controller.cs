@@ -137,8 +137,13 @@ public class AI_Controller : MonoBehaviour
             {
                 case float f when yDifference > 1.5:
                     Debug.Log("the target on uphill: " + yDifference);
-                    accel = 0.7f;
+                    accel = 1.75f;
                     brake = 0f;
+                    //if (mphSpeedInt < 10) // This method does not work, not detected as getting stuck on uphill
+                    //{
+                    //    Debug.Log("Getting stuck on uphill: " + accel);
+                    //    accel = 3f; 
+                    //}
                     break;
                 case float f when yDifference < -1.5:
                     Debug.Log("the target on downhill: " + yDifference);
@@ -220,7 +225,7 @@ public class AI_Controller : MonoBehaviour
                 targetAngle += 2;
                 Debug.Log("isHittingLeftSide, targetAngle = " + targetAngle);
             }
-            // The front half is hitting
+            // A part of the front half is hitting
             if (raycasting.isHittingLeft == true)
             {
                 targetAngle += 5;
@@ -231,7 +236,7 @@ public class AI_Controller : MonoBehaviour
                 targetAngle -= 5;
                 Debug.Log("isHittingRight, targetAngle = " + targetAngle);
             }
-            // The rear half is hitting
+            // A part of the rear half is hitting
             if (raycasting.isHittingRightRear == true)
             {
                 targetAngle -= 5;
@@ -328,23 +333,44 @@ public class AI_Controller : MonoBehaviour
         }
 
         // Getting Cars Unstuck 
-        if (!(currentPoint == 0 && roundTrip == false) && mphSpeedInt < 10) // Not the starting point of the race
+        if (mphSpeedInt < 10) // hardly moving at 9mph or less
         {
-            if (raycasting.isHittingFront == false) // if no car ahead
+            if (!(currentPoint == 0 && roundTrip == false)) // The car is not at the starting point of the race
             {
-                Debug.Log("Moving Cars Forward After Getting Stuck!!!");
-                accel = 3f;
-                brake = 0f;
-            }
-            if (raycasting.isHittingFront == true || raycasting.isHittingFrontHalf == true) // if there is a car or gameObject directly ahead blocking...
-            {
-                if (raycasting.isHittingRear == false) // ...and no car blocking behind
+                if ((raycasting.isHittingFront == true || raycasting.aboutToHitAhead == true) && raycasting.isHittingRear == false) // if there is any gameObject blocking or
+                                                                                                    // about to block ahead but no gameObject blocking directly behind
                 {
-                    Debug.Log("Moving Cars Backward After Getting Stuck With Car Or Object!!!");
-                    accel = -3f;
+                    switch (targetAngle)
+                    {
+                        case float f when targetAngle < -79f:
+                            Debug.Log("targetAngle on the left: " + targetAngle);
+                            targetAngle = 80f;
+                            Debug.Log("Moving Cars Back To The Right: " + targetAngle);
+                            break;
+                        case float f when targetAngle < -39f:
+                            Debug.Log("targetAngle on the left: " + targetAngle);
+                            targetAngle = 40f;
+                            Debug.Log("Moving Cars Back To The Right: " + targetAngle);
+                            break;
+                        case float f when targetAngle > 79f:
+                            Debug.Log("targetAngle on the right: " + targetAngle);
+                            targetAngle = -80f;
+                            Debug.Log("Moving Cars Back To The Left: " + targetAngle);
+                            break;
+                        case float f when targetAngle > 39f:
+                            Debug.Log("targetAngle on the right: " + targetAngle);
+                            targetAngle = -40f;
+                            Debug.Log("Moving Cars Back To The Left: " + targetAngle);
+                            break;
+                        default:
+                            Debug.Log("targetAngle in the straight line: " + targetAngle);
+                            break;
+                    }
+                    accel = -3f; // move backward at minus 600 wheelColliders[i].motorTorque
+                    steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2.5f), -2, 2); // just for getting cars unstuck
                     brake = 0f;
-                    /* The car does not drive backward to the previous waypoints[currentPoint - 1] as intended,
-                     * instead, the car drives forward to the previous point and unable to get back on to track!!
+                    /* With the following codes, the car does not drive backward to the previous waypoints[currentPoint - 1] as intended,
+                        * instead, the car drives forward to the previous point and unable to get back on to its track!!
                     if (currentPoint != 0)
                     {
                         target = wayPoints.waypoints[currentPoint - 1].transform.position;
@@ -358,7 +384,7 @@ public class AI_Controller : MonoBehaviour
                     steer = Mathf.Clamp(targetAngle * steeringSensitivity, -2, 2); // Only for Getting Cars Unstuck am I using -2, 2 range
                     */
                 }
-            } 
+            }
         }
 
         Debug.Log("drivingControl.Go(" + accel + ", " + steer + ", " + brake + ")");
