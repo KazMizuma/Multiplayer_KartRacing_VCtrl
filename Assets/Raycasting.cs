@@ -128,7 +128,7 @@ public class Raycasting : MonoBehaviour
             Ray gettingHitRay = new Ray(this.transform.position, backwardVec3 * 3.5f); //Combining my code to detect rear end collision
             Ray hitRightRay = new Ray(this.transform.position, rightVec3 * 1.5f); // Combining my code to detect right side collision
             Ray hitLeftRay = new Ray(this.transform.position, leftVec3 * 1.5f); // Combining my code to detect left side collision
-            Ray hitFrontHalfRay = new Ray(frontRotation.transform.position, frontCubeVec3 * 1.5f);
+            Ray hitFrontHalfRay = new Ray(frontRotation.transform.position, frontCubeVec3 * 2f);
             Ray hitRearHalfRay = new Ray(rearRotation.transform.position, rearCubeVec3 * 1.5f);
 
             //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
@@ -225,7 +225,7 @@ public class Raycasting : MonoBehaviour
             }
 
             //Combining my code, detecting frontal-half collision with another car
-            if (Physics.Raycast(hitFrontHalfRay, out hit, 1.5f))
+            if (Physics.Raycast(hitFrontHalfRay, out hit, 2f))
             {
                 isHittingFrontHalf = true;
                 if (hit.transform.gameObject.tag == "Car")
@@ -322,7 +322,7 @@ public class Raycasting : MonoBehaviour
             Gizmos.DrawRay(this.transform.position, backwardVec3 * 3.5f); // Adding the rays on the back
             Gizmos.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
             Gizmos.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
-            Gizmos.DrawRay(frontRotation.transform.position, frontCubeVec3 * 1.5f); // Rays for front half
+            Gizmos.DrawRay(frontRotation.transform.position, frontCubeVec3 * 2f); // Rays for front half
             Gizmos.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
         }
     }
