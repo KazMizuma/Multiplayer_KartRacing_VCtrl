@@ -24,9 +24,9 @@ public class AI_Controller : MonoBehaviour
 
     public int mphSpeedInt; // For Raycasting to be able to access
 
-    float unStickDuration = 3f; // Needed for unstucking code
+    float unStickDuration = 5f;
     float unStickTime = 0f; // Setting the time for unstuck code according to the unStickDuration length
-    float orgTargetAngle = 0f;
+    //float orgTargetAngle = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -132,7 +132,7 @@ public class AI_Controller : MonoBehaviour
         }
 
         //Find out the next waypoint's y position to be at uphill or downhill; MY AI CODE!
-        if (/*mphSpeedInt > 9 && */currentPoint != 0) //avoiding subtracting -1 from currentPoint[0]
+        if (currentPoint != 0) //avoiding subtracting -1 from currentPoint[0]
         {
             float nextWaypoint = wayPoints.waypoints[currentPoint].transform.position.y;
             float currentWaypoint = wayPoints.waypoints[currentPoint - 1].transform.position.y;
@@ -143,7 +143,7 @@ public class AI_Controller : MonoBehaviour
                     Debug.Log("the target on uphill: " + yDifference);
                     accel = 1.75f;
                     brake = 0f;
-                    //if (mphSpeedInt < 10) // This method does not work, not detected as getting stuck on uphill
+                    //if (mphSpeedInt < 20) // It does not seem to be detected as getting stuck on uphill
                     //{
                     //    Debug.Log("Getting stuck on uphill: " + accel);
                     //    accel = 3f; 
@@ -178,6 +178,7 @@ public class AI_Controller : MonoBehaviour
         isHittingFront = false;
         isHittingRight = false;
         //
+        isHittingRearHalf = false;
         isHittingRightRear = false;
         isHittingRear = false;
         isHittingLeftRear = false;
@@ -347,91 +348,94 @@ public class AI_Controller : MonoBehaviour
                 if (raycasting.isHittingFrontHalf == true && raycasting.isHittingRear == false) // if any gameObject blocking front half but none directly behind
                 /*if ((raycasting.isHittingFrontHalf == true || mphSpeedInt < 1) && (raycasting.isHittingRear == false || raycasting.isHittingRearHalf == false))*/ // This one doesn't seem to work well!!
                 {
-                    orgTargetAngle = targetAngle; // saving the original targetAngle value
-                    switch (targetAngle)
-                    {
-                        case float f when targetAngle < -79f:
-                            Debug.Log("targetAngle on the left: " + targetAngle);
-                            targetAngle += 60f;
-                            Debug.Log("Moving Cars Back To The Right: " + targetAngle);
-                            break;
-                        case float f when targetAngle < -39f:
-                            Debug.Log("targetAngle on the left: " + targetAngle);
-                            targetAngle += 40f;
-                            Debug.Log("Moving Cars Back To The Right: " + targetAngle);
-                            break;
-                        case float f when targetAngle > 79f:
-                            Debug.Log("targetAngle on the right: " + targetAngle);
-                            targetAngle -= 60f;
-                            Debug.Log("Moving Cars Back To The Left: " + targetAngle);
-                            break;
-                        case float f when targetAngle > 39f:
-                            Debug.Log("targetAngle on the right: " + targetAngle);
-                            targetAngle -= 40f;
-                            Debug.Log("Moving Cars Back To The Left: " + targetAngle);
-                            break;
-                        default:
-                            Debug.Log("targetAngle in close to straight line: " + targetAngle);
-                            if (targetAngle < 0) // targetAngle slightly on my left
-                            {
-                                targetAngle -= 60f;
-                            }
-                            else
-                            {
-                                targetAngle += 60f; // assuming targetAngle slightly on my right
-                            }
-                            Debug.Log("targetAngle +/- 60: " + targetAngle);
-                            break;
-                    }
+                    //orgTargetAngle = targetAngle; // saving the original targetAngle value
 
-                    unStickTime = Time.time + unStickDuration; // Setting the time to do unstucking according to the unStickDuration length
-                    if (Time.time < unStickTime && (raycasting.aboutToHitAhead == true || raycasting.isHittingFrontHalf == true)) // if the time hasn't reached 
-                        // and while the car is about to hit or is hitting any gameObject front, back up!
+                    //switch (targetAngle) // Backing up with extreme angle depending on targetAngle location
+                    //{
+                    //    case float f when targetAngle < -79f:
+                    //        Debug.Log("targetAngle on the left: " + targetAngle);
+                    //        targetAngle += 60f;
+                    //        Debug.Log("Moving Cars Back To The Right: " + targetAngle);
+                    //        break;
+                    //    case float f when targetAngle < -39f:
+                    //        Debug.Log("targetAngle on the left: " + targetAngle);
+                    //        targetAngle += 40f;
+                    //        Debug.Log("Moving Cars Back To The Right: " + targetAngle);
+                    //        break;
+                    //    case float f when targetAngle > 79f:
+                    //        Debug.Log("targetAngle on the right: " + targetAngle);
+                    //        targetAngle -= 60f;
+                    //        Debug.Log("Moving Cars Back To The Left: " + targetAngle);
+                    //        break;
+                    //    case float f when targetAngle > 39f:
+                    //        Debug.Log("targetAngle on the right: " + targetAngle);
+                    //        targetAngle -= 40f;
+                    //        Debug.Log("Moving Cars Back To The Left: " + targetAngle);
+                    //        break;
+                    //    default:
+                    //        Debug.Log("targetAngle in close to straight line: " + targetAngle);
+                    //        if (targetAngle < 0) // targetAngle slightly on my left
+                    //        {
+                    //            targetAngle -= 60f;
+                    //        }
+                    //        else
+                    //        {
+                    //            targetAngle += 60f; // assuming targetAngle slightly on my right
+                    //        }
+                    //        Debug.Log("targetAngle +/- 60: " + targetAngle);
+                    //        break;
+                    //}
+
+                    unStickTime = Time.time + unStickDuration; // Setting the time to do unstuck codes for unStickDuration
+                    if (Time.time < unStickTime ) // if the time hasn't reached
                     {
-                        accel = -4f; // move backward at minus 600 wheelColliders[i].motorTorque
-                        steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2); // changing values just for getting cars unstuck
+                        if (currentPoint != 0)
+                        {
+                            target = wayPoints.waypoints[currentPoint - 1].transform.position;
+                        }
+                        else if (currentPoint == 0)
+                        {
+                            target = wayPoints.waypoints[currentPoint].transform.position;
+                        }
+                        localTarget = drivingControl.rb.gameObject.transform.InverseTransformPoint(target);
+                        targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
+                        steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2); // Only for Getting Cars Unstuck am I using -2, 2 range
                         brake = 0f;
+                        accel = -4f; // Drive backward at minus 800 wheelColliders[i].motorTorque
                         Debug.Log("drivingControl.Go Backward(" + accel + ", " + steer + ", " + brake + ") " + "Time: " + unStickTime);
                         drivingControl.Go(accel, steer, brake);
                     }
-
-                    /* With the following codes, the car does not drive backward to the previous waypoints[currentPoint - 1] as intended,
-                        * instead, the car drives forward to the previous point and unable to get back on to its track!!
-                    if (currentPoint != 0)
-                    {
-                        target = wayPoints.waypoints[currentPoint - 1].transform.position;
-                    }
-                    else if (currentPoint == 0)
-                    {
-                        target = wayPoints.waypoints[currentPoint].transform.position;
-                    }
+                    target = wayPoints.waypoints[currentPoint].transform.position;
+                    /* THE FOLLOWING LINES WILL MESS YOU UP!!!
                     localTarget = drivingControl.rb.gameObject.transform.InverseTransformPoint(target);
                     targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
-                    steer = Mathf.Clamp(targetAngle * steeringSensitivity, -2, 2); // Only for Getting Cars Unstuck am I using -2, 2 range
-                    */
+                    steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2);
+                    brake = 0f;
+                    accel = 3f; // move backward at minus 600 wheelColliders[i].motorTorque
+                    Debug.Log("drivingControl.Go Forward(" + accel + ", " + steer + ", " + brake + ") "); */
                 }
 
-                // Avoiding frontal collisions after getting stuck, driving forward after backing up
-                unStickTime += unStickDuration; // Adding additional time duration for driving forward task
-                if (Time.time < unStickTime && /* (raycasting.aboutToHitAhead == false || */ raycasting.isHittingFrontHalf == false)//) // if unStickTime has not
-                    // reached and no gameObject is at the front, drive forward!
-                {
-                    targetAngle = orgTargetAngle; // 
-                    Debug.Log("aboutToHit or Hitting Ahead == true, targetAngle = " + targetAngle);
-                    //if (targetAngle < 0) // targetAngle slightly on my left
-                    //{
-                    //    targetAngle -= 150f;
-                    //}
-                    //else
-                    //{
-                    //    targetAngle += 150f; // assuming targetAngle slightly on my right
-                    //}
-                    accel = 3f; // move forward at 600 wheelColliders[i].motorTorque
-                    steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2); // changing values just for getting cars unstuck
-                    brake = 0f;
-                    Debug.Log("drivingControl.Go Forward(" + accel + ", " + steer + ", " + brake + ")" + "Time: " + unStickTime);
-                    drivingControl.Go(accel, steer, brake);
-                }
+                // Driving forward with extreme targetAngle after getting stuck & backing up 
+                // unStickTime += unStickDuration; // Adding additional time duration for driving forward task
+                // if (Time.time < unStickTime /* && (raycasting.aboutToHitAhead == false || raycasting.isHittingFrontHalf == false) */ )
+                // // if unStickTime has not reached and no gameObject is at the front, drive forward!
+                // {
+                //     targetAngle = orgTargetAngle;
+                //     //Debug.Log("aboutToHit or Hitting Ahead == true, targetAngle = " + targetAngle);
+                //     //if (targetAngle < 0) // targetAngle slightly on my left
+                //     //{
+                //     //    targetAngle -= 150f;
+                //     //}
+                //     //else
+                //     //{
+                //     //    targetAngle += 150f; // assuming targetAngle slightly on my right
+                //     //}
+                //     accel = 3f; // move forward at 600 wheelColliders[i].motorTorque
+                //     steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2); // changing values just for getting cars unstuck
+                //     brake = 0f;
+                //     Debug.Log("drivingControl.Go Forward(" + accel + ", " + steer + ", " + brake + ")" + "Time: " + unStickTime);
+                //     drivingControl.Go(accel, steer, brake);
+                // }
             }
         }
         Debug.Log("drivingControl.Go(" + accel + ", " + steer + ", " + brake + ")");
