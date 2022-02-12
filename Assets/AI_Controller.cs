@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// When this script is enabled and playerController is disabled in the CarParent Inspector, this script controls the car(s)
+
 public class AI_Controller : MonoBehaviour
 {
     public wayPoints wayPoints;
@@ -39,6 +41,11 @@ public class AI_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!RaceMonitor.racing) // Checking ReceMonitor's static bool "racing" to see if its coroutine PlayCountDown() has finished running or not
+        {
+            return;
+        }
+
         Vector3 localTarget = drivingControl.rb.gameObject.transform.InverseTransformPoint(target);
         float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
 
@@ -447,7 +454,7 @@ public class AI_Controller : MonoBehaviour
                     //}
 
                     unStickTime = Time.time + unStickDuration; // Setting the time to do unstuck codes for unStickDuration
-                    if (Time.time < unStickTime) // if unStickTime hasn't reached Time.time yet
+                    if (Time.time < unStickTime) // if unStickTime hasn't reached Time.time yet, drive backward toward previous waypoint at minus 800 wheelColliders[i].motorTorque
                     {
                         if (currentPoint != 0)
                         {
@@ -461,7 +468,7 @@ public class AI_Controller : MonoBehaviour
                         targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
                         steer = Mathf.Clamp(targetAngle * (steeringSensitivity), -1, 1); 
                         brake = 0f;
-                        accel = -4f; // Drive backward at minus 800 wheelColliders[i].motorTorque
+                        accel = -4f; 
                         Debug.Log("drivingControl.Go Backward(" + accel + ", " + steer + ", " + brake + ")");
                         Debug.Log("Being Stuck == " + (Time.time < unStickTime));
                         drivingControl.Go(accel, steer, brake);
@@ -476,28 +483,27 @@ public class AI_Controller : MonoBehaviour
                     Debug.Log("drivingControl.Go Forward(" + accel + ", " + steer + ", " + brake + ") "); */
                 }
 
-                // Driving forward with extreme targetAngle after getting stuck & backing up 
-                // unStickTime += unStickDuration; // Adding additional time duration for driving forward task
-                // if (Time.time < unStickTime /* && (raycasting.aboutToHitAhead == false || raycasting.isHittingFrontHalf == false) */ )
-                // // If unStickTime has not reached and no gameObject is at the front, drive forward!
-                // {
-                //     targetAngle = orgTargetAngle;
-                //     //Debug.Log("aboutToHit or Hitting Ahead == true, targetAngle = " + targetAngle);
-                //     //if (targetAngle < 0) // targetAngle slightly on my left
-                //     //{
-                //     //    targetAngle -= 150f;
-                //     //}
-                //     //else
-                //     //{
-                //     //    targetAngle += 150f; // assuming targetAngle slightly on my right
-                //     //}
-                //     accel = 3f; // move forward at 600 wheelColliders[i].motorTorque
-                //     steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2); // changing values just for getting cars unstuck
-                //     brake = 0f;
-                //     Debug.Log("drivingControl.Go Forward(" + accel + ", " + steer + ", " + brake + ")");
-                //     Debug.Log("Being Stuck == " + (Time.time < unStickTime));
-                //     drivingControl.Go(accel, steer, brake);
-                // }
+                // DRIVING FORWARD CODE GOES HERE AFTER GETTING STUCK & HAS BACKED UP, BUT DOES NOT WORK ACCORDING TO CODES!!
+                //unStickTime += unStickDuration; // Adding additional time duration for driving forward task
+                //if (Time.time < unStickTime /* && (raycasting.aboutToHitAhead == false || raycasting.isHittingFrontHalf == false) */ )
+                //{
+                //    targetAngle = orgTargetAngle;
+                //    //Debug.Log("aboutToHit or Hitting Ahead == true, targetAngle = " + targetAngle);
+                //    //if (targetAngle < 0) // targetAngle slightly on my left
+                //    //{
+                //    //    targetAngle -= 150f; // EXTREME ANGLE METHOD DOESN'T WORK, MISSES NEXT WAYPOINT!
+                //    //}
+                //    //else // assuming targetAngle slightly on my right
+                //    //{
+                //    //    targetAngle += 150f; 
+                //    //}
+                //    accel = 3f; // move forward at 600 wheelColliders[i].motorTorque
+                //    steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2); // changing values just for getting cars unstuck
+                //    brake = 0f;
+                //    Debug.Log("drivingControl.Go Forward(" + accel + ", " + steer + ", " + brake + ")");
+                //    Debug.Log("Being Stuck == " + (Time.time < unStickTime));
+                //    drivingControl.Go(accel, steer, brake);
+                //}
             }
         }
         Debug.Log("drivingControl.Go(" + accel + ", " + steer + ", " + brake + ")");
