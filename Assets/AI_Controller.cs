@@ -26,7 +26,7 @@ public class AI_Controller : MonoBehaviour
 
     public int mphSpeedInt; // For Raycasting to be able to access
 
-    public float unStickDuration = 5f;
+    public float unStickDuration = 4f;
     public float unStickTime = 0f; // Setting the time for unstuck code according to the unStickDuration length
     //float orgTargetAngle = 0f;
 
@@ -466,7 +466,7 @@ public class AI_Controller : MonoBehaviour
                         }
                         localTarget = drivingControl.rb.gameObject.transform.InverseTransformPoint(target);
                         targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
-                        steer = Mathf.Clamp(targetAngle * (steeringSensitivity), -1, 1); 
+                        steer = Mathf.Clamp(targetAngle * steeringSensitivity, -1, 1); // (targetAngle * -1) to try directing towards the previous waypoint while driving backward, SAME RESULT AS * +1
                         brake = 0f;
                         accel = -4f; 
                         Debug.Log("drivingControl.Go Backward(" + accel + ", " + steer + ", " + brake + ")");
