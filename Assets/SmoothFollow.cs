@@ -29,7 +29,7 @@ public class SmoothFollow : MonoBehaviour
 
         if (firstPersonPOV == 1)
         {
-            transform.position = target.position - target.forward * 0.85f + target.up * 1.25f;
+            transform.position = target.position - target.forward * 0.85f + target.up * 1.25f; // target.forward * 0.85f + target.up * 1.25f, the best position for first person POV.
             transform.LookAt(target.position + target.forward * 3);
         }
         else

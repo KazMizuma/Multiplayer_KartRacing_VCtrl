@@ -35,8 +35,8 @@ public class drivingControl : MonoBehaviour
         {
             tireSkid[i] = Instantiate(tireSkidPrefab);
             tireSkid[i].parent = wheelColliders[i].transform;
-            Debug.Log("wheelColliders[i].transform " + wheelColliders[i].transform);
-            Debug.Log("wheelColliders[i].gameObject " + wheelColliders[i].gameObject);
+            //Debug.Log("wheelColliders[i].transform " + wheelColliders[i].transform);
+            //Debug.Log("wheelColliders[i].gameObject " + wheelColliders[i].gameObject);
             tireSkid[i].localRotation = Quaternion.Euler(90, 0, 0);
             tireSkid[i].localPosition = -Vector3.up * wheelColliders[i].radius;
         }
@@ -46,10 +46,10 @@ public class drivingControl : MonoBehaviour
     {
         if (tireSkid[i] == null) return;
         Transform holder = tireSkid[i];
-        Debug.Log("tireSkid[i] or holder " + tireSkid[i]);
+        //Debug.Log("tireSkid[i] or holder " + tireSkid[i]);
         tireSkid[i] = null;
         holder.parent = null;
-        Debug.Log("holder.gameObject " + holder.gameObject);
+        //Debug.Log("holder.gameObject " + holder.gameObject);
         holder.localRotation = Quaternion.Euler(90, 0, 0);
         Destroy(holder.gameObject, 15);
     }
@@ -156,7 +156,7 @@ public class drivingControl : MonoBehaviour
             }
             else
             {
-                Debug.Log("wheelColliders[" + i + "] " + wheelColliders[i] + " else clause");
+                Debug.Log(this.transform.gameObject.name + " wheelColliders[" + i + "] " + wheelColliders[i] + " else clause");
             }
             Vector3 Vec3pos;
             Quaternion quat;
@@ -166,8 +166,8 @@ public class drivingControl : MonoBehaviour
             //Debug.Log(wheelColliders[i] + " wheelColliders[i]");
         }
 
-        Debug.Log("wheelColliders[i].motorTorque: " + thrustTorque);
-        Debug.Log("wheelColliders[i].brakeTorque: " + brake);
+        Debug.Log(this.transform.gameObject.name + " wheelColliders[i].motorTorque: " + thrustTorque);
+        Debug.Log(this.transform.gameObject.name + " wheelColliders[i].brakeTorque: " + brake);
 
         if (brake != 0)
         {
