@@ -29,6 +29,8 @@ public class drivingControl : MonoBehaviour
     float RPM;
     float currGearPerc;
 
+    public GameObject driverNamePrefab;
+
     public void startTireSkid(int i)
     {
         if (tireSkid[i] == null)
@@ -54,6 +56,12 @@ public class drivingControl : MonoBehaviour
         Destroy(holder.gameObject, 15);
     }
 
+    // Awake is called when the script reference is being loaded
+    private void Awake()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +74,10 @@ public class drivingControl : MonoBehaviour
         }
 
         brakeLight.SetActive(false);
+
+        GameObject driverName = Instantiate<GameObject>(driverNamePrefab);
+        driverName.GetComponent<driverNameUI>().targetCar = rb.gameObject.transform;
+        driverName.GetComponent<driverNameUI>().driverName.text = rb.transform.gameObject.name;
     }
 
     public void calculateEngineSound()

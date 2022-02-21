@@ -28,7 +28,7 @@ public class AI_Controller : MonoBehaviour
 
     public int mphSpeedInt; // For Raycasting to be able to access
 
-    public float unStickDuration = 4f;
+    public float unStickDuration = 2f;
     public float unStickTime = 0f; // Setting the time for unstuck code according to the unStickDuration length
     //float orgTargetAngle = 0f;
 
@@ -496,13 +496,14 @@ public class AI_Controller : MonoBehaviour
                         drivingControl.Go(accel, steer, brake);
                     }
                     target = wayPoints.waypoints[currentPoint].transform.position;
-                    /* THE FOLLOWING LINES WILL MESS YOU UP!!!
-                    localTarget = drivingControl.rb.gameObject.transform.InverseTransformPoint(target);
-                    targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
-                    steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2);
-                    brake = 0f;
-                    accel = 3f; // drive forward at 600 wheelColliders[i].motorTorque
-                    Debug.Log("drivingControl.Go Forward(" + accel + ", " + steer + ", " + brake + ") "); */
+
+                    //ANY OF THE FOLLOWING LINES PLACING HERE WILL MESS YOU UP!!!
+                    //localTarget = drivingControl.rb.gameObject.transform.InverseTransformPoint(target);
+                    //targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
+                    //steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2);
+                    //accel = 3f; // drive forward at 600 wheelColliders[i].motorTorque after driving backward
+                    //brake = 0f;
+                    //ANY OF THE ABOVE LINES PLACING HERE WILL MESS YOU UP!!!
                 }
 
                 // DRIVING FORWARD CODE GOES HERE AFTER GETTING STUCK & HAS BACKED UP, BUT DOES NOT WORK ACCORDING TO CODES!!

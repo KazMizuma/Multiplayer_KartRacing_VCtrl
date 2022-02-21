@@ -11,13 +11,22 @@ public class SmoothFollow : MonoBehaviour
     public float heightDamping = 4.0f;
     public float rotationDamping = 2.0f;
 
-    int firstPersonPOV = -1; // when +1 first player, -1 third player pov
+    int firstPersonOnOff = -1; // when +1 first player, -1 third player pov
    
     void Start()
     {
-        if (PlayerPrefs.HasKey("firstPersonPOV"))
+        if (PlayerPrefs.HasKey("firstPersonSwitch"))
         {
-            firstPersonPOV = PlayerPrefs.GetInt("firstPersonPOV");
+            firstPersonOnOff = PlayerPrefs.GetInt("firstPersonSwitch");
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            firstPersonOnOff = firstPersonOnOff * -1;
+            PlayerPrefs.SetInt("firstPersonSwitch", firstPersonOnOff);
         }
     }
 
@@ -27,7 +36,7 @@ public class SmoothFollow : MonoBehaviour
         if (target == null)
             return;
 
-        if (firstPersonPOV == 1)
+        if (firstPersonOnOff == 1)
         {
             transform.position = target.position - target.forward * 0.85f + target.up * 1.25f; // target.forward * 0.85f + target.up * 1.25f, the best position for first person POV.
             transform.LookAt(target.position + target.forward * 3);
@@ -53,15 +62,6 @@ public class SmoothFollow : MonoBehaviour
                                     transform.position.z);
 
             transform.LookAt(target);
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            firstPersonPOV = firstPersonPOV * -1;
-            PlayerPrefs.SetInt("firstPersonPOV", firstPersonPOV);
         }
     }
 }

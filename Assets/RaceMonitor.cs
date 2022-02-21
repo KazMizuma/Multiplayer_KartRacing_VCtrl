@@ -20,7 +20,7 @@ public class RaceMonitor : MonoBehaviour
 
     IEnumerator PlayCountDown()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         foreach (GameObject gameObj in countDownItems)
         {
             gameObj.SetActive(true);
