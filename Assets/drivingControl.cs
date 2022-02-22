@@ -30,6 +30,7 @@ public class drivingControl : MonoBehaviour
     float currGearPerc;
 
     public GameObject driverNamePrefab;
+    public Renderer carMesh;
 
     public void startTireSkid(int i)
     {
@@ -77,7 +78,8 @@ public class drivingControl : MonoBehaviour
 
         GameObject driverName = Instantiate<GameObject>(driverNamePrefab);
         driverName.GetComponent<driverNameUI>().targetCar = rb.gameObject.transform;
-        driverName.GetComponent<driverNameUI>().driverName.text = rb.transform.gameObject.name;
+        driverName.GetComponent<driverNameUI>().driverName.text = rb.transform.parent.name;
+        driverName.GetComponent<driverNameUI>().carRenderer = carMesh;
     }
 
     public void calculateEngineSound()
