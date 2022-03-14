@@ -10,6 +10,11 @@ public class driverNameUI : MonoBehaviour
     CanvasGroup canvasGroup;
     public Renderer carRenderer;
 
+    //private void OnBecameVisible()
+    //{
+    //    enabled = true;
+    //}
+
     // Awake is called when the script instanced is being loaded
     private void Awake()
     {
@@ -28,6 +33,12 @@ public class driverNameUI : MonoBehaviour
         // if (Camera.main.fieldOfView(Canvas)) 
         // https://answers.unity.com/questions/172721/render-only-what-the-camera-sees.html
         // OnBecameVisible 
+
         this.transform.position = Camera.main.WorldToScreenPoint(targetCar.position);
+
+        //if (carRenderer.isVisible)
+        //{
+
+        //}
     }
 }
