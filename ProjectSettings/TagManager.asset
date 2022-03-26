@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Car
   - GameScreen
+  - Purple
+  - Green
+  - Yellow
+  - Red
   layers:
   - Default
   - TransparentFX

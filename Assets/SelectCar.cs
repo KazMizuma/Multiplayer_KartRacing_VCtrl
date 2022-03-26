@@ -6,11 +6,11 @@ using UnityEngine.UI; //added 3/22/22
 public class SelectCar : MonoBehaviour
 {
     public GameObject[] cars;
-    int currentCar;
+    int currentCar; 
     // Start is called before the first frame update
-    void Start()
+    void Start() 
     {
-        if (PlayerPrefs.HasKey("CarSelection")) //added 3/22/22
+        if (PlayerPrefs.HasKey("CarSelection"))
         {
             currentCar = PlayerPrefs.GetInt("CarSelection");
         }
@@ -25,7 +25,7 @@ public class SelectCar : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {

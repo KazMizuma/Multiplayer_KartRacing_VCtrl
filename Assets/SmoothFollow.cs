@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class SmoothFollow : MonoBehaviour
 {
     Transform[] target;
-    public float distance = 8.0f;
-    public float height = 1.5f;
-    public float heightOffset = 1.0f;
+    public float distance = 4.0f;
+    public float height = 2.0f;
+    public float heightOffset = 0f;
     public float heightDamping = 4.0f;
     public float rotationDamping = 2.0f;
     public RawImage rearCamView;
-    int index = 0;
+    int index = 0; 
 
     int FP = -1;
 
@@ -21,6 +21,35 @@ public class SmoothFollow : MonoBehaviour
         if (PlayerPrefs.HasKey("FP"))
         {
             FP = PlayerPrefs.GetInt("FP");
+        }
+
+        //if (PlayerPrefs.HasKey("TP")) // 3/25 added for Target Player PlayerPrefs
+        //{
+        //    index = PlayerPrefs.GetInt("TP");
+        //}
+
+        switch (PlayerPrefs.GetInt("CarSelection"))
+        {
+            case 0: // Red
+                index = 0;
+                Debug.Log("SmoothFollow index " + index);
+                break;
+            case 1: // Yellow
+                index = 4;
+                Debug.Log("SmoothFollow index " + index);
+                break;
+            case 2: // Purple
+                index = 3;
+                Debug.Log("SmoothFollow index " + index);
+                break;
+            case 3: // Green
+                index = 2;
+                Debug.Log("SmoothFollow index " + index);
+                break;
+            default:
+                index = 0;
+                Debug.Log("SmoothFollow index " + index);
+                break;
         }
     }
 
@@ -33,6 +62,7 @@ public class SmoothFollow : MonoBehaviour
             for (int i = 0; i < cars.Length; i++)
             {
                 target[i] = cars[i].transform;
+                Debug.Log(cars[i].name + " " + i);
             }
             target[index].Find("RearViewCam").gameObject.GetComponent<Camera>().targetTexture = 
                                                             (rearCamView.texture as RenderTexture);
@@ -79,6 +109,7 @@ public class SmoothFollow : MonoBehaviour
         {
             target[index].Find("RearViewCam").gameObject.GetComponent<Camera>().targetTexture = null;
             index++;
+            //PlayerPrefs.SetInt("TP", index); // 3/25 added for Target Player PlayerPrefs
             if (index > target.Length - 1) index = 0;
             target[index].Find("RearViewCam").gameObject.GetComponent<Camera>().targetTexture = 
                                                               (rearCamView.texture as RenderTexture);

@@ -4469,7 +4469,7 @@ GameObject:
   - component: {fileID: 1925375763}
   m_Layer: 0
   m_Name: CarRed
-  m_TagString: Untagged
+  m_TagString: Red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15145,7 +15145,7 @@ GameObject:
   - component: {fileID: 3484235102527746315}
   m_Layer: 0
   m_Name: CarGreen
-  m_TagString: Untagged
+  m_TagString: Green
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15655,7 +15655,7 @@ GameObject:
   - component: {fileID: 3484235103358636580}
   m_Layer: 0
   m_Name: CarPurple
-  m_TagString: Untagged
+  m_TagString: Purple
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15674,7 +15674,7 @@ GameObject:
   - component: {fileID: 3484235103501753498}
   m_Layer: 0
   m_Name: CarYellow
-  m_TagString: Untagged
+  m_TagString: Yellow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
