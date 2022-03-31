@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Attached to the parent of the car, not to the rigid body
 public class drivingControl : MonoBehaviour
 {
     public WheelCollider[] wheelColliders;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Attached to the rigid body of the car, not to the parent
 public class Raycasting : MonoBehaviour
 {
     //public float targetVelocity = 10.0f; // World of Zero's, I'm not using it

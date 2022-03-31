@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; //added 3/22/22
 
+// Attached to Camera (not Main Camera) under MainMenu scene
 public class SelectCar : MonoBehaviour
 {
     public GameObject[] cars;

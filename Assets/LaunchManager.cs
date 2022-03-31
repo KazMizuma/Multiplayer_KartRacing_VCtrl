@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// Attached to LaunchManager gameobject under MainMenu scene
 public class LaunchManager : MonoBehaviour
 {
     public InputField playerName;

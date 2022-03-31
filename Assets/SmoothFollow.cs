@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Attached to Main Camera
 public class SmoothFollow : MonoBehaviour
 {
     Transform[] target;

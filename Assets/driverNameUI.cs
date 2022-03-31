@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Attached to DriverName_text prefab object which aren't put under Hierarchy but in Assets. The prefab gets instantiated in drivingControl.cs and populates
+// the following public variables
 public class driverNameUI : MonoBehaviour
 {
     public Text driverName;

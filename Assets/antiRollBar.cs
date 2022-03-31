@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Attached to the rigid body of the car, not to the parent
 public class antiRollBar : MonoBehaviour
 {
     public float antiRoll = 5000.00f;

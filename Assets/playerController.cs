@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// When this script is enabled and AI_Controller is disabled in the CarParent Inspector, a user takes control of the car
+// Attached to the parent of the car, not to the rigid body
+// When this script is enabled and AI_Controller is disabled on the CarParent in the Inspector, a user takes control of the car
 
 public class playerController : MonoBehaviour
 {

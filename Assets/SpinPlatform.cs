@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Attached to each Choice# gameobject under MainMenu scene
 public class SpinPlatform : MonoBehaviour
 {
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Attached to GameScreen Canvas Group under Canvas
 public class GameScreen : MonoBehaviour
 {
     public GameObject miniMap;

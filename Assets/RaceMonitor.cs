@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Attached to RaceMonitor gameobject
 public class RaceMonitor : MonoBehaviour
 {
     public GameObject[] countDownItems;

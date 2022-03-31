@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Attached to Waypoints gameobject under Waypoint gameobject
 public class wayPoints : MonoBehaviour
 {
     public GameObject[] waypoints;
