@@ -10,6 +10,8 @@ TagManager:
   - Green
   - Yellow
   - Red
+  - Even
+  - Odd
   layers:
   - Default
   - TransparentFX
