@@ -4557,6 +4557,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints: {fileID: 1138865700}
   nextWaypointName: 
+  wayPointsOdd: {fileID: 0}
+  nextWaypointNameOdd: 
   steeringSensitivity: 0.01
   publicAccel: 0.25
   publicBrake: 0.05
@@ -9966,6 +9968,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints: {fileID: 1138865700}
   nextWaypointName: 
+  wayPointsOdd: {fileID: 0}
+  nextWaypointNameOdd: 
   steeringSensitivity: 0.01
   publicAccel: 0.25
   publicBrake: 0.05
@@ -15125,6 +15129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints: {fileID: 1138865700}
   nextWaypointName: 
+  wayPointsOdd: {fileID: 0}
+  nextWaypointNameOdd: 
   steeringSensitivity: 0.01
   publicAccel: 0.25
   publicBrake: 0.05
@@ -15566,6 +15572,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints: {fileID: 1138865700}
   nextWaypointName: 
+  wayPointsOdd: {fileID: 0}
+  nextWaypointNameOdd: 
   steeringSensitivity: 0.01
   publicAccel: 0.25
   publicBrake: 0.05
@@ -15750,6 +15758,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints: {fileID: 1138865700}
   nextWaypointName: 
+  wayPointsOdd: {fileID: 0}
+  nextWaypointNameOdd: 
   steeringSensitivity: 0.01
   publicAccel: 0.25
   publicBrake: 0.05
@@ -18802,6 +18812,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints: {fileID: 1138865700}
   nextWaypointName: 
+  wayPointsOdd: {fileID: 0}
+  nextWaypointNameOdd: 
   steeringSensitivity: 0.01
   publicAccel: 0.25
   publicBrake: 0.05
@@ -22217,6 +22229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints: {fileID: 1138865700}
   nextWaypointName: 
+  wayPointsOdd: {fileID: 0}
+  nextWaypointNameOdd: 
   steeringSensitivity: 0.01
   publicAccel: 0.25
   publicBrake: 0.05
@@ -29785,6 +29799,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints: {fileID: 1138865700}
   nextWaypointName: 
+  wayPointsOdd: {fileID: 0}
+  nextWaypointNameOdd: 
   steeringSensitivity: 0.01
   publicAccel: 0.25
   publicBrake: 0.05
@@ -30145,7 +30161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 559320333237804814}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.44, z: 0.14}
+  m_LocalPosition: {x: 0, y: 0.44, z: 0.033}
   m_LocalScale: {x: 100, y: 43.127617, z: 166.37643}
   m_Children: []
   m_Father: {fileID: 3484235102522744927}
@@ -30968,7 +30984,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 668666608326078896}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.44, z: 0.14}
+  m_LocalPosition: {x: 0, y: 0.44, z: 0.04}
   m_LocalScale: {x: 100, y: 43.127617, z: 166.37643}
   m_Children: []
   m_Father: {fileID: 4530325458451599073}
