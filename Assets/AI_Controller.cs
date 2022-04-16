@@ -296,7 +296,7 @@ public class AI_Controller : MonoBehaviour
                 // DO NOT PUT ANY WAYPOINT RELATED CODE / DEBUG ABOVE!! IT'LL MESS THINGS UP!!
 
                 Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPointsOdd.waypoints[currentPointOdd].name);
-                nextWaypointName = wayPointsOdd.waypoints[currentPointOdd].name; // For debug purpose only
+                nextWaypointNameOdd = wayPointsOdd.waypoints[currentPointOdd].name; // For debug purpose only
             }
 
             // Getting Cars Unstuck 
