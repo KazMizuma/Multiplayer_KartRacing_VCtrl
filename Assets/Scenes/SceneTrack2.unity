@@ -6803,7 +6803,7 @@ GameObject:
   - component: {fileID: 1925375763}
   m_Layer: 0
   m_Name: CarRed
-  m_TagString: Red
+  m_TagString: Even
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13347,7 +13347,7 @@ GameObject:
   - component: {fileID: 2579285574360422797}
   m_Layer: 0
   m_Name: CarGreen (1)
-  m_TagString: Untagged
+  m_TagString: Even
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18451,7 +18451,7 @@ GameObject:
   - component: {fileID: 3484235102527746315}
   m_Layer: 0
   m_Name: CarGreen
-  m_TagString: Green
+  m_TagString: Even
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18963,7 +18963,7 @@ GameObject:
   - component: {fileID: 3484235103358636580}
   m_Layer: 0
   m_Name: CarPurple
-  m_TagString: Purple
+  m_TagString: Even
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18982,7 +18982,7 @@ GameObject:
   - component: {fileID: 3484235103501753498}
   m_Layer: 0
   m_Name: CarYellow
-  m_TagString: Yellow
+  m_TagString: Even
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22203,7 +22203,7 @@ GameObject:
   - component: {fileID: 4530325457413943844}
   m_Layer: 0
   m_Name: CarYellow (1)
-  m_TagString: Untagged
+  m_TagString: Even
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25441,7 +25441,7 @@ GameObject:
   - component: {fileID: 4963709714180013723}
   m_Layer: 0
   m_Name: CarPurple (1)
-  m_TagString: Untagged
+  m_TagString: Even
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33011,7 +33011,7 @@ GameObject:
   - component: {fileID: 7802857026998190975}
   m_Layer: 0
   m_Name: CarRed (1)
-  m_TagString: Untagged
+  m_TagString: Even
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

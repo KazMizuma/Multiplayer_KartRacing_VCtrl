@@ -11,12 +11,13 @@ public class RaceMonitor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (GameObject gameObj in countDownItems)
-        {
-            gameObj.SetActive(false);
-        }
+        //foreach (GameObject gameObj in countDownItems)
+        //{
+        //    gameObj.SetActive(false);
+        //}
 
-        StartCoroutine(PlayCountDown());
+        //StartCoroutine(PlayCountDown());
+        racing = true;
     }
 
     IEnumerator PlayCountDown()

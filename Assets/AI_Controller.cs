@@ -13,6 +13,9 @@ public class AI_Controller : MonoBehaviour
     public wayPoints wayPointsOdd; //two-way traffic test codes 4/10/22
     public string nextWaypointNameOdd; // For debug purpose only
 
+    public wayPoints wayPointsTrfc; //traffic control test codes 5/01/22
+    public string nextWaypointNameTrfc; // For debug purpose only
+
     drivingControl drivingControl;
     Raycasting raycasting; //Accessing Raycasting script to control collisions
     public float steeringSensitivity = 0.01f;
@@ -21,6 +24,8 @@ public class AI_Controller : MonoBehaviour
     int currentPoint = 0;
     Vector3 targetOdd; //two-way traffic test codes 4/10/22
     int currentPointOdd = 0;
+    Vector3 targetTrfc; //traffic control test codes 5/01/22
+    int currentPointTrfc = 0;
 
     bool roundTrip = false;
 
@@ -46,28 +51,24 @@ public class AI_Controller : MonoBehaviour
         drivingControl = this.GetComponent<drivingControl>();
         raycasting = this.transform.GetComponentInChildren<Raycasting>(); //Accessing Raycasting script to control collisions
 
-        //one-way traffic codes at their original position 4/10/22
-        //target = wayPointsOdd.waypoints[currentPointOdd].transform.position; 
-        //Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPoints.waypoints[currentPoint].name);
-        //nextWaypointName = wayPoints.waypoints[currentPoint].name; // For debug purpose only
-        //one-way traffic codes at their original position 4/10/22
-
-        //two-way traffic test codes 4/10/22
-        //GameObject waypoint_odd = GameObject.Find("Waypoint_Odd"); 
-        //Debug.Log("waypoint_odd " + waypoint_odd);
         if (this.transform.gameObject.tag == "Odd")
         {
             targetOdd = wayPointsOdd.waypoints[currentPointOdd].transform.position;
             Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPointsOdd.waypoints[currentPointOdd].name);
             nextWaypointNameOdd = wayPointsOdd.waypoints[currentPointOdd].name; // For debug purpose only
         }
-        else
+        else if(this.transform.gameObject.tag == "Even")
         {
             target = wayPoints.waypoints[currentPoint].transform.position;
             Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPoints.waypoints[currentPoint].name);
             nextWaypointName = wayPoints.waypoints[currentPoint].name; // For debug purpose only
         }
-        //two-way traffic test codes 4/10/22
+        else //Traffic Control Test Codes 4/29/22
+        {
+            targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+            Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPointsTrfc.waypoints[currentPointTrfc].name);
+            nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name; // For debug purpose only
+        }
     }
 
     // Update is called once per frame
@@ -266,13 +267,12 @@ public class AI_Controller : MonoBehaviour
 
             if (distanceToTargetOdd < 7) // Increased from 5 to be lenient for multiple cars reaching the waypoints simultaneously
             {
-                //Debug.Log("distance to target is < 5 ");
                 if (currentPointOdd == 0 && roundTrip == false) //first time approaching the point [0]
                 {
                     Debug.Log(this.transform.gameObject.name + " First time approaching the point [" + currentPointOdd + "]");
                     Debug.Log(this.transform.gameObject.name + " publicAccel & publicBrake: " + publicAccel + "; " + publicBrake);
                 }
-                else //making a round trip
+                if (currentPointOdd == 0 && roundTrip == true) //making a round trip
                 {
                     Debug.Log(this.transform.gameObject.name + " Making a round trip!");
                 }
@@ -281,8 +281,6 @@ public class AI_Controller : MonoBehaviour
             if (distanceToTargetOdd < 5) /* increase the value if gameObject circles around waypoint. 
                                        * Increased from 2 to be lenient for multiple cars reaching the waypoints simultaneously */
             {
-                //Debug.Log("distance to target is < 2 ");
-
                 currentPointOdd++;
                 // DO NOT PUT ANY WAYPOINT RELATED CODE / DEBUG BELOW!! IT'LL MESS THINGS UP!!
                 if (currentPointOdd >= wayPointsOdd.waypoints.Length)
@@ -356,9 +354,9 @@ public class AI_Controller : MonoBehaviour
             drivingControl.calculateEngineSound();
             //***ONE-WAY TRAFFIC ORIGINAL CODES (CLEANED & MODIFED) WITHIN TWO-WAY TRAFFIC IF{} CODES END HERE 4/10/22***
         }
-        else //***TWO-WAY TRAFFIC ELSE{} TEST CODES BEGIN (CONTINUE ALL THE WAY TO THE END OF THE PAGE) 4/10/22*** 
+        // else //***ONE-WAY TRAFFIC ORIGINAL CODES WITHIN TWO-WAY TRAFFIC ELSE{} TEST CODES BEGIN 4/10/22***
+        else if (this.transform.gameObject.tag == "Even") //***TRAFFIC CONTROL ELSE IF{} TEST CODES BEGIN 4/27/22*** 
         {
-            //***ONE-WAY TRAFFIC ORIGINAL CODES WITHIN TWO-WAY TRAFFIC ELSE{} TEST CODES BEGIN 4/10/22***
             Vector3 localTarget = drivingControl.rb.gameObject.transform.InverseTransformPoint(target);
             float targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
             float distanceToTarget = Vector3.Distance(target, drivingControl.rb.gameObject.transform.position);
@@ -646,32 +644,20 @@ public class AI_Controller : MonoBehaviour
 
             if (distanceToTarget < 7) // Increased from 5 to be lenient for multiple cars reaching the waypoints simultaneously
             {
-                //Debug.Log("distance to target is < 5 ");
                 if (currentPoint == 0 && roundTrip == false) //first time approaching the point [0]
                 {
                     Debug.Log(this.transform.gameObject.name + " First time approaching the point [" + currentPoint + "]");
                     Debug.Log(this.transform.gameObject.name + " publicAccel & publicBrake: " + publicAccel + "; " + publicBrake);
-                    //accel = 0.5f; //original value
-
-                    //COMMENTING OUT TO TRY OUT MY AI CODE!
-                    //accel = 0.4f; //trying new value
-                    //brake = 0;
                 }
-                else //making a round trip
+                if (currentPoint == 0 && roundTrip == true) //making a round trip
                 {
                     Debug.Log(this.transform.gameObject.name + " Making a round trip!");
-                    //COMMENTING OUT TO TRY OUT MY AI CODE!
-                    //accel = publicAccel;
-                    //brake = publicBrake;
-                    //Debug.Log("publicAccel & publicBrake: " + publicAccel + "; " + publicBrake);
                 }
             }
 
             if (distanceToTarget < 5) /* increase the value if gameObject circles around waypoint. 
                                        * Increased from 2 to be lenient for multiple cars reaching the waypoints simultaneously */
             {
-                //Debug.Log("distance to target is < 2 ");
-
                 currentPoint++;
                 // DO NOT PUT ANY WAYPOINT RELATED CODE / DEBUG BELOW!! IT'LL MESS THINGS UP!!
                 if (currentPoint >= wayPoints.waypoints.Length)
@@ -843,6 +829,306 @@ public class AI_Controller : MonoBehaviour
             //***ONE-WAY TRAFFIC ORIGINAL CODES WITHIN TWO-WAY TRAFFIC ELSE{} CODES END HERE 4/10/22***
         }
         //***TWO-WAY TRAFFIC IF/ELSE{} TEST CODES END 4/10/22***
+        else //***TRAFFIC CONTROL ELSE IF{} TEST CODES BEGIN (CONTINUE ALL THE WAY TO THE END OF THE PAGE) 5/01/22***
+        {
+            Vector3 localTargetTrfc = drivingControl.rb.gameObject.transform.InverseTransformPoint(targetTrfc);
+            float targetAngleTrfc = Mathf.Atan2(localTargetTrfc.x, localTargetTrfc.z) * Mathf.Rad2Deg;
+            float distanceToTargetTrfc = Vector3.Distance(targetTrfc, drivingControl.rb.gameObject.transform.position);
 
+            /* The following values need to be updated to get the car going and keep it under control
+               Brought up here from below */
+            //float accel = 0.5f; //original value
+            float accel = 0.5f;
+            float steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -1, 1); // "Commenting Out for Overtaking Test" * Mathf.Sign(drivingControl.currentSpeed);
+            //Debug.Log("targetAngle & steeringSensitivity: " + targetAngle + " & " + steeringSensitivity);
+            //Debug.Log(" drivingControl.currentSpeed " + drivingControl.currentSpeed + " Sign of it = " + Mathf.Sign(drivingControl.currentSpeed));
+            float brake = 0f;
+
+            //Get the distance to the next waypoint
+            //Debug.Log("distanceToTarget: " + (int)distanceToTarget + " Meters");
+            //double distanceInMile = distanceToTarget * 0.000621371;
+            //decimal distanceInMileInDecimal = (decimal)distanceInMile;
+            //Debug.Log("distanceInMileInDecimal Rounded 4: " + decimal.Round(distanceInMileInDecimal, 4) + " Miles");
+
+            //Get the speed in MPH
+            double mphSpeed = (drivingControl.currentSpeed * 3600) * 0.000621371;
+            mphSpeedInt = (int)mphSpeed;
+            //Debug.Log("drivingControl.currentSpeed: " + mphSpeedInt + " MPH");
+
+            //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
+            //Works well, POV is that of drivingControl.rb.gameObject.transform.position
+            if (mphSpeedInt > 29)
+            {
+                switch (Mathf.Abs(targetAngleTrfc))
+                {
+                    case float f when Mathf.Abs(targetAngleTrfc) > 50:
+                        Debug.Log(this.transform.gameObject.name + " Sharp Curv, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                        accel = 0.1f;
+                        brake = 0.06f;
+                        break;
+                    case float f when Mathf.Abs(targetAngleTrfc) > 25:
+                        Debug.Log(this.transform.gameObject.name + " Curv, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                        accel = 0.3f;
+                        brake = 0.02f;
+                        break;
+                    default:
+                        Debug.Log(this.transform.gameObject.name + " Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                        Debug.Log(this.transform.gameObject.name + " drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
+                        switch (mphSpeedInt)
+                        {
+                            case int i when mphSpeedInt < 21:
+                                Debug.Log(this.transform.gameObject.name + " Straight line, bring it up a bit");
+                                accel = 0.8f;
+                                brake = 0f;
+                                break;
+                            case int i when mphSpeedInt > 39:
+                                Debug.Log(this.transform.gameObject.name + " Bring it down below 80mph!");
+                                accel = publicAccel;
+                                brake = publicBrake;
+                                break;
+                            default:
+                                // the current speed is between 60 and 80mph
+                                break;
+                        }
+                        break;
+                }
+            }
+
+            //Find out the next waypoint's y position to be at uphill or downhill; MY AI CODE!
+            if (currentPointTrfc != 0) //avoiding subtracting -1 from currentPoint[0]
+            {
+                float nextWaypointTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position.y;
+                float currentWaypointTrfc = wayPointsTrfc.waypoints[currentPointTrfc - 1].transform.position.y;
+                float yDifference = nextWaypointTrfc - currentWaypointTrfc;
+                switch (yDifference)
+                {
+                    case float f when yDifference > 1.5:
+                        Debug.Log(this.transform.gameObject.name + " the target on uphill: " + yDifference);
+                        if (mphSpeedInt < 40)
+                        {
+                            accel = 3f;
+                            brake = 0f;
+                        }
+                        else
+                        {
+                            accel = 1f;
+                            brake = 0F;
+                        }
+                        break;
+                    case float f when yDifference < -1.5:
+                        Debug.Log(this.transform.gameObject.name + " the target on downhill: " + yDifference);
+                        if (mphSpeedInt < 60)
+                        {
+                            accel = 0.5f;
+                            brake = 0f;
+                        }
+                        else
+                        {
+                            accel = 0.01f;
+                            brake = 0.1F;
+                        }
+                        break;
+                    default:
+                        Debug.Log(this.transform.gameObject.name + " the target on flat ground: " + yDifference);
+                        break;
+                }
+            }
+
+            /* For AI_Controller to grab
+            aboutToHitAhead = false;
+            aboutToHitLeftAhead = false;
+            aboutToHitDirectlyAhead = false;
+            aboutToHitRightAhead = false;
+            //
+            aboutToGetHitRightRear = false;
+            aboutToGetHitRear = false;
+            aboutToGetHitLeftRear = false;
+            //
+            isHittingRightSide = false;
+            isHittingLeftSide = false;
+            //
+            isHittingFrontHalf = false;
+            isHittingLeft = false;
+            isHittingFront = false;
+            isHittingRight = false;
+            //
+            isHittingRearHalf = false;
+            isHittingRightRear = false;
+            isHittingRear = false;
+            isHittingLeftRear = false;
+            */
+            //Testing Overtaking, targetAngle += to turn right, -= to turn left 
+            if (mphSpeedInt > 19 && Time.time > unStickTime) // if driving 35mph or faster & not being stuck
+            {
+                Debug.Log(this.transform.gameObject.name + " Speed > 34mph & Not Being Stuck == " + (Time.time > unStickTime));
+
+                // About to hit ahead
+                if (raycasting.aboutToHitLeftAhead == true)
+                {
+                    targetAngleTrfc += 30;
+                    Debug.Log(this.transform.gameObject.name + " aboutToHitLeftAhead, targetAngle = " + targetAngleTrfc);
+                }
+                if (raycasting.aboutToHitDirectlyAhead == true) // Avoiding frontal collisions with other cars
+                {
+                    Debug.Log(this.transform.gameObject.name + " Avoiding Frontal Collisions!!!");
+                    accel = 0.4f;
+                    brake = 0.01f;
+                }
+                if (raycasting.aboutToHitRightAhead == true)
+                {
+                    targetAngleTrfc -= 30;
+                    Debug.Log(this.transform.gameObject.name + " aboutToHitRightAhead, targetAngle = " + targetAngleTrfc);
+                }
+                // About to get hit from rear
+                if (raycasting.aboutToGetHitRightRear == true)
+                {
+                    targetAngleTrfc -= 30;
+                    Debug.Log(this.transform.gameObject.name + " aboutToGetHitRightRear, targetAngle = " + targetAngleTrfc);
+                }
+                if (raycasting.aboutToGetHitRear == true) // Avoiding getting rear ended with another car
+                {
+                    Debug.Log(this.transform.gameObject.name + " Avoiding Rear-End!!!");
+                    accel = 0.6f;
+                    brake = 0f;
+                }
+                if (raycasting.aboutToGetHitLeftRear == true)
+                {
+                    targetAngleTrfc += 30;
+                    Debug.Log(this.transform.gameObject.name + " aboutToGetHitLeftRear, targetAngle = " + targetAngleTrfc);
+                }
+                // Hitting the side
+                if (raycasting.isHittingRightSide == true)
+                {
+                    targetAngleTrfc -= 10;
+                    Debug.Log(this.transform.gameObject.name + " isHittingRightSide, targetAngle = " + targetAngleTrfc);
+                }
+                if (raycasting.isHittingLeftSide == true)
+                {
+                    targetAngleTrfc += 10;
+                    Debug.Log(this.transform.gameObject.name + " isHittingLeftSide, targetAngle = " + targetAngleTrfc);
+                }
+                // A part of the front half is hitting
+                if (raycasting.isHittingLeft == true)
+                {
+                    targetAngleTrfc += 15;
+                    Debug.Log(this.transform.gameObject.name + " isHittingLeft, targetAngle = " + targetAngleTrfc);
+                }
+                if (raycasting.isHittingRight == true)
+                {
+                    targetAngleTrfc -= 15;
+                    Debug.Log(this.transform.gameObject.name + " isHittingRight, targetAngle = " + targetAngleTrfc);
+                }
+                // A part of the rear half is hitting
+                if (raycasting.isHittingRightRear == true)
+                {
+                    targetAngleTrfc -= 20;
+                    Debug.Log(this.transform.gameObject.name + " isHittingRightRear, targetAngle = " + targetAngleTrfc);
+                }
+                if (raycasting.isHittingLeftRear == true)
+                {
+                    targetAngleTrfc += 20;
+                    Debug.Log(this.transform.gameObject.name + " isHittingLeftRear, targetAngle = " + targetAngleTrfc);
+                }
+
+                steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -1, 1);
+            }
+
+            if (distanceToTargetTrfc < 3) // increase the value if gameObject circles around the waypoint.
+            {
+                bool leftTurn = false;
+
+                currentPointTrfc++;
+
+                if (currentPointTrfc == 9)
+                {
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1)
+                    {
+                        currentPointTrfc = 9;
+                        leftTurn = true;
+                        Debug.Log("TRFC, " + this.transform.gameObject.name + "'sleftTurn = " + leftTurn + " and currentPointTrfc is " + currentPointTrfc);
+                    }
+                    else
+                    {
+                        currentPointTrfc = 10;
+                    }
+                }
+
+                if (leftTurn == true && currentPointTrfc == 9)
+                {
+                    Debug.Log("TRFC, currentPointTrfc is " + currentPointTrfc);
+                    currentPointTrfc = 10;
+                }
+
+                if (leftTurn == true && currentPointTrfc == 10)
+                {
+                    Debug.Log("TRFC, currentPointTrfc is " + currentPointTrfc);
+                    currentPointTrfc = 0;
+                }
+
+                roundTrip = true;
+
+                targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+
+                Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPointsTrfc.waypoints[currentPointTrfc].name);
+                nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name; // For debug purpose only
+            } 
+
+                // Getting Cars Unstuck 
+                if (mphSpeedInt < 11) // hardly moving at 10 mph or less
+            {
+                if (!(currentPointTrfc == 0 && roundTrip == false)) // The car is not at the starting point of the race
+                {
+                    if (raycasting.isHittingFrontHalf == true && raycasting.isHittingRear == false) // if any gameObject blocking front half but none directly behind
+                    {
+                        unStickTime = Time.time + unStickDuration; // Setting the time to do unstuck codes for unStickDuration
+                        if (Time.time < unStickTime) // if unStickTime hasn't reached Time.time yet, drive backward toward -2 previous waypoint at minus 800 wheelColliders[i].motorTorque
+                        {
+                            if (currentPointTrfc > 1)
+                            {
+                                targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc - 2].transform.position;
+                                Debug.Log(this.transform.gameObject.name + " Getting Stuck == " + (Time.time < unStickTime));
+                                Debug.Log(this.transform.gameObject.name + " driving back toward (currentPoint - 2) " + wayPointsTrfc.waypoints[currentPointTrfc - 2].name);
+                                nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc - 2].name; // For debug purpose only
+                            }
+                            else if (currentPoint == 1)
+                            {
+                                targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc - 1].transform.position;
+                                Debug.Log(this.transform.gameObject.name + " Getting Stuck == " + (Time.time < unStickTime));
+                                Debug.Log(this.transform.gameObject.name + " driving back toward (currentPoint - 1) " + wayPointsTrfc.waypoints[currentPointTrfc - 1].name);
+                                nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc - 1].name; // For debug purpose only
+                            }
+                            else
+                            {
+                                targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+                                Debug.Log(this.transform.gameObject.name + " Getting Stuck == " + (Time.time < unStickTime));
+                                Debug.Log(this.transform.gameObject.name + " driving back toward (currentPoint - 0) " + wayPointsTrfc.waypoints[currentPointTrfc].name);
+                                nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name; // For debug purpose only
+                            }
+                            localTargetTrfc = drivingControl.rb.gameObject.transform.InverseTransformPoint(targetTrfc);
+                            targetAngleTrfc = Mathf.Atan2(localTargetTrfc.x, localTargetTrfc.z) * Mathf.Rad2Deg;
+                            steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -1, 1); // (targetAngle * -1) to try directing towards the previous waypoint while driving backward, SAME RESULT AS * +1
+                            brake = 0f;
+                            accel = -4f;
+                            Debug.Log(this.transform.gameObject.name + " drivingControl.Go Backward(" + accel + ", " + steer + ", " + brake + ")");
+                            drivingControl.Go(accel, steer, brake);
+                        }
+                        targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+
+                        //ANY OF THE FOLLOWING LINES PLACING HERE WILL MESS YOU UP!!!
+                        //localTarget = drivingControl.rb.gameObject.transform.InverseTransformPoint(target);
+                        //targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
+                        //steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2);
+                        //accel = 3f; // drive forward at 600 wheelColliders[i].motorTorque after driving backward
+                        //brake = 0f;
+                        //ANY OF THE ABOVE LINES PLACING HERE WILL MESS YOU UP!!!
+                    }
+                }
+            }
+            Debug.Log(this.transform.gameObject.name + " drivingControl.Go(" + accel + ", " + steer + ", " + brake + ")");
+            drivingControl.Go(accel, steer, brake); //running Go regardless of distanceToTarget here
+            drivingControl.CheckSkidding();
+            drivingControl.calculateEngineSound();
+        } //***TRAFFIC CONTROL ELSE IF{} TEST CODES END 5/01/22***
     }
 }
