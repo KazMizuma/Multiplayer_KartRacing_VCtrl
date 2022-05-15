@@ -950,6 +950,7 @@ public class AI_Controller : MonoBehaviour
             isHittingFrontHalf = false;
             isHittingLeft = false;
             isHittingFront = false;
+            isHittingFrontTrfc = false; // For Traffic Control Codes
             isHittingRight = false;
             //
             isHittingRearHalf = false;
@@ -1033,72 +1034,70 @@ public class AI_Controller : MonoBehaviour
                 steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -1, 1);
             }
 
-            // The increment of a current waypoint (currentPointTrfc) occurs as the car approaches the current waypoint at currentPointTrfc < x distance.
-            if (distanceToTargetTrfc < 4) // increase the value if gameObject circles around the waypoint.
+            // The increment of a current waypoint (currentPointTrfc) occurs as the car approaches the current waypoint at currentPointTrfc < 3 distance.
+            if (distanceToTargetTrfc < 3) // increase the value if gameObject circles around the waypoint.
             {
-                // ********** BEGINS, NOT WORKING PERFECTLY **********
-                //bool leftTurn = false;
-                //bool rightTurn = false;
-                //bool straight = false;
-                //currentPointTrfc++; // As soon as the car reaches a current waypoint, currentPointTrfc gets incremented to the next point
-                //roundTrip = true; // Since it's not looping, as soon as the first increment occurs, changing the value to true.
-                //if (currentPointTrfc == 9) // if/when the car has reached at the Cube (8), NOT at Cube (9),
-                //{
-                //    int randomNumber = Random.Range(1, 3);
-                //    if (randomNumber == 1) // left turn
-                //    {
-                //        currentPointTrfc = 9; // setting the next waypoint to the Cube (9), which is a left turn
-                //        leftTurn = true;
-                //        //Debug.Log("TRFC, " + this.transform.gameObject.name + "'s leftTurn = " + leftTurn + " and currentPointTrfc is " + currentPointTrfc);
-                //    }
-                //    else // right turn
-                //    {
-                //        currentPointTrfc = 10;
-                //    }
-                //}
-                //if (leftTurn == true && currentPointTrfc == 9) // if the car has made a left turn at Cube (8) and the next waypoint has been set to the Cube (9),
-                //{
-                //    currentPointTrfc = 10; // Wait until the car reaches the Cube (9). At that point, setting currentPointTrfc to (10).
-                //}
-                //if (leftTurn == true && currentPointTrfc == 10) // if the car has made a left turn and has reached the Cube (9),
-                //{
-                //    currentPointTrfc = 0; // Only then can you set the currentPointTrfc to (0)!
-                //                          // In actuality, the car goes directly from Cube (8) to (0), so Cube (0) and (9) are placed next to each other in the scene to workaround!
-                //}
-                //if (currentPointTrfc == 15) // just arrived at the corner (14)
-                //{
-                //    int randomNumber = Random.Range(1, 3);
-                //    if (randomNumber == 1) // straight
-                //    {
-                //        currentPointTrfc = 19;
-                //        straight = true;
-                //    }
-                //    else // right turn
-                //    {
-                //        currentPointTrfc = 15;
-                //        rightTurn = true;
-                //    }
-                //}
-                //if (currentPointTrfc == 19) // just arrived at the corner (18)
-                //{
-                //    Debug.Log("TRFC, HELLOOOO!!!");
-                //    int randomNumber = Random.Range(1, 4);
-                //    if (randomNumber == 1) // turning right
-                //    {
-                //        currentPointTrfc = 7;
-                //    }
-                //    else if (randomNumber == 2) // straight
-                //    {
-                //        currentPointTrfc = 22;
-                //    }
-                //    else // turning left
-                //    {
-                //        currentPointTrfc = 23;
-                //    }
-                //}
-                // ********** ENDS, NOT WORKING PERFECTLY **********
+                bool leftTurn = false;
+                bool rightTurn = false;
+                bool straight = false;
+                currentPointTrfc++; // As soon as the car reaches a current waypoint, currentPointTrfc gets incremented to the next point
+                roundTrip = true; // Since it's not looping, as soon as the first increment occurs, changing the value to true.
+                if (currentPointTrfc == 9) // if/when the car has reached at the Cube (8), NOT at Cube (9),
+                {
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // left turn
+                    {
+                        currentPointTrfc = 9; // setting the next waypoint to the Cube (9), which is a left turn
+                        leftTurn = true;
+                        //Debug.Log("TRFC, " + this.transform.gameObject.name + "'s leftTurn = " + leftTurn + " and currentPointTrfc is " + currentPointTrfc);
+                    }
+                    else // right turn
+                    {
+                        currentPointTrfc = 10;
+                    }
+                }
+                if (leftTurn == true && currentPointTrfc == 9) // if the car has made a left turn at Cube (8) and the next waypoint has been set to the Cube (9),
+                {
+                    currentPointTrfc = 10; // Wait until the car reaches the Cube (9). At that point, setting currentPointTrfc to (10).
+                }
+                if (leftTurn == true && currentPointTrfc == 10) // if the car has made a left turn and has reached the Cube (9),
+                {
+                    currentPointTrfc = 0; // Only then can you set the currentPointTrfc to (0)!
+                                          // In actuality, the car goes directly from Cube (8) to (0), so Cube (0) and (9) are placed next to each other in the scene to workaround!
+                }
+                if (currentPointTrfc == 15) // just arrived at the corner (14)
+                {
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 19;
+                        straight = true;
+                    }
+                    else // right turn
+                    {
+                        currentPointTrfc = 15;
+                        rightTurn = true;
+                    }
+                }
+                if (currentPointTrfc == 19 && raycasting.isHittingFrontTrfc == true) // just arrived at the corner (18)
+                {
+                    Debug.Log("TRFC, HELLOOOO!!!");
+                    int randomNumber = Random.Range(1, 4);
+                    if (randomNumber == 1) // turning right
+                    {
+                        currentPointTrfc = 7;
+                    }
+                    else if (randomNumber == 2) // straight
+                    {
+                        currentPointTrfc = 22;
+                    }
+                    else // turning left
+                    {
+                        currentPointTrfc = 23;
+                    }
+                }
 
-                currentPointTrfc++;
+                //currentPointTrfc++; // As soon as the car reaches a current waypoint, currentPointTrfc gets incremented to the next point
 
                 targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // Finally, the target angle is processed accordingly. 
 

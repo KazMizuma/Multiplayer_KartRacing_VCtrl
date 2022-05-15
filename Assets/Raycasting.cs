@@ -27,7 +27,7 @@ public class Raycasting : MonoBehaviour
     public bool isHittingFrontHalf = false;
     public bool isHittingLeft = false;
     public bool isHittingFront = false;
-    //public bool isHittingFrontTrfc = false; // 5/13 Traffic Control Test Codes
+    public bool isHittingFrontTrfc = false; // 5/13 Traffic Control Test Codes
     public bool isHittingRight = false;
     //
     public bool isHittingRearHalf = false;
@@ -101,7 +101,7 @@ public class Raycasting : MonoBehaviour
         isHittingFrontHalf = false;
         isHittingLeft = false;
         isHittingFront = false;
-        //isHittingFrontTrfc = false; // 5/13 Traffic Control Test Codes
+        isHittingFrontTrfc = false; // 5/13 Traffic Control Test Codes
         isHittingRight = false;
         //
         isHittingRearHalf = false;
@@ -254,14 +254,14 @@ public class Raycasting : MonoBehaviour
                 }
 
                 // 5/13 Traffic Control Test Codes
-                //if (hit.transform.gameObject.tag == "Threshold")
-                //{
-                //    if (i > 6 && i < 11)
-                //    {
-                //        isHittingFrontTrfc = true;
-                //        Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " TRFC");
-                //    }
-                //}
+                if (hit.transform.gameObject.tag == "Threshold")
+                {
+                    if (i > 6 && i < 11)
+                    {
+                        isHittingFrontTrfc = true;
+                        Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " TRFC");
+                    }
+                }
             }
 
             //Combining my code, detecting  rear-half collision with another car
