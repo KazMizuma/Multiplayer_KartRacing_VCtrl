@@ -1040,8 +1040,41 @@ public class AI_Controller : MonoBehaviour
                 bool leftTurn = false;
                 bool rightTurn = false;
                 bool straight = false;
-                currentPointTrfc++; // As soon as the car reaches a current waypoint, currentPointTrfc gets incremented to the next point
+                currentPointTrfc++; // As soon as the car reaches a current waypoint at <3 distance, currentPointTrfc gets incremented to the next point
                 roundTrip = true; // Since it's not looping, as soon as the first increment occurs, changing the value to true.
+
+                if (currentPointTrfc == 5) // just arrived at Cube (4)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 28;
+                    }
+                    else // turning left
+                    {
+                        currentPointTrfc = 5;
+                    }
+                }
+
+                if (currentPointTrfc == 7) // just arrived at Cube (6)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 4);
+                    if (randomNumber == 1) // turning right
+                    {
+                        currentPointTrfc = 23;
+                    }
+                    else if (randomNumber == 2) // straight
+                    {
+                        currentPointTrfc = 25;
+                    }
+                    else // turning left
+                    {
+                        currentPointTrfc = 7;
+                    }
+                }
+
                 if (currentPointTrfc == 9) // if/when the car has reached at the Cube (8), NOT at Cube (9),
                 {
                     int randomNumber = Random.Range(1, 3);
@@ -1065,7 +1098,8 @@ public class AI_Controller : MonoBehaviour
                     currentPointTrfc = 0; // Only then can you set the currentPointTrfc to (0)!
                                           // In actuality, the car goes directly from Cube (8) to (0), so Cube (0) and (9) are placed next to each other in the scene to workaround!
                 }
-                if (currentPointTrfc == 15) // just arrived at the corner (14)
+
+                if (currentPointTrfc == 15) // just arrived at Cube (14)
                 {
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // straight
@@ -1079,9 +1113,10 @@ public class AI_Controller : MonoBehaviour
                         rightTurn = true;
                     }
                 }
-                if (currentPointTrfc == 19 && raycasting.isHittingFrontTrfc == true) // just arrived at the corner (18)
+
+                if (currentPointTrfc == 19 && raycasting.isHittingFrontTrfc == true) // Arrived at Cube (18), isHittingFrontTrfc Threshold logic FIXES/WORKS!
                 {
-                    Debug.Log("TRFC, HELLOOOO!!!");
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
                     if (randomNumber == 1) // turning right
                     {
@@ -1095,6 +1130,25 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 23;
                     }
+                }
+
+                if (currentPointTrfc == 28 && raycasting.isHittingFrontTrfc == true) // just arrived at Cube (27), Box Collider & is Trigger MUST BE CHECKED!
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // left
+                    {
+                        currentPointTrfc = 29;
+                    }
+                    else // right turn
+                    {
+                        currentPointTrfc = 31;
+                    }
+                }
+
+                if (currentPointTrfc == 31 && raycasting.isHittingFrontTrfc == true)
+                {
+                    currentPointTrfc = 19;
                 }
 
                 //currentPointTrfc++; // As soon as the car reaches a current waypoint, currentPointTrfc gets incremented to the next point

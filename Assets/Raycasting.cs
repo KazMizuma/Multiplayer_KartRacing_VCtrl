@@ -259,7 +259,7 @@ public class Raycasting : MonoBehaviour
                     if (i > 6 && i < 11)
                     {
                         isHittingFrontTrfc = true;
-                        Debug.Log(transform.gameObject.name + " IS HITTING " + hit.transform.gameObject.name + " TRFC");
+                        Debug.Log(transform.parent.gameObject.name + " IS AT " + hit.transform.gameObject.name + " THRESHOLD");
                     }
                 }
             }
