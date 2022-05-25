@@ -1130,6 +1130,7 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 23;
                     }
+                    raycasting.isHittingFrontTrfc = false;
                 }
 
                 if (currentPointTrfc == 28 && raycasting.isHittingFrontTrfc == true) // just arrived at Cube (27), Box Collider & is Trigger MUST BE CHECKED!
@@ -1144,14 +1145,35 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 31;
                     }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 31 && raycasting.isHittingFrontTrfc == true)
+                if (currentPointTrfc == 32 && raycasting.isHittingFrontTrfc == true) // at Cube (31)
                 {
                     currentPointTrfc = 19;
+                    raycasting.isHittingFrontTrfc = false; 
                 }
 
-                //currentPointTrfc++; // As soon as the car reaches a current waypoint, currentPointTrfc gets incremented to the next point
+                if (currentPointTrfc == 31 && raycasting.isHittingFrontTrfc == true) // reached Cube (30)
+                {
+                    currentPointTrfc = 32;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 35 && raycasting.isHittingFrontTrfc == true) // at Cube (34)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 0;
+                    }
+                    else // right turn
+                    {
+                        currentPointTrfc = 35;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
 
                 targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // Finally, the target angle is processed accordingly. 
 
