@@ -1057,11 +1057,11 @@ public class AI_Controller : MonoBehaviour
                     }
                 }
 
-                if (currentPointTrfc == 7) // just arrived at Cube (6)
+                if (currentPointTrfc == 7 && raycasting.isHittingFrontTrfc == true) // just arrived at Cube (6)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
-                    if (randomNumber == 1) // turning right
+                    if (randomNumber == 1) // right turn
                     {
                         currentPointTrfc = 23;
                     }
@@ -1069,12 +1069,14 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 25;
                     }
-                    else // turning left
+                    else // left turn
                     {
                         currentPointTrfc = 7;
                     }
+                    raycasting.isHittingFrontTrfc = false;
                 }
 
+                // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.isHittingFrontTrfc BEGINS
                 if (currentPointTrfc == 9) // if/when the car has reached at the Cube (8), NOT at Cube (9),
                 {
                     int randomNumber = Random.Range(1, 3);
@@ -1098,6 +1100,7 @@ public class AI_Controller : MonoBehaviour
                     currentPointTrfc = 0; // Only then can you set the currentPointTrfc to (0)!
                                           // In actuality, the car goes directly from Cube (8) to (0), so Cube (0) and (9) are placed next to each other in the scene to workaround!
                 }
+                // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.isHittingFrontTrfc ENDS
 
                 if (currentPointTrfc == 15) // just arrived at Cube (14)
                 {
@@ -1133,6 +1136,25 @@ public class AI_Controller : MonoBehaviour
                     raycasting.isHittingFrontTrfc = false;
                 }
 
+                if (currentPointTrfc == 25 && raycasting.isHittingFrontTrfc == true) // at Cube (24)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 4);
+                    if (randomNumber == 1) // turning right
+                    {
+                        currentPointTrfc = 50;
+                    }
+                    else if (randomNumber == 2) // straight
+                    {
+                        currentPointTrfc = 49;
+                    }
+                    else // turning left
+                    {
+                        currentPointTrfc = 51;
+                    }
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
                 if (currentPointTrfc == 28 && raycasting.isHittingFrontTrfc == true) // just arrived at Cube (27), Box Collider & is Trigger MUST BE CHECKED!
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
@@ -1148,10 +1170,84 @@ public class AI_Controller : MonoBehaviour
                     raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
                 }
 
+                if (currentPointTrfc == 29 && raycasting.isHittingFrontTrfc == true) // just arrived at Cube (28)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 54;
+                    }
+                    else // left turn
+                    {
+                        currentPointTrfc = 63;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
                 if (currentPointTrfc == 32 && raycasting.isHittingFrontTrfc == true) // at Cube (31)
                 {
                     currentPointTrfc = 19;
                     raycasting.isHittingFrontTrfc = false; 
+                }
+
+                if (currentPointTrfc == 20 && raycasting.isHittingFrontTrfc == true) // at Cube (19)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 48;
+                    }
+                    else // right turn
+                    {
+                        currentPointTrfc = 20;
+                    }
+                    raycasting.isHittingFrontTrfc = false; 
+                }
+
+                if (currentPointTrfc == 22 && raycasting.isHittingFrontTrfc == true) // at Cube (21)
+                {
+                    currentPointTrfc = 44;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 45 && raycasting.isHittingFrontTrfc == true) // at Cube (44)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 4);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 47;
+                    }
+                    else if (randomNumber == 2) // right turn
+                    {
+                        currentPointTrfc = 45;
+                    }
+                    else
+                    {
+                        currentPointTrfc = 49; // left turn
+                    }
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 47 && raycasting.isHittingFrontTrfc == true) // at Cube (46)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 4);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 7;
+                    }
+                    else if (randomNumber == 2) // right turn
+                    {
+                        currentPointTrfc = 25;
+                    }
+                    else
+                    {
+                        currentPointTrfc = 22; // left turn
+                    }
+                    raycasting.isHittingFrontTrfc = false;
                 }
 
                 if (currentPointTrfc == 31 && raycasting.isHittingFrontTrfc == true) // reached Cube (30)
@@ -1173,6 +1269,218 @@ public class AI_Controller : MonoBehaviour
                         currentPointTrfc = 35;
                     }
                     raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 37 && raycasting.isHittingFrontTrfc == true) // at Cube (36)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 4);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 23;
+                    }
+                    else if (randomNumber == 2) // right turn
+                    {
+                        currentPointTrfc = 22;
+                    }
+                    else
+                    {
+                        currentPointTrfc = 25;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 23 && raycasting.isHittingFrontTrfc == true) // when at Cube (22)
+                {
+                    currentPointTrfc = 37;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 38 && raycasting.isHittingFrontTrfc == true) // at Cube (37) 
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // right turn
+                    {
+                        currentPointTrfc = 38;
+                    }
+                    else // left turn
+                    {
+                        currentPointTrfc = 43;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 43 && raycasting.isHittingFrontTrfc == true) // at Cube (42) 
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 10;
+                    }
+                    else // right turn
+                    {
+                        currentPointTrfc = 35;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 44 && raycasting.isHittingFrontTrfc == true) // when at Cube (43)
+                {
+                    currentPointTrfc = 28;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 48 && raycasting.isHittingFrontTrfc == true) // at Cube (47) 
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // right turn
+                    {
+                        currentPointTrfc = 71;
+                    }
+                    else // left turn
+                    {
+                        currentPointTrfc = 54;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 54 && raycasting.isHittingFrontTrfc == true) // at Cube (53) 
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // right turn
+                    {
+                        currentPointTrfc = 48;
+                    }
+                    else // left turn
+                    {
+                        currentPointTrfc = 74;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 49 && raycasting.isHittingFrontTrfc == true) // when at Cube (48)
+                {
+                    currentPointTrfc = 75;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 65 && raycasting.isHittingFrontTrfc == true) // at Cube (64)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 4);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 51;
+                    }
+                    else if (randomNumber == 2) // right turn
+                    {
+                        currentPointTrfc = 49;
+                    }
+                    else
+                    {
+                        currentPointTrfc = 45; // left turn
+                    }
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 66 && raycasting.isHittingFrontTrfc == true) // at Cube (65) 
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // right turn
+                    {
+                        currentPointTrfc = 66;
+                    }
+                    else // left turn
+                    {
+                        currentPointTrfc = 79;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 50 && raycasting.isHittingFrontTrfc == true) // when at Cube (49)
+                {
+                    currentPointTrfc = 65;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 51 && raycasting.isHittingFrontTrfc == true) // when at Cube (50)
+                {
+                    currentPointTrfc = 47;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 63 && raycasting.isHittingFrontTrfc == true) // at Cube (62) 
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // left turn
+                    {
+                        currentPointTrfc = 20;
+                    }
+                    else // straight
+                    {
+                        currentPointTrfc = 73;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 71 && raycasting.isHittingFrontTrfc == true) // at Cube (70) 
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // right turn
+                    {
+                        currentPointTrfc = 63;
+                    }
+                    else // straight
+                    {
+                        currentPointTrfc = 71;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 73 && raycasting.isHittingFrontTrfc == true) // at Cube (72) 
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 39;
+                    }
+                    else // right turn
+                    {
+                        currentPointTrfc = 5;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
+                if (currentPointTrfc == 74 && raycasting.isHittingFrontTrfc == true) // when at Cube (73)
+                {
+                    currentPointTrfc = 29;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 75 && raycasting.isHittingFrontTrfc == true) // when at Cube (74)
+                {
+                    currentPointTrfc = 73;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 79 && raycasting.isHittingFrontTrfc == true) // when at Cube (78)
+                {
+                    currentPointTrfc = 66;
+                    raycasting.isHittingFrontTrfc = false;
+                }
+
+                if (currentPointTrfc == 80 && raycasting.isHittingFrontTrfc == true) // when at Cube (79)
+                {
+                    currentPointTrfc = 59;
+                    raycasting.isHittingFrontTrfc = false;
                 }
 
                 targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // Finally, the target angle is processed accordingly. 
