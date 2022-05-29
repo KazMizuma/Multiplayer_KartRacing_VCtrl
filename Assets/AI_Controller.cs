@@ -959,9 +959,9 @@ public class AI_Controller : MonoBehaviour
             isHittingLeftRear = false;
             */
             //Testing Overtaking, targetAngle += to turn right, -= to turn left 
-            if (mphSpeedInt > 19 && Time.time > unStickTime) // if driving 35mph or faster & not being stuck
+            if (mphSpeedInt > 19 && Time.time > unStickTime) // if driving 20mph or faster & not being stuck
             {
-                Debug.Log(this.transform.gameObject.name + " Speed > 34mph & Not Being Stuck == " + (Time.time > unStickTime));
+                Debug.Log(this.transform.gameObject.name + " Speed > 20mph & Not Being Stuck == " + (Time.time > unStickTime));
 
                 // About to hit ahead
                 if (raycasting.aboutToHitLeftAhead == true)
@@ -1474,6 +1474,21 @@ public class AI_Controller : MonoBehaviour
                     raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
                 }
 
+                if (currentPointTrfc == 74 && raycasting.isHittingFrontTrfc == true) // when at Cube (73)
+                {
+                    Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int randomNumber = Random.Range(1, 3);
+                    if (randomNumber == 1) // straight
+                    {
+                        currentPointTrfc = 29;
+                    }
+                    else // left turn
+                    {
+                        currentPointTrfc = 15;
+                    }
+                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                }
+
                 if (currentPointTrfc == 79 && raycasting.isHittingFrontTrfc == true) // at Cube (78) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
@@ -1505,12 +1520,6 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 50; // left turn
                     }
-                    raycasting.isHittingFrontTrfc = false;
-                }
-
-                if (currentPointTrfc == 74 && raycasting.isHittingFrontTrfc == true) // when at Cube (73)
-                {
-                    currentPointTrfc = 29;
                     raycasting.isHittingFrontTrfc = false;
                 }
 
