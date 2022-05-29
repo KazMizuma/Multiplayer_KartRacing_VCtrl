@@ -1102,7 +1102,7 @@ public class AI_Controller : MonoBehaviour
                 }
                 // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.isHittingFrontTrfc ENDS
 
-                if (currentPointTrfc == 15) // just arrived at Cube (14)
+                if (currentPointTrfc == 15) // just arrived at Cube (14), !?? WORKS WITHOUT raycasting.isHittingFrontTrfc HERE ??!
                 {
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // straight
