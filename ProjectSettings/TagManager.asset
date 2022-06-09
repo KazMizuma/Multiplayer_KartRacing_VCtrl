@@ -13,6 +13,11 @@ TagManager:
   - Even
   - Odd
   - Threshold
+  - T
+  - RightOfT
+  - LeftOfT
+  - Lights
+  - 4Way
   layers:
   - Default
   - TransparentFX

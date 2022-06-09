@@ -17,6 +17,11 @@ public class Raycasting : MonoBehaviour
     public bool aboutToHitDirectlyAhead = false;
     public bool aboutToHitRightAhead = false;
     //
+    public bool aboutToHitFarAhead = false; // 6/05 Traffic Control Test Codes
+    public bool aboutToHitFarDirectly = false; 
+    public bool aboutToHitFarLeftAhead = false;
+    public bool aboutToHitFarRightAhead = false;
+    //
     public bool aboutToGetHitRightRear = false;
     public bool aboutToGetHitRear = false;
     public bool aboutToGetHitLeftRear = false;
@@ -28,6 +33,7 @@ public class Raycasting : MonoBehaviour
     public bool isHittingLeft = false;
     public bool isHittingFront = false;
     public bool isHittingFrontTrfc = false; // 5/13 Traffic Control Test Codes
+    public string hitFrontHalfDownRayText; // 5/30 Traffic Control Test Codes, casting rays downward, debug purpose only
     public bool isHittingRight = false;
     //
     public bool isHittingRearHalf = false;
@@ -35,14 +41,14 @@ public class Raycasting : MonoBehaviour
     public bool isHittingRear = false;
     public bool isHittingLeftRear = false;
 
-    //AI_Controller ai_controller; // To access AI_Controller
+    AI_Controller ai_controller; // To access AI_Controller, 6/05 Trfc Ctrl
 
     //public Vector3 deltaPosition; // Trying World of Zero's avoidance method
 
     // Start is called before the first frame update
     void Start()
     {
-        //ai_controller = this.transform.parent.GetComponent<AI_Controller>(); // To access AI_Controller
+        ai_controller = this.transform.parent.GetComponent<AI_Controller>(); // To access AI_Controller, 6/05 Trfc Ctrl
     }
 
     // Update is called once per frame
@@ -91,6 +97,11 @@ public class Raycasting : MonoBehaviour
         aboutToHitDirectlyAhead = false;
         aboutToHitRightAhead = false;
         //
+        aboutToHitFarAhead = false; // 6/05 Traffic Control Test Codes
+        aboutToHitFarDirectly = false; 
+        aboutToHitFarLeftAhead = false;
+        aboutToHitFarRightAhead = false;
+        //
         aboutToGetHitRightRear = false;
         aboutToGetHitRear = false;
         aboutToGetHitLeftRear = false;
@@ -114,24 +125,31 @@ public class Raycasting : MonoBehaviour
             var rotation = this.transform.rotation;
 
             var rotationFrontHalf = frontRotation.transform.rotation; // Rays for front half
+            var rotationFrontDown = frontRotation.transform.rotation; // 5/30 Traffic Control Test Codes, casting rays downward
             var rotationRearHalf = rearRotation.transform.rotation; // Rays for rear half
-            var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * angle - 15, this.transform.up); // For the front and back
+            var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * 25 - 13, this.transform.up); // For the front and back
+            var rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1/2), this.transform.up); // For the front, 6/05 Trfc Ctrl
             var rotationAngleAxSides = Quaternion.AngleAxis(i / (float)numberOfRays * 160 - 80, this.transform.up); // For the sides
             var rotationAngleAxFront = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, frontRotation.transform.up); // Rays for front half
+            var rotationAngleAxFrontDown = Quaternion.AngleAxis(1, frontRotation.transform.up); // 5/30 Traffic Control Test Codes, casting rays downward
             var rotationAngleAxRear = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, rearRotation.transform.up); // Rays for rear half
 
             var forwardVec3 = rotation * rotationAngleAx * Vector3.forward;
+            var forwardVec3Trfc = rotation * rotationAngleAxTrfc * Vector3.forward; // 6/05 Trfc Ctrl
             var backwardVec3 = rotation * rotationAngleAx * Vector3.back; // Adding the rays on the back
             var rightVec3 = rotation * rotationAngleAxSides * Vector3.right; // Adding the rays on the right
             var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
             var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
+            var frontCubeDownVec3 = rotationFrontDown * rotationAngleAxFrontDown * Vector3.down; // 5/30 Traffic Control Test Codes, casting rays downward
             var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
 
-            Ray hittingRay = new Ray(this.transform.position, forwardVec3 * 4f); //Combining my code to detect frontal collision
-            Ray gettingHitRay = new Ray(this.transform.position, backwardVec3 * 3.5f); //Combining my code to detect rear end collision
+            Ray hittingRay = new Ray(this.transform.position, forwardVec3 * 5f); // Combining my code to detect frontal collision
+            Ray hittingRayTrfc = new Ray(this.transform.position, forwardVec3Trfc * 8f); // 6/05 Trfc Ctrl
+            Ray gettingHitRay = new Ray(this.transform.position, backwardVec3 * 3.5f); // Combining my code to detect rear end collision
             Ray hitRightRay = new Ray(this.transform.position, rightVec3 * 1.5f); // Combining my code to detect right side collision
             Ray hitLeftRay = new Ray(this.transform.position, leftVec3 * 1.5f); // Combining my code to detect left side collision
             Ray hitFrontHalfRay = new Ray(frontRotation.transform.position, frontCubeVec3 * 2f);
+            Ray hitFrontHalfDownRay = new Ray(frontRotation.transform.position, frontCubeDownVec3 * 0.8f); // 5/30 Traffic Control Test Codes, casting rays downward
             Ray hitRearHalfRay = new Ray(rearRotation.transform.position, rearCubeVec3 * 1.5f);
 
             //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
@@ -143,7 +161,7 @@ public class Raycasting : MonoBehaviour
             //Debug.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
 
             //Combining my code, detecting frontal collision with another car
-            if (Physics.Raycast(hittingRay, out hit, 4f))
+            if (Physics.Raycast(hittingRay, out hit, 5f))
             {
                 aboutToHitAhead = true;
                 if (hit.transform.gameObject.tag == "Car")
@@ -169,6 +187,60 @@ public class Raycasting : MonoBehaviour
                             break;
                         default:
                             break;
+                    }
+                }
+            }
+
+            if (Physics.Raycast(hittingRayTrfc, out hit, 8f)) // 6/05 Trfc Ctrl
+            {
+                aboutToHitFarAhead = true;
+                Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " FAR AHEAD, TRFC");
+                if (hit.transform.gameObject.tag == "Car" && Mathf.Abs(ai_controller.targetAngleTrfc) <= 25) // 6/07 Trfc Ctrl, if driving straight
+                {
+                    aboutToHitFarDirectly = true;
+                    Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " FAR STRAIGHT AHEAD, TRFC");
+                }
+                if (hit.transform.gameObject.tag == "Car" && Mathf.Abs(ai_controller.targetAngleTrfc) > 25) // 6/07 Trfc Ctrl, if driving a curve
+                {
+                    if (ai_controller.targetAngleTrfc > 0) // right curve turn
+                    {
+                        switch (i)
+                        {
+                            case int r when i < 7: //Gizmos.color = Color.green; // Starting from the left, 6 on the left
+                                aboutToHitFarLeftAhead = true; // For AI_Controller to grab
+                                Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " ON THE FAR LEFT AHEAD, TRFC");
+                                break;
+                            case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
+                                aboutToHitFarDirectly = true;
+                                Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " FAR STRAIGHT AHEAD, TRFC");
+                                break;
+                            case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the right, 6 on the right
+                                aboutToHitFarRightAhead = true;
+                                Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " ON THE FAR RIGHT AHEAD, TRFC");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else // left curve turn
+                    {
+                        switch (i)
+                        {
+                            case int r when i < 7: //Gizmos.color = Color.green; // Starting from the right, 6 on the right
+                                aboutToHitFarRightAhead = true;
+                                Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " ON THE FAR RIGHT AHEAD, TRFC");
+                                break;
+                            case int r when i > 6 && i < 11: //Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
+                                aboutToHitFarDirectly = true;
+                                Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " FAR STRAIGHT AHEAD, TRFC");
+                                break;
+                            case int r when i > 10 && i < 18: //Gizmos.color = Color.red; // Ending at the left, 6 on the left
+                                aboutToHitFarLeftAhead = true; // For AI_Controller to grab
+                                Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " ON THE FAR LEFT AHEAD, TRFC");
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
@@ -264,6 +336,32 @@ public class Raycasting : MonoBehaviour
                 }
             }
 
+            if (Physics.Raycast(hitFrontHalfDownRay, out hit, 0.8f)) // 5/30 Traffic Control Test Codes, casting rays downward
+            {
+                Debug.Log(transform.gameObject.name + " IS ON " + hit.transform.gameObject.name + ", TRFC");
+                hitFrontHalfDownRayText = hit.transform.gameObject.tag;
+                switch (hit.transform.gameObject.tag)
+                {
+                    case "T":
+                        Debug.Log(transform.gameObject.name + " IS AT T INTERSECTION, TRFC");
+                        break;
+                    case "RightOfT":
+                        Debug.Log(transform.gameObject.name + " IS AT THE RIGHT OF T INTERSECTION, TRFC");
+                        break;
+                    case "LeftOfT":
+                        Debug.Log(transform.gameObject.name + " IS AT THE LEFT OF T INTERSECTION, TRFC");
+                        break;
+                    case "4Way":
+                        Debug.Log(transform.gameObject.name + " IS AT THE 4-WAY INTERSECTION, TRFC");
+                        break;
+                    case "Lights":
+                        Debug.Log(transform.gameObject.name + " IS AT THE TRAFFIC LIGHTS, TRFC");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             //Combining my code, detecting  rear-half collision with another car
             if (Physics.Raycast(hitRearHalfRay, out hit, 1.5f))
             {
@@ -301,17 +399,22 @@ public class Raycasting : MonoBehaviour
             var rotation = this.transform.rotation;
 
             var rotationFrontHalf = frontRotation.transform.rotation; // Rays for front half
+            var rotationFrontDown = frontRotation.transform.rotation; // 5/30 Traffic Control Test Codes, casting rays downward
             var rotationRearHalf = rearRotation.transform.rotation; // Rays for rear half
-            var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * angle - 15, this.transform.up); // For the front and back
+            var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * 25 - 13, this.transform.up); // For the front and back
+            var rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1 / 2), this.transform.up);
             var rotationAngleAxSides = Quaternion.AngleAxis(i / (float)numberOfRays * 160 - 80, this.transform.up); // For the sides
             var rotationAngleAxFront = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, frontRotation.transform.up); // Rays for front half
+            var rotationAngleAxFrontDown = Quaternion.AngleAxis(1, frontRotation.transform.up); // 5/30 Traffic Control Test Codes, casting rays downward
             var rotationAngleAxRear = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, rearRotation.transform.up); // Rays for rear half
 
-            var forwardVec3 = rotation * rotationAngleAx * Vector3.forward;
+            var forwardVec3 = rotation * rotationAngleAx * Vector3.forward; // Adding the rays at the front
+            var forwardVec3Trfc = rotation * rotationAngleAxTrfc * Vector3.forward; // 6/05 Trfc Ctrl
             var backwardVec3 = rotation * rotationAngleAx * Vector3.back; // Adding the rays on the back
             var rightVec3 = rotation * rotationAngleAxSides * Vector3.right; // Adding the rays on the right
             var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
             var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
+            var frontCubeDownVec3 = rotationFrontDown * rotationAngleAxFrontDown * Vector3.down; // 5/30 Traffic Control Test Codes, casting rays downward
             var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
 
             //Combining my code, color coding the rays
@@ -331,11 +434,13 @@ public class Raycasting : MonoBehaviour
             }
 
             //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
-            Gizmos.DrawRay(this.transform.position, forwardVec3 * 4f);
+            Gizmos.DrawRay(this.transform.position, forwardVec3 * 5f); // Adding the rays at the front
+            Gizmos.DrawRay(this.transform.position, forwardVec3Trfc * 8f); // 6/05 Trfc Ctrl, Adding longer rays at the front
             Gizmos.DrawRay(this.transform.position, backwardVec3 * 3.5f); // Adding the rays on the back
             Gizmos.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
             Gizmos.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
             Gizmos.DrawRay(frontRotation.transform.position, frontCubeVec3 * 2f); // Rays for front half
+            Gizmos.DrawRay(frontRotation.transform.position, frontCubeDownVec3 * 0.8f); // 5/30 Traffic Control Test Codes, casting rays downward
             Gizmos.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
         }
     }

@@ -40,6 +40,7 @@ public class AI_Controller : MonoBehaviour
     public float publicBrake = 0.05f;
 
     public int mphSpeedInt; // For Raycasting to be able to access
+    public float targetAngleTrfc; 
 
     public float unStickDuration = 2f;
     public float unStickTime = 0f; // Setting the time for unstuck code according to the unStickDuration length
@@ -203,7 +204,7 @@ public class AI_Controller : MonoBehaviour
                 if (raycasting.aboutToHitDirectlyAhead == true) // Avoiding frontal collisions with other cars
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Frontal Collisions!!!");
-                    accel = 0.4f;
+                    accel = 0.5f;
                     brake = 0.01f;
                 }
                 if (raycasting.aboutToHitRightAhead == true)
@@ -526,7 +527,7 @@ public class AI_Controller : MonoBehaviour
                 if (raycasting.aboutToHitDirectlyAhead == true) // Avoiding frontal collisions with other cars
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Frontal Collisions!!!");
-                    accel = 0.4f;
+                    accel = 0.5f;
                     brake = 0.01f;
                 }
                 if (raycasting.aboutToHitRightAhead == true)
@@ -832,7 +833,7 @@ public class AI_Controller : MonoBehaviour
         else //***TRAFFIC CONTROL ELSE IF{} TEST CODES BEGIN (CONTINUE ALL THE WAY TO THE END OF THE PAGE) 5/01/22***
         {
             Vector3 localTargetTrfc = drivingControl.rb.gameObject.transform.InverseTransformPoint(targetTrfc);
-            float targetAngleTrfc = Mathf.Atan2(localTargetTrfc.x, localTargetTrfc.z) * Mathf.Rad2Deg;
+            targetAngleTrfc = Mathf.Atan2(localTargetTrfc.x, localTargetTrfc.z) * Mathf.Rad2Deg; // 6/05 Trfc Ctrl, Accessing from Raycasting.cs
             float distanceToTargetTrfc = Vector3.Distance(targetTrfc, drivingControl.rb.gameObject.transform.position);
 
             /* The following values need to be updated to get the car going and keep it under control
@@ -857,7 +858,7 @@ public class AI_Controller : MonoBehaviour
 
             //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
             //Works well, POV is that of drivingControl.rb.gameObject.transform.position
-            if (mphSpeedInt > 29)
+            if (mphSpeedInt > 20)
             {
                 switch (Mathf.Abs(targetAngleTrfc))
                 {
@@ -876,18 +877,18 @@ public class AI_Controller : MonoBehaviour
                         Debug.Log(this.transform.gameObject.name + " drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
                         switch (mphSpeedInt)
                         {
-                            case int i when mphSpeedInt < 21:
+                            case int i when mphSpeedInt < 25:
                                 Debug.Log(this.transform.gameObject.name + " Straight line, bring it up a bit");
                                 accel = 0.8f;
                                 brake = 0f;
                                 break;
-                            case int i when mphSpeedInt > 39:
-                                Debug.Log(this.transform.gameObject.name + " Bring it down below 80mph!");
+                            case int i when mphSpeedInt > 30: // CONTROLLING ONGOING SPEED HERE!
+                                Debug.Log(this.transform.gameObject.name + " Bring it down below 30mph!");
                                 accel = publicAccel;
                                 brake = publicBrake;
                                 break;
                             default:
-                                // the current speed is between 60 and 80mph
+                                // the current speed is between 20 and 30mph
                                 break;
                         }
                         break;
@@ -940,6 +941,11 @@ public class AI_Controller : MonoBehaviour
             aboutToHitDirectlyAhead = false;
             aboutToHitRightAhead = false;
             //
+            aboutToHitFarAhead = false; // 6/05 Traffic Control Test Codes
+            aboutToHitFarDirectly = false; 
+            aboutToHitFarLeftAhead = false;
+            aboutToHitFarRightAhead = false;
+            //
             aboutToGetHitRightRear = false;
             aboutToGetHitRear = false;
             aboutToGetHitLeftRear = false;
@@ -951,6 +957,7 @@ public class AI_Controller : MonoBehaviour
             isHittingLeft = false;
             isHittingFront = false;
             isHittingFrontTrfc = false; // For Traffic Control Codes
+            hitFrontHalfDownRayText = null; // 6/06 Trfc Ctrl
             isHittingRight = false;
             //
             isHittingRearHalf = false;
@@ -959,26 +966,51 @@ public class AI_Controller : MonoBehaviour
             isHittingLeftRear = false;
             */
             //Testing Overtaking, targetAngle += to turn right, -= to turn left 
-            if (mphSpeedInt > 19 && Time.time > unStickTime) // if driving 20mph or faster & not being stuck
+            if (mphSpeedInt > 9 && Time.time > unStickTime) // if driving 10mph or faster & not being stuck
             {
-                Debug.Log(this.transform.gameObject.name + " Speed > 20mph & Not Being Stuck == " + (Time.time > unStickTime));
+                Debug.Log(this.transform.gameObject.name + " Speed > 10mph & Not Being Stuck == " + (Time.time > unStickTime));
 
-                // About to hit ahead
+                // About to hit far ahead, 6/07 Trfc Ctrl
+                if (raycasting.aboutToHitFarLeftAhead == true)
+                {
+                    Debug.Log(this.transform.gameObject.name + " aboutToHitFarLeftAhead, TRFC " + targetAngleTrfc);
+                    targetAngleTrfc += 15;
+                    accel = 0.01f; 
+                    brake = 1.5f;
+                }
+                if (raycasting.aboutToHitFarDirectly == true) // Avoiding frontal collisions with other cars
+                {
+                    Debug.Log(this.transform.gameObject.name + " Avoiding Far Frontal Collisions, TRFC");
+                    accel = 0.01f; 
+                    brake = 1.5f;
+                }
+                if (raycasting.aboutToHitFarRightAhead == true)
+                {
+                    Debug.Log(this.transform.gameObject.name + " aboutToHitFarRightAhead, TRFC " + targetAngleTrfc);
+                    targetAngleTrfc -= 15;
+                    accel = 0.01f; 
+                    brake = 1.5f;
+                }
+                // About to hit ahead, 6/02 Trfc Ctrl
                 if (raycasting.aboutToHitLeftAhead == true)
                 {
-                    targetAngleTrfc += 30;
                     Debug.Log(this.transform.gameObject.name + " aboutToHitLeftAhead, targetAngle = " + targetAngleTrfc);
+                    targetAngleTrfc += 30;
+                    accel = 0.01f; 
+                    brake = 2f;
                 }
                 if (raycasting.aboutToHitDirectlyAhead == true) // Avoiding frontal collisions with other cars
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Frontal Collisions!!!");
-                    accel = 0.4f;
-                    brake = 0.01f;
+                    accel = 0.01f; 
+                    brake = 2f;
                 }
                 if (raycasting.aboutToHitRightAhead == true)
                 {
-                    targetAngleTrfc -= 30;
                     Debug.Log(this.transform.gameObject.name + " aboutToHitRightAhead, targetAngle = " + targetAngleTrfc);
+                    targetAngleTrfc -= 30;
+                    accel = 0.01f; 
+                    brake = 2f;
                 }
                 // About to get hit from rear
                 if (raycasting.aboutToGetHitRightRear == true)
@@ -989,7 +1021,7 @@ public class AI_Controller : MonoBehaviour
                 if (raycasting.aboutToGetHitRear == true) // Avoiding getting rear ended with another car
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Rear-End!!!");
-                    accel = 0.6f;
+                    accel = 0.3f; // 6/02 speed adjustment
                     brake = 0f;
                 }
                 if (raycasting.aboutToGetHitLeftRear == true)
@@ -1548,7 +1580,7 @@ public class AI_Controller : MonoBehaviour
             } 
 
             // Getting Cars Unstuck 
-            if (mphSpeedInt < 11) // hardly moving at 10 mph or less
+            if (mphSpeedInt < 6) // hardly moving at 10 mph or less
             {
                 if (!(currentPointTrfc == 0 && roundTrip == false)) // The car is not at the starting point of the race
                 {

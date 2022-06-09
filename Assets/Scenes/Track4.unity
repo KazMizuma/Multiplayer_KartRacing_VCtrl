@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 18236133}
   m_Layer: 0
   m_Name: roadStraightLongMid (8)
-  m_TagString: Untagged
+  m_TagString: 4Way
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1170,7 +1170,7 @@ GameObject:
   - component: {fileID: 243776271}
   m_Layer: 0
   m_Name: roadStraightLong (5)
-  m_TagString: Untagged
+  m_TagString: Lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1453,7 +1453,7 @@ GameObject:
   - component: {fileID: 288516528}
   m_Layer: 0
   m_Name: roadStraightLongMid (10)
-  m_TagString: Untagged
+  m_TagString: Lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2048,7 +2048,7 @@ GameObject:
   - component: {fileID: 377938264}
   m_Layer: 0
   m_Name: roadStraightLongMid (3)
-  m_TagString: Untagged
+  m_TagString: Lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2266,7 +2266,7 @@ GameObject:
   - component: {fileID: 395530962}
   m_Layer: 0
   m_Name: roadStraightLongMid (9)
-  m_TagString: Untagged
+  m_TagString: 4Way
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2644,7 +2644,7 @@ GameObject:
   - component: {fileID: 420823829}
   m_Layer: 0
   m_Name: roadStraightLongMid (16)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5333,7 +5333,7 @@ GameObject:
   - component: {fileID: 876772925}
   m_Layer: 0
   m_Name: roadStraightLongMid (6)
-  m_TagString: Untagged
+  m_TagString: Lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8177,7 +8177,7 @@ GameObject:
   - component: {fileID: 1340838892}
   m_Layer: 0
   m_Name: roadStraightLongMid (15)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8665,7 +8665,7 @@ GameObject:
   - component: {fileID: 1467349551}
   m_Layer: 0
   m_Name: roadStraightLongMid (12)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8962,7 +8962,7 @@ GameObject:
   - component: {fileID: 1545603528}
   m_Layer: 0
   m_Name: roadStraightLongMid (7)
-  m_TagString: Untagged
+  m_TagString: 4Way
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9464,7 +9464,7 @@ GameObject:
   - component: {fileID: 1657008909}
   m_Layer: 0
   m_Name: roadStraightLongMid (11)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11404,7 +11404,7 @@ GameObject:
   - component: {fileID: 2015952841}
   m_Layer: 0
   m_Name: roadStraightLongMid (5)
-  m_TagString: Untagged
+  m_TagString: Lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11608,7 +11608,7 @@ GameObject:
   - component: {fileID: 2052629843}
   m_Layer: 0
   m_Name: roadStraight (4)
-  m_TagString: Untagged
+  m_TagString: RightOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13656,7 +13656,7 @@ GameObject:
   - component: {fileID: 1902660952544108572}
   m_Layer: 0
   m_Name: roadStraight (1)
-  m_TagString: Untagged
+  m_TagString: LeftOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13784,7 +13784,7 @@ GameObject:
   - component: {fileID: 1015718802}
   m_Layer: 0
   m_Name: roadCurved (1)
-  m_TagString: Untagged
+  m_TagString: 4Way
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13841,7 +13841,7 @@ GameObject:
   - component: {fileID: 1199930728}
   m_Layer: 0
   m_Name: roadStraightLong (4)
-  m_TagString: Untagged
+  m_TagString: 4Way
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14869,7 +14869,7 @@ GameObject:
   - component: {fileID: 4382782424047250101}
   m_Layer: 0
   m_Name: roadCrossing (1)
-  m_TagString: Untagged
+  m_TagString: Lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15011,7 +15011,7 @@ GameObject:
   - component: {fileID: 6620280685454863990}
   m_Layer: 0
   m_Name: roadCurved
-  m_TagString: Untagged
+  m_TagString: Lights
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15433,7 +15433,7 @@ GameObject:
   - component: {fileID: 1798231030}
   m_Layer: 0
   m_Name: roadStraightLong (29)
-  m_TagString: Untagged
+  m_TagString: 4Way
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16111,7 +16111,7 @@ GameObject:
   - component: {fileID: 1608636379}
   m_Layer: 0
   m_Name: roadStraightLong (23)
-  m_TagString: Untagged
+  m_TagString: RightOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16832,7 +16832,7 @@ GameObject:
   - component: {fileID: 7385901051112821299}
   m_Layer: 0
   m_Name: roadCrossing
-  m_TagString: Untagged
+  m_TagString: 4Way
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18366,7 +18366,7 @@ GameObject:
   - component: {fileID: 8296172667405361246}
   m_Layer: 0
   m_Name: roadSplitSmall
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18399,7 +18399,7 @@ GameObject:
   - component: {fileID: 8296172667555639898}
   m_Layer: 0
   m_Name: roadStraightLongMid (8)
-  m_TagString: Untagged
+  m_TagString: RightOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18432,7 +18432,7 @@ GameObject:
   - component: {fileID: 8296172667600499830}
   m_Layer: 0
   m_Name: roadSplitSmall (3)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18465,7 +18465,7 @@ GameObject:
   - component: {fileID: 8296172667609318855}
   m_Layer: 0
   m_Name: roadSplitSmall (4)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18498,7 +18498,7 @@ GameObject:
   - component: {fileID: 8296172667643469651}
   m_Layer: 0
   m_Name: roadStraightLongMid (9)
-  m_TagString: Untagged
+  m_TagString: RightOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18531,7 +18531,7 @@ GameObject:
   - component: {fileID: 8296172667646545023}
   m_Layer: 0
   m_Name: roadStraightLongMid (3)
-  m_TagString: Untagged
+  m_TagString: LeftOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18564,7 +18564,7 @@ GameObject:
   - component: {fileID: 8296172667758324555}
   m_Layer: 0
   m_Name: roadStraightLongMid (10)
-  m_TagString: Untagged
+  m_TagString: LeftOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18615,7 +18615,7 @@ GameObject:
   - component: {fileID: 8296172667869897821}
   m_Layer: 0
   m_Name: roadSplitSmall (1)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18648,7 +18648,7 @@ GameObject:
   - component: {fileID: 8296172668063732441}
   m_Layer: 0
   m_Name: roadStraightLongMid
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18681,7 +18681,7 @@ GameObject:
   - component: {fileID: 8296172668132507419}
   m_Layer: 0
   m_Name: roadStraightLongMid (12)
-  m_TagString: Untagged
+  m_TagString: RightOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18714,7 +18714,7 @@ GameObject:
   - component: {fileID: 8296172668242581195}
   m_Layer: 0
   m_Name: roadSplitSmall (2)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18747,7 +18747,7 @@ GameObject:
   - component: {fileID: 8296172668294925531}
   m_Layer: 0
   m_Name: roadStraightLongMid (4)
-  m_TagString: Untagged
+  m_TagString: RightOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18798,7 +18798,7 @@ GameObject:
   - component: {fileID: 8296172668540485149}
   m_Layer: 0
   m_Name: roadStraightLongMid (13)
-  m_TagString: Untagged
+  m_TagString: LeftOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18831,7 +18831,7 @@ GameObject:
   - component: {fileID: 8296172668584491463}
   m_Layer: 0
   m_Name: roadStraightLongMid (2)
-  m_TagString: Untagged
+  m_TagString: LeftOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18864,7 +18864,7 @@ GameObject:
   - component: {fileID: 8296172668660566511}
   m_Layer: 0
   m_Name: roadStraightLongMid (5)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18915,7 +18915,7 @@ GameObject:
   - component: {fileID: 8296172668787284309}
   m_Layer: 0
   m_Name: roadStraightLongMid (6)
-  m_TagString: Untagged
+  m_TagString: RightOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18948,7 +18948,7 @@ GameObject:
   - component: {fileID: 8296172669054117058}
   m_Layer: 0
   m_Name: roadStraightLongMid (11)
-  m_TagString: Untagged
+  m_TagString: LeftOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19017,7 +19017,7 @@ GameObject:
   - component: {fileID: 8296172669330105916}
   m_Layer: 0
   m_Name: roadSplitSmall (5)
-  m_TagString: Untagged
+  m_TagString: T
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19050,7 +19050,7 @@ GameObject:
   - component: {fileID: 8296172669437061098}
   m_Layer: 0
   m_Name: roadStraightLongMid (1)
-  m_TagString: Untagged
+  m_TagString: RightOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19083,7 +19083,7 @@ GameObject:
   - component: {fileID: 8296172669440740631}
   m_Layer: 0
   m_Name: roadStraightLongMid (7)
-  m_TagString: Untagged
+  m_TagString: LeftOfT
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
