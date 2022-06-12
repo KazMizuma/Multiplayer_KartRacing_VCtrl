@@ -32,7 +32,7 @@ public class Raycasting : MonoBehaviour
     public bool isHittingFrontHalf = false;
     public bool isHittingLeft = false;
     public bool isHittingFront = false;
-    public bool isHittingFrontTrfc = false; // 5/13 Traffic Control Test Codes
+    public bool atThresholdTrfc = false; // 5/13 Traffic Control Test Codes
     public string hitFrontHalfDownRayText; // 5/30 Traffic Control Test Codes, casting rays downward, debug purpose only
     public bool isHittingRight = false;
     //
@@ -112,7 +112,7 @@ public class Raycasting : MonoBehaviour
         isHittingFrontHalf = false;
         isHittingLeft = false;
         isHittingFront = false;
-        isHittingFrontTrfc = false; // 5/13 Traffic Control Test Codes
+        atThresholdTrfc = false; // 5/13 Traffic Control Test Codes
         isHittingRight = false;
         //
         isHittingRearHalf = false;
@@ -330,7 +330,7 @@ public class Raycasting : MonoBehaviour
                 {
                     if (i > 6 && i < 11)
                     {
-                        isHittingFrontTrfc = true;
+                        atThresholdTrfc = true;
                         Debug.Log(transform.parent.gameObject.name + " IS AT " + hit.transform.gameObject.name + " THRESHOLD");
                     }
                 }

@@ -9,7 +9,7 @@ public class drivingControl : MonoBehaviour
     public float torque = 200;
     public GameObject[] wheelMeshes;
     public float maxSteerAngle = 30;
-    public float maxBrakeTorque = 1250; // 6/09/22 Trfc Ctrl, increasing the brake torque by 250
+    public float maxBrakeTorque = 5000; // 6/12/22 Trfc Ctrl, increasing the brake torque by 4000
 
     public AudioSource skidSound;
     public Transform tireSkidPrefab; //for startTireSkid and endTireSkid, tire skidding marking prefab
@@ -152,7 +152,7 @@ public class drivingControl : MonoBehaviour
         }
 
         steer = Mathf.Clamp(steer, -1, 1) * maxSteerAngle;
-        brake = Mathf.Clamp(brake, 0, 2) * maxBrakeTorque; // 6/09/22 Trfc Ctrl, increasing the brake threshold by 1
+        brake = Mathf.Clamp(brake, 0, 5) * maxBrakeTorque; // 6/12/22 Trfc Ctrl, increasing the brake threshold by 4
 
         for (int i = 0; i < 4; i++)
         {

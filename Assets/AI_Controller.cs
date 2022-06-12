@@ -44,7 +44,11 @@ public class AI_Controller : MonoBehaviour
 
     public float unStickDuration = 2f;
     public float unStickTime = 0f; // Setting the time for unstuck code according to the unStickDuration length
-    //float orgTargetAngle = 0f;
+                                   //float orgTargetAngle = 0f;
+
+    public bool leftTurn = false; // 6/11 Trfc Ctrl
+    public bool rightTurn = false;
+    public bool straight = false;
 
     // Start is called before the first frame update
     void Start()
@@ -119,12 +123,12 @@ public class AI_Controller : MonoBehaviour
                 switch (Mathf.Abs(targetAngleOdd))
                 {
                     case float f when Mathf.Abs(targetAngleOdd) > 50:
-                        Debug.Log(this.transform.gameObject.name + " Sharp Curv, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleOdd));
+                        Debug.Log(this.transform.gameObject.name + " Sharp Curve, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleOdd));
                         accel = 0.1f;
                         brake = 0.06f;
                         break;
                     case float f when Mathf.Abs(targetAngleOdd) > 25:
-                        Debug.Log(this.transform.gameObject.name + " Curv, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleOdd));
+                        Debug.Log(this.transform.gameObject.name + " Curve, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleOdd));
                         accel = 0.3f;
                         brake = 0.02f;
                         break;
@@ -376,10 +380,10 @@ public class AI_Controller : MonoBehaviour
             //    switch (nextTargetAngle) //calculating an angle difference from current to next waypoint
             //    {
             //        case float f when nextTargetAngle > 50:
-            //            Debug.Log("Sharp Curv, more than 50: " + nextTargetAngle);
+            //            Debug.Log("Sharp Curve, more than 50: " + nextTargetAngle);
             //            break;
             //        case float f when nextTargetAngle > 25:
-            //            Debug.Log("Curv, more than 25: " + nextTargetAngle);
+            //            Debug.Log("Curve, more than 25: " + nextTargetAngle);
             //            break;
             //        default:
             //            Debug.Log("Straight, 25 or less: " + nextTargetAngle);
@@ -418,12 +422,12 @@ public class AI_Controller : MonoBehaviour
                 switch (Mathf.Abs(targetAngle))
                 {
                     case float f when Mathf.Abs(targetAngle) > 50:
-                        Debug.Log(this.transform.gameObject.name + " Sharp Curv, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
+                        Debug.Log(this.transform.gameObject.name + " Sharp Curve, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
                         accel = 0.1f;
                         brake = 0.06f;
                         break;
                     case float f when Mathf.Abs(targetAngle) > 25:
-                        Debug.Log(this.transform.gameObject.name + " Curv, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
+                        Debug.Log(this.transform.gameObject.name + " Curve, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngle));
                         accel = 0.3f;
                         brake = 0.02f;
                         break;
@@ -836,9 +840,14 @@ public class AI_Controller : MonoBehaviour
             targetAngleTrfc = Mathf.Atan2(localTargetTrfc.x, localTargetTrfc.z) * Mathf.Rad2Deg; // 6/05 Trfc Ctrl, Accessing from Raycasting.cs
             float distanceToTargetTrfc = Vector3.Distance(targetTrfc, drivingControl.rb.gameObject.transform.position);
 
+            leftTurn = false; // 6/12 Trfc Ctrl
+            rightTurn = false;
+            straight = false;
+
             /* The following values need to be updated to get the car going and keep it under control
                Brought up here from below */
             //float accel = 0.5f; //original value
+            // 6/12 TRFC CTRL TEST CODES PLANNED HERE!!!
             float accel = 0.5f;
             float steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -1, 1); // "Commenting Out for Overtaking Test" * Mathf.Sign(drivingControl.currentSpeed);
             //Debug.Log("targetAngle & steeringSensitivity: " + targetAngle + " & " + steeringSensitivity);
@@ -863,32 +872,32 @@ public class AI_Controller : MonoBehaviour
                 switch (Mathf.Abs(targetAngleTrfc))
                 {
                     case float f when Mathf.Abs(targetAngleTrfc) > 50:
-                        Debug.Log(this.transform.gameObject.name + " Sharp Curv, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                        Debug.Log(this.transform.gameObject.name + " Sharp Curve, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
                         accel = 0.1f;
                         brake = 0.06f;
                         break;
                     case float f when Mathf.Abs(targetAngleTrfc) > 25:
-                        Debug.Log(this.transform.gameObject.name + " Curv, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                        Debug.Log(this.transform.gameObject.name + " Curve, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
                         accel = 0.3f;
                         brake = 0.02f;
                         break;
                     default:
                         Debug.Log(this.transform.gameObject.name + " Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
                         Debug.Log(this.transform.gameObject.name + " drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
-                        switch (mphSpeedInt)
+                        switch (mphSpeedInt) // CONTROLLING ONGOING SPEED WHILE GOING STRAIGHT!
                         {
                             case int i when mphSpeedInt < 25:
-                                Debug.Log(this.transform.gameObject.name + " Straight line, bring it up a bit");
+                                Debug.Log(this.transform.gameObject.name + " Bring it up => 25mph");
                                 accel = 0.8f;
                                 brake = 0f;
                                 break;
-                            case int i when mphSpeedInt > 30: // CONTROLLING ONGOING SPEED HERE!
-                                Debug.Log(this.transform.gameObject.name + " Bring it down below 30mph!");
+                            case int i when mphSpeedInt > 30: 
+                                Debug.Log(this.transform.gameObject.name + " Bring it down below 31mph");
                                 accel = publicAccel;
                                 brake = publicBrake;
                                 break;
                             default:
-                                // the current speed is between 20 and 30mph
+                                // the current speed is between 25 and 30mph
                                 break;
                         }
                         break;
@@ -966,51 +975,58 @@ public class AI_Controller : MonoBehaviour
             isHittingLeftRear = false;
             */
             //Testing Overtaking, targetAngle += to turn right, -= to turn left 
-            if (mphSpeedInt > 9 && Time.time > unStickTime) // if driving 10mph or faster & not being stuck
+            //if (mphSpeedInt > 9 && Time.time > unStickTime) // if driving 10mph or faster & not being stuck
+            if (mphSpeedInt > 5 && Time.time > unStickTime) // 6/12 Trfc Ctrl, if driving 6mph or faster & not being stuck
             {
-                Debug.Log(this.transform.gameObject.name + " Speed > 10mph & Not Being Stuck == " + (Time.time > unStickTime));
+                Debug.Log(this.transform.gameObject.name + " Speed > 6mph & Not Being Stuck == " + (Time.time > unStickTime));
+                //Debug.Log(this.transform.gameObject.name + " Speed > 0mph & Not Being Stuck == " + (Time.time > unStickTime)); // 6/12 Trfc Ctrl
 
-                // About to hit far ahead, 6/07 Trfc Ctrl
+                //if (raycasting.atThresholdTrfc == true && leftTurn == true) // 6/12 Trfc Ctrl TESTING
+                //{
+                //    brake = 3f;
+                //}
+
+                // About to hit far ahead, 6/12 Trfc Ctrl
                 if (raycasting.aboutToHitFarLeftAhead == true)
                 {
                     Debug.Log(this.transform.gameObject.name + " aboutToHitFarLeftAhead, TRFC " + targetAngleTrfc);
                     targetAngleTrfc += 15;
-                    accel = 0.01f; 
-                    brake = 1.5f;
+                    //accel = 0.01f;
+                    brake = 4f;
                 }
                 if (raycasting.aboutToHitFarDirectly == true) // Avoiding frontal collisions with other cars
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Far Frontal Collisions, TRFC");
-                    accel = 0.01f; 
-                    brake = 1.5f;
+                    //accel = 0.01f;
+                    brake = 4f;
                 }
                 if (raycasting.aboutToHitFarRightAhead == true)
                 {
                     Debug.Log(this.transform.gameObject.name + " aboutToHitFarRightAhead, TRFC " + targetAngleTrfc);
                     targetAngleTrfc -= 15;
-                    accel = 0.01f; 
-                    brake = 1.5f;
+                    //accel = 0.01f;
+                    brake = 4f;
                 }
-                // About to hit ahead, 6/02 Trfc Ctrl
+                // About to hit ahead, 6/12 Trfc Ctrl
                 if (raycasting.aboutToHitLeftAhead == true)
                 {
                     Debug.Log(this.transform.gameObject.name + " aboutToHitLeftAhead, targetAngle = " + targetAngleTrfc);
                     targetAngleTrfc += 30;
-                    accel = 0.01f; 
-                    brake = 2f;
+                    //accel = 0.01f;
+                    brake = 5f;
                 }
                 if (raycasting.aboutToHitDirectlyAhead == true) // Avoiding frontal collisions with other cars
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Frontal Collisions!!!");
-                    accel = 0.01f; 
-                    brake = 2f;
+                    //accel = 0.01f;
+                    brake = 5f;
                 }
                 if (raycasting.aboutToHitRightAhead == true)
                 {
                     Debug.Log(this.transform.gameObject.name + " aboutToHitRightAhead, targetAngle = " + targetAngleTrfc);
                     targetAngleTrfc -= 30;
-                    accel = 0.01f; 
-                    brake = 2f;
+                    //accel = 0.01f;
+                    brake = 5f;
                 }
                 // About to get hit from rear
                 if (raycasting.aboutToGetHitRightRear == true)
@@ -1069,9 +1085,6 @@ public class AI_Controller : MonoBehaviour
             // The increment of a current waypoint (currentPointTrfc) occurs as the car approaches the current waypoint at currentPointTrfc < 3 distance.
             if (distanceToTargetTrfc < 3) // increase the value if gameObject circles around the waypoint.
             {
-                bool leftTurn = false;
-                bool rightTurn = false;
-                bool straight = false;
                 currentPointTrfc++; // As soon as the car reaches a current waypoint at <3 distance, currentPointTrfc gets incremented to the next point
                 roundTrip = true; // Since it's not looping, as soon as the first increment occurs, changing the value to true.
 
@@ -1081,15 +1094,26 @@ public class AI_Controller : MonoBehaviour
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // straight
                     {
-                        currentPointTrfc = 28;
+                        currentPointTrfc = 43;
                     }
-                    else // turning left
+                    else // 6/12 Trfc Ctrl test codes, turning left
                     {
-                        currentPointTrfc = 5;
+                        //accel = 0.01f;
+                        //brake = 1.5f;
+                        currentPointTrfc = 83;
+                        leftTurn = true;
                     }
                 }
 
-                if (currentPointTrfc == 7 && raycasting.isHittingFrontTrfc == true) // just arrived at Cube (6)
+                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // 6/12 Trfc Ctrl, at (83)
+                {
+                    //accel = 0.01f;
+                    //brake = 2f;
+                    currentPointTrfc = 5;
+                    raycasting.atThresholdTrfc = false;
+                }
+
+                if (currentPointTrfc == 7 && raycasting.atThresholdTrfc == true) // just arrived at Cube (6)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
@@ -1105,10 +1129,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 7;
                     }
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.isHittingFrontTrfc BEGINS
+                // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.atThresholdTrfc BEGINS
                 if (currentPointTrfc == 9) // if/when the car has reached at the Cube (8), NOT at Cube (9),
                 {
                     int randomNumber = Random.Range(1, 3);
@@ -1132,24 +1156,24 @@ public class AI_Controller : MonoBehaviour
                     currentPointTrfc = 0; // Only then can you set the currentPointTrfc to (0)!
                                           // In actuality, the car goes directly from Cube (8) to (0), so Cube (0) and (9) are placed next to each other in the scene to workaround!
                 }
-                // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.isHittingFrontTrfc ENDS
+                // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.atThresholdTrfc ENDS
 
-                if (currentPointTrfc == 15) // just arrived at Cube (14), !?? WORKS WITHOUT raycasting.isHittingFrontTrfc HERE ??!
+                if (currentPointTrfc == 15) // just arrived at Cube (14), !?? WORKS WITHOUT raycasting.atThresholdTrfc HERE ??!
                 {
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // straight
                     {
                         currentPointTrfc = 19;
-                        straight = true;
+                        //straight = true;
                     }
                     else // right turn
                     {
                         currentPointTrfc = 15;
-                        rightTurn = true;
+                        //rightTurn = true;
                     }
                 }
 
-                if (currentPointTrfc == 19 && raycasting.isHittingFrontTrfc == true) // Arrived at Cube (18), isHittingFrontTrfc Threshold logic FIXES/WORKS!
+                if (currentPointTrfc == 19 && raycasting.atThresholdTrfc == true) // Arrived at Cube (18), atThresholdTrfc Threshold logic FIXES/WORKS!
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
@@ -1165,10 +1189,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 23;
                     }
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 25 && raycasting.isHittingFrontTrfc == true) // at Cube (24)
+                if (currentPointTrfc == 25 && raycasting.atThresholdTrfc == true) // at Cube (24)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
@@ -1184,10 +1208,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 51;
                     }
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 28 && raycasting.isHittingFrontTrfc == true) // just arrived at Cube (27), Box Collider & is Trigger MUST BE CHECKED!
+                if (currentPointTrfc == 28 && raycasting.atThresholdTrfc == true) // just arrived at Cube (27), Box Collider & is Trigger MUST BE CHECKED!
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1199,10 +1223,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 31;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; 
                 }
 
-                if (currentPointTrfc == 29 && raycasting.isHittingFrontTrfc == true) // just arrived at Cube (28)
+                if (currentPointTrfc == 29 && raycasting.atThresholdTrfc == true) // just arrived at Cube (28)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1214,16 +1238,16 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 63;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; 
                 }
 
-                if (currentPointTrfc == 32 && raycasting.isHittingFrontTrfc == true) // at Cube (31)
+                if (currentPointTrfc == 32 && raycasting.atThresholdTrfc == true) // at Cube (31)
                 {
                     currentPointTrfc = 19;
-                    raycasting.isHittingFrontTrfc = false; 
+                    raycasting.atThresholdTrfc = false; 
                 }
 
-                if (currentPointTrfc == 20 && raycasting.isHittingFrontTrfc == true) // at Cube (19)
+                if (currentPointTrfc == 20 && raycasting.atThresholdTrfc == true) // at Cube (19)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1235,16 +1259,16 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 20;
                     }
-                    raycasting.isHittingFrontTrfc = false; 
+                    raycasting.atThresholdTrfc = false; 
                 }
 
-                if (currentPointTrfc == 22 && raycasting.isHittingFrontTrfc == true) // at Cube (21)
+                if (currentPointTrfc == 22 && raycasting.atThresholdTrfc == true) // at Cube (21)
                 {
                     currentPointTrfc = 44;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 45 && raycasting.isHittingFrontTrfc == true) // at Cube (44)
+                if (currentPointTrfc == 45 && raycasting.atThresholdTrfc == true) // at Cube (44)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
@@ -1260,10 +1284,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 49; // left turn
                     }
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 47 && raycasting.isHittingFrontTrfc == true) // at Cube (46)
+                if (currentPointTrfc == 47 && raycasting.atThresholdTrfc == true) // at Cube (46)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
@@ -1279,16 +1303,16 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 22; // left turn
                     }
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 31 && raycasting.isHittingFrontTrfc == true) // reached Cube (30)
+                if (currentPointTrfc == 31 && raycasting.atThresholdTrfc == true) // reached Cube (30)
                 {
                     currentPointTrfc = 32;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 35 && raycasting.isHittingFrontTrfc == true) // at Cube (34)
+                if (currentPointTrfc == 35 && raycasting.atThresholdTrfc == true) // at Cube (34)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1300,10 +1324,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 35;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 37 && raycasting.isHittingFrontTrfc == true) // at Cube (36)
+                if (currentPointTrfc == 37 && raycasting.atThresholdTrfc == true) // at Cube (36)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
@@ -1319,16 +1343,16 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 25;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 23 && raycasting.isHittingFrontTrfc == true) // when at Cube (22)
+                if (currentPointTrfc == 23 && raycasting.atThresholdTrfc == true) // when at Cube (22)
                 {
                     currentPointTrfc = 37;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 38 && raycasting.isHittingFrontTrfc == true) // at Cube (37) 
+                if (currentPointTrfc == 38 && raycasting.atThresholdTrfc == true) // at Cube (37) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1340,10 +1364,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 43;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 43 && raycasting.isHittingFrontTrfc == true) // at Cube (42) 
+                if (currentPointTrfc == 43 && raycasting.atThresholdTrfc == true) // at Cube (42) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1355,16 +1379,16 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 35;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 44 && raycasting.isHittingFrontTrfc == true) // when at Cube (43)
+                if (currentPointTrfc == 44 && raycasting.atThresholdTrfc == true) // when at Cube (43)
                 {
                     currentPointTrfc = 28;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 48 && raycasting.isHittingFrontTrfc == true) // at Cube (47) 
+                if (currentPointTrfc == 48 && raycasting.atThresholdTrfc == true) // at Cube (47) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1376,10 +1400,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 54;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 54 && raycasting.isHittingFrontTrfc == true) // at Cube (53) 
+                if (currentPointTrfc == 54 && raycasting.atThresholdTrfc == true) // at Cube (53) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1391,16 +1415,16 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 74;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 49 && raycasting.isHittingFrontTrfc == true) // when at Cube (48)
+                if (currentPointTrfc == 49 && raycasting.atThresholdTrfc == true) // when at Cube (48)
                 {
                     currentPointTrfc = 75;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 65 && raycasting.isHittingFrontTrfc == true) // at Cube (64)
+                if (currentPointTrfc == 65 && raycasting.atThresholdTrfc == true) // at Cube (64)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
@@ -1416,10 +1440,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 45; // left turn
                     }
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 66 && raycasting.isHittingFrontTrfc == true) // at Cube (65) 
+                if (currentPointTrfc == 66 && raycasting.atThresholdTrfc == true) // at Cube (65) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1431,22 +1455,22 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 79;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 50 && raycasting.isHittingFrontTrfc == true) // when at Cube (49)
+                if (currentPointTrfc == 50 && raycasting.atThresholdTrfc == true) // when at Cube (49)
                 {
                     currentPointTrfc = 65;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 51 && raycasting.isHittingFrontTrfc == true) // when at Cube (50)
+                if (currentPointTrfc == 51 && raycasting.atThresholdTrfc == true) // when at Cube (50)
                 {
                     currentPointTrfc = 47;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 59 && raycasting.isHittingFrontTrfc == true) // at Cube (58) 
+                if (currentPointTrfc == 59 && raycasting.atThresholdTrfc == true) // at Cube (58) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1458,10 +1482,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 79;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 63 && raycasting.isHittingFrontTrfc == true) // at Cube (62) 
+                if (currentPointTrfc == 63 && raycasting.atThresholdTrfc == true) // at Cube (62) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1473,10 +1497,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 73;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 71 && raycasting.isHittingFrontTrfc == true) // at Cube (70) 
+                if (currentPointTrfc == 71 && raycasting.atThresholdTrfc == true) // at Cube (70) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1488,10 +1512,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 71;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 73 && raycasting.isHittingFrontTrfc == true) // at Cube (72) 
+                if (currentPointTrfc == 73 && raycasting.atThresholdTrfc == true) // at Cube (72) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1503,10 +1527,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 5;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 74 && raycasting.isHittingFrontTrfc == true) // when at Cube (73)
+                if (currentPointTrfc == 74 && raycasting.atThresholdTrfc == true) // when at Cube (73)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1518,10 +1542,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 15;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 79 && raycasting.isHittingFrontTrfc == true) // at Cube (78) 
+                if (currentPointTrfc == 79 && raycasting.atThresholdTrfc == true) // at Cube (78) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1533,10 +1557,10 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 80;
                     }
-                    raycasting.isHittingFrontTrfc = false; // Set it back to false immediately!
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 82 && raycasting.isHittingFrontTrfc == true) // at Cube (81)
+                if (currentPointTrfc == 82 && raycasting.atThresholdTrfc == true) // at Cube (81)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
@@ -1552,25 +1576,25 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 50; // left turn
                     }
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 75 && raycasting.isHittingFrontTrfc == true) // when at Cube (74)
+                if (currentPointTrfc == 75 && raycasting.atThresholdTrfc == true) // when at Cube (74)
                 {
                     currentPointTrfc = 73;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 79 && raycasting.isHittingFrontTrfc == true) // when at Cube (78)
+                if (currentPointTrfc == 79 && raycasting.atThresholdTrfc == true) // when at Cube (78)
                 {
                     currentPointTrfc = 66;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 80 && raycasting.isHittingFrontTrfc == true) // when at Cube (79)
+                if (currentPointTrfc == 80 && raycasting.atThresholdTrfc == true) // when at Cube (79)
                 {
                     currentPointTrfc = 59;
-                    raycasting.isHittingFrontTrfc = false;
+                    raycasting.atThresholdTrfc = false;
                 }
 
                 targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // Finally, the target angle is processed accordingly. 
@@ -1580,7 +1604,7 @@ public class AI_Controller : MonoBehaviour
             } 
 
             // Getting Cars Unstuck 
-            if (mphSpeedInt < 6) // hardly moving at 10 mph or less
+            if (mphSpeedInt < 6) // hardly moving at 5 mph or less
             {
                 if (!(currentPointTrfc == 0 && roundTrip == false)) // The car is not at the starting point of the race
                 {
