@@ -27,7 +27,7 @@ public class AI_Controller : MonoBehaviour
     Vector3 targetTrfc; //traffic control test codes 5/01/22
     int currentPointTrfc = 0;
 
-    bool roundTrip = false;
+    public bool roundTrip = false;
 
     // Making the values accessible from Raycasting.cs
     //public float accel = 0.5f;
@@ -73,6 +73,7 @@ public class AI_Controller : MonoBehaviour
             targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
             Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPointsTrfc.waypoints[currentPointTrfc].name);
             nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name; // For debug purpose only
+            wayPointsTrfc.waypoints[34].gameObject.GetComponent<BoxCollider>().enabled = false; // 6/12 Trfc Ctrl, (34) messes the starting traffic, so disabling
         }
     }
 
@@ -847,7 +848,7 @@ public class AI_Controller : MonoBehaviour
             /* The following values need to be updated to get the car going and keep it under control
                Brought up here from below */
             //float accel = 0.5f; //original value
-            // 6/12 TRFC CTRL TEST CODES PLANNED HERE!!!
+            // 6/13 TRFC CTRL TEST CODES PLANNED HERE!!!
             float accel = 0.5f;
             float steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -1, 1); // "Commenting Out for Overtaking Test" * Mathf.Sign(drivingControl.currentSpeed);
             //Debug.Log("targetAngle & steeringSensitivity: " + targetAngle + " & " + steeringSensitivity);
@@ -1086,7 +1087,13 @@ public class AI_Controller : MonoBehaviour
             if (distanceToTargetTrfc < 3) // increase the value if gameObject circles around the waypoint.
             {
                 currentPointTrfc++; // As soon as the car reaches a current waypoint at <3 distance, currentPointTrfc gets incremented to the next point
-                roundTrip = true; // Since it's not looping, as soon as the first increment occurs, changing the value to true.
+
+                if (this.transform.gameObject.name == "CarPurple (1)" && currentPointTrfc == 1) // 6/12 Trfc Ctrl
+                {
+                    roundTrip = true;
+                    wayPointsTrfc.waypoints[34].gameObject.GetComponent<BoxCollider>().enabled = true; // (34) messes the traffic at the starting point.
+                                                                                                       // Enabling it back after the traffic gets cleared.
+                }
 
                 if (currentPointTrfc == 5) // just arrived at Cube (4)
                 {
