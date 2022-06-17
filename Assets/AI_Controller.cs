@@ -50,6 +50,9 @@ public class AI_Controller : MonoBehaviour
     public bool rightTurn = false;
     public bool straight = false;
 
+    public float accelTrfc; // 6/16 Trfc Ctrl
+    public float brakeTrfc;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -308,7 +311,7 @@ public class AI_Controller : MonoBehaviour
             {
                 if (!(currentPointOdd == 0 && roundTrip == false)) // The car is not at the starting point of the race
                 {
-                    if (raycasting.isHittingFrontHalf == true && raycasting.isHittingRear == false) // if any gameObject blocking front half but none directly behind
+                    if (raycasting.isHittingFrontHalf == true && raycasting.isHittingRear == false) // if any gameObject is blocking front half but no "Car" is directly behind
                     {
                         unStickTime = Time.time + unStickDuration; // Setting the time to do unstuck codes for unStickDuration
                         if (Time.time < unStickTime) // if unStickTime hasn't reached Time.time yet, drive backward toward -2 previous waypoint at minus 800 wheelColliders[i].motorTorque
@@ -721,7 +724,7 @@ public class AI_Controller : MonoBehaviour
                 if (!(currentPoint == 0 && roundTrip == false)) // The car is not at the starting point of the race
                 {
                     /*if ((raycasting.isHittingFront == true || raycasting.aboutToHitAhead == true) && raycasting.isHittingRear == false)*/ // if any gameObject blocking or about to block ahead but none directly behind
-                    if (raycasting.isHittingFrontHalf == true && raycasting.isHittingRear == false) // if any gameObject blocking front half but none directly behind
+                    if (raycasting.isHittingFrontHalf == true && raycasting.isHittingRear == false) // if any gameObject is blocking front half but no "Car" is directly behind
                     /*if ((raycasting.isHittingFrontHalf == true || mphSpeedInt < 1) && (raycasting.isHittingRear == false || raycasting.isHittingRearHalf == false))*/ // This one doesn't seem to work well!!
                     {
                         //orgTargetAngle = targetAngle; // saving the original targetAngle value
@@ -845,15 +848,23 @@ public class AI_Controller : MonoBehaviour
             rightTurn = false;
             straight = false;
 
-            /* The following values need to be updated to get the car going and keep it under control
-               Brought up here from below */
-            //float accel = 0.5f; //original value
-            // 6/13 TRFC CTRL TEST CODES PLANNED HERE!!!
-            float accel = 0.5f;
-            float steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -1, 1); // "Commenting Out for Overtaking Test" * Mathf.Sign(drivingControl.currentSpeed);
-            //Debug.Log("targetAngle & steeringSensitivity: " + targetAngle + " & " + steeringSensitivity);
-            //Debug.Log(" drivingControl.currentSpeed " + drivingControl.currentSpeed + " Sign of it = " + Mathf.Sign(drivingControl.currentSpeed));
-            float brake = 0f;
+            // 6/16 TRFC CTRL TEST CODES
+            float steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -2, 2);
+            if (currentPointTrfc == 0 && roundTrip == false)
+            {
+                accelTrfc = 0.8f;
+                brakeTrfc = 0f;
+            }
+            if (currentPointTrfc > 0 && roundTrip == true && raycasting.hitFrontHalfDownRayText == "Untagged")
+            {
+                accelTrfc = 0.5f;
+                brakeTrfc = 0f;
+            }
+            if (currentPointTrfc > 0 && roundTrip == true && raycasting.hitFrontHalfDownRayText != "Untagged")
+            {
+                accelTrfc = 0.3f;
+                brakeTrfc = 0f;
+            }
 
             //Get the distance to the next waypoint
             //Debug.Log("distanceToTarget: " + (int)distanceToTarget + " Meters");
@@ -874,13 +885,13 @@ public class AI_Controller : MonoBehaviour
                 {
                     case float f when Mathf.Abs(targetAngleTrfc) > 50:
                         Debug.Log(this.transform.gameObject.name + " Sharp Curve, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
-                        accel = 0.1f;
-                        brake = 0.06f;
+                        accelTrfc = 0.1f;
+                        brakeTrfc = 0.06f;
                         break;
                     case float f when Mathf.Abs(targetAngleTrfc) > 25:
                         Debug.Log(this.transform.gameObject.name + " Curve, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
-                        accel = 0.3f;
-                        brake = 0.02f;
+                        accelTrfc = 0.3f;
+                        brakeTrfc = 0.02f;
                         break;
                     default:
                         Debug.Log(this.transform.gameObject.name + " Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
@@ -889,13 +900,13 @@ public class AI_Controller : MonoBehaviour
                         {
                             case int i when mphSpeedInt < 25:
                                 Debug.Log(this.transform.gameObject.name + " Bring it up => 25mph");
-                                accel = 0.8f;
-                                brake = 0f;
+                                accelTrfc = 0.8f;
+                                brakeTrfc = 0f;
                                 break;
-                            case int i when mphSpeedInt > 30: 
+                            case int i when mphSpeedInt > 30:
                                 Debug.Log(this.transform.gameObject.name + " Bring it down below 31mph");
-                                accel = publicAccel;
-                                brake = publicBrake;
+                                accelTrfc = publicAccel;
+                                brakeTrfc = publicBrake;
                                 break;
                             default:
                                 // the current speed is between 25 and 30mph
@@ -917,26 +928,26 @@ public class AI_Controller : MonoBehaviour
                         Debug.Log(this.transform.gameObject.name + " the target on uphill: " + yDifference);
                         if (mphSpeedInt < 40)
                         {
-                            accel = 3f;
-                            brake = 0f;
+                            accelTrfc = 3f;
+                            brakeTrfc = 0f;
                         }
                         else
                         {
-                            accel = 1f;
-                            brake = 0F;
+                            accelTrfc = 1f;
+                            brakeTrfc = 0F;
                         }
                         break;
                     case float f when yDifference < -1.5:
                         Debug.Log(this.transform.gameObject.name + " the target on downhill: " + yDifference);
                         if (mphSpeedInt < 60)
                         {
-                            accel = 0.5f;
-                            brake = 0f;
+                            accelTrfc = 0.5f;
+                            brakeTrfc = 0f;
                         }
                         else
                         {
-                            accel = 0.01f;
-                            brake = 0.1F;
+                            accelTrfc = 0.01f;
+                            brakeTrfc = 0.1F;
                         }
                         break;
                     default:
@@ -982,52 +993,41 @@ public class AI_Controller : MonoBehaviour
                 Debug.Log(this.transform.gameObject.name + " Speed > 6mph & Not Being Stuck == " + (Time.time > unStickTime));
                 //Debug.Log(this.transform.gameObject.name + " Speed > 0mph & Not Being Stuck == " + (Time.time > unStickTime)); // 6/12 Trfc Ctrl
 
-                //if (raycasting.atThresholdTrfc == true && leftTurn == true) // 6/12 Trfc Ctrl TESTING
-                //{
-                //    brake = 3f;
-                //}
-
                 // About to hit far ahead, 6/12 Trfc Ctrl
                 if (raycasting.aboutToHitFarLeftAhead == true)
                 {
                     Debug.Log(this.transform.gameObject.name + " aboutToHitFarLeftAhead, TRFC " + targetAngleTrfc);
-                    targetAngleTrfc += 15;
-                    //accel = 0.01f;
-                    brake = 4f;
+                    targetAngleTrfc += 30;
+                    brakeTrfc = 4f;
                 }
                 if (raycasting.aboutToHitFarDirectly == true) // Avoiding frontal collisions with other cars
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Far Frontal Collisions, TRFC");
-                    //accel = 0.01f;
-                    brake = 4f;
+                    brakeTrfc = 4f;
                 }
                 if (raycasting.aboutToHitFarRightAhead == true)
                 {
                     Debug.Log(this.transform.gameObject.name + " aboutToHitFarRightAhead, TRFC " + targetAngleTrfc);
-                    targetAngleTrfc -= 15;
-                    //accel = 0.01f;
-                    brake = 4f;
+                    targetAngleTrfc -= 30;
+                    brakeTrfc = 4f;
                 }
                 // About to hit ahead, 6/12 Trfc Ctrl
                 if (raycasting.aboutToHitLeftAhead == true)
                 {
                     Debug.Log(this.transform.gameObject.name + " aboutToHitLeftAhead, targetAngle = " + targetAngleTrfc);
-                    targetAngleTrfc += 30;
-                    //accel = 0.01f;
-                    brake = 5f;
+                    targetAngleTrfc += 45;
+                    brakeTrfc = 5f;
                 }
                 if (raycasting.aboutToHitDirectlyAhead == true) // Avoiding frontal collisions with other cars
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Frontal Collisions!!!");
-                    //accel = 0.01f;
-                    brake = 5f;
+                    brakeTrfc = 5f;
                 }
                 if (raycasting.aboutToHitRightAhead == true)
                 {
                     Debug.Log(this.transform.gameObject.name + " aboutToHitRightAhead, targetAngle = " + targetAngleTrfc);
-                    targetAngleTrfc -= 30;
-                    //accel = 0.01f;
-                    brake = 5f;
+                    targetAngleTrfc -= 45;
+                    brakeTrfc = 5f;
                 }
                 // About to get hit from rear
                 if (raycasting.aboutToGetHitRightRear == true)
@@ -1035,11 +1035,10 @@ public class AI_Controller : MonoBehaviour
                     targetAngleTrfc -= 30;
                     Debug.Log(this.transform.gameObject.name + " aboutToGetHitRightRear, targetAngle = " + targetAngleTrfc);
                 }
-                if (raycasting.aboutToGetHitRear == true) // Avoiding getting rear ended with another car
+                if (raycasting.aboutToGetHitRear == true) // 6/14 Trfc Ctrl, Getting rear ended by another car
                 {
-                    Debug.Log(this.transform.gameObject.name + " Avoiding Rear-End!!!");
-                    accel = 0.3f; // 6/02 speed adjustment
-                    brake = 0f;
+                    Debug.Log(this.transform.gameObject.name + " About To Get Rear-Ended!!!");
+                    brakeTrfc = 0f;
                 }
                 if (raycasting.aboutToGetHitLeftRear == true)
                 {
@@ -1060,12 +1059,12 @@ public class AI_Controller : MonoBehaviour
                 // A part of the front half is hitting
                 if (raycasting.isHittingLeft == true)
                 {
-                    targetAngleTrfc += 15;
+                    targetAngleTrfc += 60;
                     Debug.Log(this.transform.gameObject.name + " isHittingLeft, targetAngle = " + targetAngleTrfc);
                 }
                 if (raycasting.isHittingRight == true)
                 {
-                    targetAngleTrfc -= 15;
+                    targetAngleTrfc -= 60;
                     Debug.Log(this.transform.gameObject.name + " isHittingRight, targetAngle = " + targetAngleTrfc);
                 }
                 // A part of the rear half is hitting
@@ -1088,14 +1087,18 @@ public class AI_Controller : MonoBehaviour
             {
                 currentPointTrfc++; // As soon as the car reaches a current waypoint at <3 distance, currentPointTrfc gets incremented to the next point
 
-                if (this.transform.gameObject.name == "CarPurple (1)" && currentPointTrfc == 1) // 6/12 Trfc Ctrl
+                if (currentPointTrfc == 1) // 6/16 Trfc Ctrl
                 {
                     roundTrip = true;
+                }
+
+                if (this.transform.gameObject.name == "CarPurple (1)") // 6/12 Trfc Ctrl
+                {
                     wayPointsTrfc.waypoints[34].gameObject.GetComponent<BoxCollider>().enabled = true; // (34) messes the traffic at the starting point.
                                                                                                        // Enabling it back after the traffic gets cleared.
                 }
 
-                if (currentPointTrfc == 5) // just arrived at Cube (4)
+                if (currentPointTrfc == 5) // 6/14 Trfc Ctrl, just arrived at Cube (4), WORKS WITHOUT raycasting.atThresholdTrfc
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1105,22 +1108,17 @@ public class AI_Controller : MonoBehaviour
                     }
                     else // 6/12 Trfc Ctrl test codes, turning left
                     {
-                        //accel = 0.01f;
-                        //brake = 1.5f;
-                        currentPointTrfc = 83;
-                        leftTurn = true;
+                        currentPointTrfc = 5;
                     }
                 }
 
-                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // 6/12 Trfc Ctrl, at (83)
+                if (currentPointTrfc == 44 && raycasting.atThresholdTrfc == true) // 6/14 Trfc Ctrl, at Cube (43)
                 {
-                    //accel = 0.01f;
-                    //brake = 2f;
-                    currentPointTrfc = 5;
+                    currentPointTrfc = 28;
                     raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 7 && raycasting.atThresholdTrfc == true) // just arrived at Cube (6)
+                if (currentPointTrfc == 7 && raycasting.atThresholdTrfc == true) // just arrived at Cube (6), Box Collider & is Trigger MUST BE CHECKED!
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 4);
@@ -1136,7 +1134,7 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 7;
                     }
-                    raycasting.atThresholdTrfc = false;
+                    raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
                 // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.atThresholdTrfc BEGINS
@@ -1165,7 +1163,7 @@ public class AI_Controller : MonoBehaviour
                 }
                 // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.atThresholdTrfc ENDS
 
-                if (currentPointTrfc == 15) // just arrived at Cube (14), !?? WORKS WITHOUT raycasting.atThresholdTrfc HERE ??!
+                if (currentPointTrfc == 15) // just arrived at Cube (14), WORKS WITHOUT raycasting.atThresholdTrfc
                 {
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // straight
@@ -1218,7 +1216,7 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 28 && raycasting.atThresholdTrfc == true) // just arrived at Cube (27), Box Collider & is Trigger MUST BE CHECKED!
+                if (currentPointTrfc == 28 && raycasting.atThresholdTrfc == true) // just arrived at Cube (27)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     int randomNumber = Random.Range(1, 3);
@@ -1615,7 +1613,7 @@ public class AI_Controller : MonoBehaviour
             {
                 if (!(currentPointTrfc == 0 && roundTrip == false)) // The car is not at the starting point of the race
                 {
-                    if (raycasting.isHittingFrontHalf == true && raycasting.isHittingRear == false) // if any gameObject blocking front half but none directly behind
+                    if (raycasting.isHittingFrontHalf == true && raycasting.isHittingRear == false) // if any gameObject is blocking front half but no "Car" is directly behind
                     {
                         unStickTime = Time.time + unStickDuration; // Setting the time to do unstuck codes for unStickDuration
                         if (Time.time < unStickTime) // if unStickTime hasn't reached Time.time yet, drive backward toward -2 previous waypoint at minus 800 wheelColliders[i].motorTorque
@@ -1644,10 +1642,10 @@ public class AI_Controller : MonoBehaviour
                             localTargetTrfc = drivingControl.rb.gameObject.transform.InverseTransformPoint(targetTrfc);
                             targetAngleTrfc = Mathf.Atan2(localTargetTrfc.x, localTargetTrfc.z) * Mathf.Rad2Deg;
                             steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -1, 1); // (targetAngle * -1) to try directing towards the previous waypoint while driving backward, SAME RESULT AS * +1
-                            brake = 0f;
-                            accel = -4f;
-                            Debug.Log(this.transform.gameObject.name + " drivingControl.Go Backward(" + accel + ", " + steer + ", " + brake + ")");
-                            drivingControl.Go(accel, steer, brake);
+                            brakeTrfc = 0f;
+                            accelTrfc = -4f;
+                            Debug.Log(this.transform.gameObject.name + " drivingControl.Go Backward(" + accelTrfc + ", " + steer + ", " + brakeTrfc + ")");
+                            drivingControl.Go(accelTrfc, steer, brakeTrfc);
                         }
                         targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
 
@@ -1655,14 +1653,14 @@ public class AI_Controller : MonoBehaviour
                         //localTarget = drivingControl.rb.gameObject.transform.InverseTransformPoint(target);
                         //targetAngle = Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg;
                         //steer = Mathf.Clamp(targetAngle * (steeringSensitivity * 2f), -2, 2);
-                        //accel = 3f; // drive forward at 600 wheelColliders[i].motorTorque after driving backward
+                        //accelTrfc = 3f; // drive forward at 600 wheelColliders[i].motorTorque after driving backward
                         //brake = 0f;
                         //ANY OF THE ABOVE LINES PLACING HERE WILL MESS YOU UP!!!
                     }
                 }
             }
-            Debug.Log(this.transform.gameObject.name + " drivingControl.Go(" + accel + ", " + steer + ", " + brake + ")");
-            drivingControl.Go(accel, steer, brake); //running Go regardless of distanceToTarget here
+            Debug.Log(this.transform.gameObject.name + " drivingControl.Go(" + accelTrfc + ", " + steer + ", " + brakeTrfc + ")");
+            drivingControl.Go(accelTrfc, steer, brakeTrfc); //running Go regardless of distanceToTarget here
             drivingControl.CheckSkidding();
             drivingControl.calculateEngineSound();
         } //***TRAFFIC CONTROL ELSE IF{} TEST CODES END 5/01/22***

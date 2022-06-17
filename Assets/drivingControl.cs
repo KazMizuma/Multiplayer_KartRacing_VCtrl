@@ -8,7 +8,7 @@ public class drivingControl : MonoBehaviour
     public WheelCollider[] wheelColliders;
     public float torque = 200;
     public GameObject[] wheelMeshes;
-    public float maxSteerAngle = 30;
+    public float maxSteerAngle = 45; // 6/14/22 Trfc Ctrl
     public float maxBrakeTorque = 5000; // 6/12/22 Trfc Ctrl, increasing the brake torque by 4000
 
     public AudioSource skidSound;
@@ -151,7 +151,7 @@ public class drivingControl : MonoBehaviour
             thrustTorque = accel * torque;
         }
 
-        steer = Mathf.Clamp(steer, -1, 1) * maxSteerAngle;
+        steer = Mathf.Clamp(steer, -2, 2) * maxSteerAngle; // 6/14/22 Trfc Ctrl
         brake = Mathf.Clamp(brake, 0, 5) * maxBrakeTorque; // 6/12/22 Trfc Ctrl, increasing the brake threshold by 4
 
         for (int i = 0; i < 4; i++)
