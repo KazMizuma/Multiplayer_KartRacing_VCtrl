@@ -848,22 +848,25 @@ public class AI_Controller : MonoBehaviour
             rightTurn = false;
             straight = false;
 
-            // 6/16 TRFC CTRL TEST CODES
+            // 6/17 TRFC CTRL TEST CODES
             float steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -2, 2);
-            if (currentPointTrfc == 0 && roundTrip == false)
+            if (currentPointTrfc < 1 && roundTrip == false) // if at the starting point
             {
                 accelTrfc = 0.8f;
                 brakeTrfc = 0f;
             }
-            if (currentPointTrfc > 0 && roundTrip == true && raycasting.hitFrontHalfDownRayText == "Untagged")
+            else // if not at starting point
             {
-                accelTrfc = 0.5f;
-                brakeTrfc = 0f;
-            }
-            if (currentPointTrfc > 0 && roundTrip == true && raycasting.hitFrontHalfDownRayText != "Untagged")
-            {
-                accelTrfc = 0.3f;
-                brakeTrfc = 0f;
+                if (raycasting.hitFrontHalfDownRayText == "Untagged")
+                {
+                    accelTrfc = 0.5f;
+                    brakeTrfc = 0f;
+                }
+                else // at where intersections are; 4Way Stop sign at 24 44 64 81
+                {
+                    accelTrfc = 0.25f;
+                    brakeTrfc = 0f;
+                }
             }
 
             //Get the distance to the next waypoint
@@ -879,40 +882,47 @@ public class AI_Controller : MonoBehaviour
 
             //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
             //Works well, POV is that of drivingControl.rb.gameObject.transform.position
-            if (mphSpeedInt > 20)
+            // 6/18 Trfc Ctrl Test Code
+            if (mphSpeedInt > 5 && raycasting.hitFrontHalfDownRayText != "Untagged")
             {
-                switch (Mathf.Abs(targetAngleTrfc))
+                Debug.Log(this.transform.gameObject.name + " Maintaining at 5mph");
+                accelTrfc = publicAccel;
+                brakeTrfc = publicBrake;
+                if (mphSpeedInt > 20 && raycasting.hitFrontHalfDownRayText == "Untagged")
                 {
-                    case float f when Mathf.Abs(targetAngleTrfc) > 50:
-                        Debug.Log(this.transform.gameObject.name + " Sharp Curve, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
-                        accelTrfc = 0.1f;
-                        brakeTrfc = 0.06f;
-                        break;
-                    case float f when Mathf.Abs(targetAngleTrfc) > 25:
-                        Debug.Log(this.transform.gameObject.name + " Curve, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
-                        accelTrfc = 0.3f;
-                        brakeTrfc = 0.02f;
-                        break;
-                    default:
-                        Debug.Log(this.transform.gameObject.name + " Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
-                        Debug.Log(this.transform.gameObject.name + " drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
-                        switch (mphSpeedInt) // CONTROLLING ONGOING SPEED WHILE GOING STRAIGHT!
-                        {
-                            case int i when mphSpeedInt < 25:
-                                Debug.Log(this.transform.gameObject.name + " Bring it up => 25mph");
-                                accelTrfc = 0.8f;
-                                brakeTrfc = 0f;
-                                break;
-                            case int i when mphSpeedInt > 30:
-                                Debug.Log(this.transform.gameObject.name + " Bring it down below 31mph");
-                                accelTrfc = publicAccel;
-                                brakeTrfc = publicBrake;
-                                break;
-                            default:
-                                // the current speed is between 25 and 30mph
-                                break;
-                        }
-                        break;
+                    switch (Mathf.Abs(targetAngleTrfc))
+                    {
+                        case float f when Mathf.Abs(targetAngleTrfc) > 50:
+                            Debug.Log(this.transform.gameObject.name + " Sharp Curve, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                            accelTrfc = 0.1f;
+                            brakeTrfc = 0.06f;
+                            break;
+                        case float f when Mathf.Abs(targetAngleTrfc) > 25:
+                            Debug.Log(this.transform.gameObject.name + " Curve, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                            accelTrfc = 0.3f;
+                            brakeTrfc = 0.02f;
+                            break;
+                        default:
+                            Debug.Log(this.transform.gameObject.name + " Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                            Debug.Log(this.transform.gameObject.name + " drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
+                            switch (mphSpeedInt) // CONTROLLING ONGOING SPEED WHILE GOING STRAIGHT!
+                            {
+                                case int i when mphSpeedInt < 25:
+                                    Debug.Log(this.transform.gameObject.name + " Bring it up => 25mph");
+                                    accelTrfc = 0.8f;
+                                    brakeTrfc = 0f;
+                                    break;
+                                case int i when mphSpeedInt > 25:
+                                    Debug.Log(this.transform.gameObject.name + " Bring it down below 26mph");
+                                    accelTrfc = publicAccel;
+                                    brakeTrfc = publicBrake;
+                                    break;
+                                default:
+                                    // the current speed is between 20 and 25mph
+                                    break;
+                            }
+                            break;
+                    }
                 }
             }
 
@@ -1087,7 +1097,7 @@ public class AI_Controller : MonoBehaviour
             {
                 currentPointTrfc++; // As soon as the car reaches a current waypoint at <3 distance, currentPointTrfc gets incremented to the next point
 
-                if (currentPointTrfc == 1) // 6/16 Trfc Ctrl
+                if (currentPointTrfc == 2) // 6/16 Trfc Ctrl, at Cube (1)
                 {
                     roundTrip = true;
                 }
@@ -1608,8 +1618,8 @@ public class AI_Controller : MonoBehaviour
                 nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name; // For debug purpose only
             } 
 
-            // Getting Cars Unstuck 
-            if (mphSpeedInt < 6) // hardly moving at 5 mph or less
+            // Getting Cars Unstuck, 6/18 Trfc Ctrl Test Code
+            if (mphSpeedInt < 6 && raycasting.hitFrontHalfDownRayText == "Untagged") // hardly moving at 5 mph or less and not at intersections
             {
                 if (!(currentPointTrfc == 0 && roundTrip == false)) // The car is not at the starting point of the race
                 {
