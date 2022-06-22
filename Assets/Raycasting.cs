@@ -120,18 +120,28 @@ public class Raycasting : MonoBehaviour
         isHittingRear = false;
         isHittingLeftRear = false;
 
+        Ray downRay = new Ray(gameObject.transform.position, gameObject.transform.up * -0.8f); // 6/22 Trfc Ctrl, raycast down, not wasting 16 rays!
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.up * -0.8f, Color.green);
+        if (Physics.Raycast(downRay, out hit, 0.8f))
+        {
+            if (hit.transform.gameObject.tag == "Car")
+            {
+                Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + "!!!");
+            }
+        }
+
         for (int i = 1; i < numberOfRays; i++)
         {
             var rotation = this.transform.rotation;
 
             var rotationFrontHalf = frontRotation.transform.rotation; // Rays for front half
-            var rotationFrontDown = frontRotation.transform.rotation; // 5/30 Traffic Control Test Codes, casting rays downward
+            //var rotationFrontDown = frontRotation.transform.rotation; // 5/30 Traffic Control Test Codes, casting rays downward
             var rotationRearHalf = rearRotation.transform.rotation; // Rays for rear half
             var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * 25 - 13, this.transform.up); // For the front and back
             var rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1/2), this.transform.up); // For the front, 6/05 Trfc Ctrl
             var rotationAngleAxSides = Quaternion.AngleAxis(i / (float)numberOfRays * 160 - 80, this.transform.up); // For the sides
             var rotationAngleAxFront = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, frontRotation.transform.up); // Rays for front half
-            var rotationAngleAxFrontDown = Quaternion.AngleAxis(1, frontRotation.transform.up); // 5/30 Traffic Control Test Codes, casting rays downward
+            //var rotationAngleAxFrontDown = Quaternion.AngleAxis(1, frontRotation.transform.up); // 5/30 Traffic Control Test Codes, casting rays downward
             var rotationAngleAxRear = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, rearRotation.transform.up); // Rays for rear half
 
             var forwardVec3 = rotation * rotationAngleAx * Vector3.forward;
@@ -140,7 +150,7 @@ public class Raycasting : MonoBehaviour
             var rightVec3 = rotation * rotationAngleAxSides * Vector3.right; // Adding the rays on the right
             var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
             var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
-            var frontCubeDownVec3 = rotationFrontDown * rotationAngleAxFrontDown * Vector3.down; // 5/30 Traffic Control Test Codes, casting rays downward
+            //var frontCubeDownVec3 = rotationFrontDown * rotationAngleAxFrontDown * Vector3.down; // 5/30 Traffic Control Test Codes, casting rays downward
             var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
 
             Ray hittingRay = new Ray(this.transform.position, forwardVec3 * 5f); // Combining my code to detect frontal collision
@@ -149,7 +159,7 @@ public class Raycasting : MonoBehaviour
             Ray hitRightRay = new Ray(this.transform.position, rightVec3 * 1.5f); // Combining my code to detect right side collision
             Ray hitLeftRay = new Ray(this.transform.position, leftVec3 * 1.5f); // Combining my code to detect left side collision
             Ray hitFrontHalfRay = new Ray(frontRotation.transform.position, frontCubeVec3 * 2f);
-            Ray hitFrontHalfDownRay = new Ray(frontRotation.transform.position, frontCubeDownVec3 * 0.8f); // 5/30 Traffic Control Test Codes, casting rays downward
+            //Ray hitFrontHalfDownRay = new Ray(frontRotation.transform.position, frontCubeDownVec3 * 0.8f); // 5/30 Traffic Control Test Codes, casting rays downward
             Ray hitRearHalfRay = new Ray(rearRotation.transform.position, rearCubeVec3 * 1.5f);
 
             //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
@@ -336,7 +346,7 @@ public class Raycasting : MonoBehaviour
                 }
             }
 
-            if (Physics.Raycast(hitFrontHalfDownRay, out hit, 0.8f)) // 5/30 Traffic Control Test Codes, casting rays downward
+            if (Physics.Raycast(downRay, out hit, 0.8f)) // 5/30 Traffic Control Test Codes, casting rays downward
             {
                 Debug.Log(transform.gameObject.name + " IS ON " + hit.transform.gameObject.name + ", TRFC");
                 hitFrontHalfDownRayText = hit.transform.gameObject.tag;
@@ -399,13 +409,13 @@ public class Raycasting : MonoBehaviour
             var rotation = this.transform.rotation;
 
             var rotationFrontHalf = frontRotation.transform.rotation; // Rays for front half
-            var rotationFrontDown = frontRotation.transform.rotation; // 5/30 Traffic Control Test Codes, casting rays downward
+            //var rotationFrontDown = frontRotation.transform.rotation; // 5/30 Traffic Control Test Codes, casting rays downward
             var rotationRearHalf = rearRotation.transform.rotation; // Rays for rear half
             var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * 25 - 13, this.transform.up); // For the front and back
             var rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1 / 2), this.transform.up);
             var rotationAngleAxSides = Quaternion.AngleAxis(i / (float)numberOfRays * 160 - 80, this.transform.up); // For the sides
             var rotationAngleAxFront = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, frontRotation.transform.up); // Rays for front half
-            var rotationAngleAxFrontDown = Quaternion.AngleAxis(1, frontRotation.transform.up); // 5/30 Traffic Control Test Codes, casting rays downward
+            //var rotationAngleAxFrontDown = Quaternion.AngleAxis(1, frontRotation.transform.up); // 5/30 Traffic Control Test Codes, casting rays downward
             var rotationAngleAxRear = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, rearRotation.transform.up); // Rays for rear half
 
             var forwardVec3 = rotation * rotationAngleAx * Vector3.forward; // Adding the rays at the front
@@ -414,7 +424,7 @@ public class Raycasting : MonoBehaviour
             var rightVec3 = rotation * rotationAngleAxSides * Vector3.right; // Adding the rays on the right
             var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
             var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
-            var frontCubeDownVec3 = rotationFrontDown * rotationAngleAxFrontDown * Vector3.down; // 5/30 Traffic Control Test Codes, casting rays downward
+            //var frontCubeDownVec3 = rotationFrontDown * rotationAngleAxFrontDown * Vector3.down; // 5/30 Traffic Control Test Codes, casting rays downward
             var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
 
             //Combining my code, color coding the rays
@@ -440,7 +450,7 @@ public class Raycasting : MonoBehaviour
             Gizmos.DrawRay(this.transform.position, rightVec3 * 1.5f); // Adding the rays on the right
             Gizmos.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
             Gizmos.DrawRay(frontRotation.transform.position, frontCubeVec3 * 2f); // Rays for front half
-            Gizmos.DrawRay(frontRotation.transform.position, frontCubeDownVec3 * 0.8f); // 5/30 Traffic Control Test Codes, casting rays downward
+            //Gizmos.DrawRay(frontRotation.transform.position, frontCubeDownVec3 * 0.8f); // 5/30 Traffic Control Test Codes, casting rays downward
             Gizmos.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
         }
     }

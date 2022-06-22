@@ -43,6 +43,7 @@ public class AI_Controller : MonoBehaviour
     public float targetAngleTrfc; 
 
     public float unStickDuration = 2f;
+    public float unStickDurationTrfc = 1f;
     public float unStickTime = 0f; // Setting the time for unstuck code according to the unStickDuration length
                                    //float orgTargetAngle = 0f;
 
@@ -52,6 +53,8 @@ public class AI_Controller : MonoBehaviour
 
     public float accelTrfc; // 6/16 Trfc Ctrl
     public float brakeTrfc;
+
+    public int current; // 6/22 Trfc Ctrl
 
     // Start is called before the first frame update
     void Start()
@@ -850,21 +853,21 @@ public class AI_Controller : MonoBehaviour
 
             // 6/17 TRFC CTRL TEST CODES
             float steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -2, 2);
-            if (currentPointTrfc < 1 && roundTrip == false) // if at the starting point
+            if (currentPointTrfc < 2 && roundTrip == false) // if at the initial starting point
             {
-                accelTrfc = 0.8f;
+                accelTrfc = 0.5f;
                 brakeTrfc = 0f;
             }
-            else // if not at starting point
+            else // if not at the initial starting point
             {
                 if (raycasting.hitFrontHalfDownRayText == "Untagged")
                 {
-                    accelTrfc = 0.5f;
+                    accelTrfc = 0.3f;
                     brakeTrfc = 0f;
                 }
                 else // at where intersections are; 4Way Stop sign at 24 44 64 81
                 {
-                    accelTrfc = 0.25f;
+                    accelTrfc = 0.2f;
                     brakeTrfc = 0f;
                 }
             }
@@ -883,50 +886,44 @@ public class AI_Controller : MonoBehaviour
             //Finding out the angle to the next target, drivingControl.rb.gameObject.transform to waypoint, version 2; MY AI CODE!
             //Works well, POV is that of drivingControl.rb.gameObject.transform.position
             // 6/18 Trfc Ctrl Test Code
-            if (mphSpeedInt > 5 && raycasting.hitFrontHalfDownRayText != "Untagged")
+            if (mphSpeedInt > 15)
             {
-                Debug.Log(this.transform.gameObject.name + " Maintaining at 5mph");
-                accelTrfc = publicAccel;
-                brakeTrfc = publicBrake;
-                if (mphSpeedInt > 20 && raycasting.hitFrontHalfDownRayText == "Untagged")
+                switch (Mathf.Abs(targetAngleTrfc))
                 {
-                    switch (Mathf.Abs(targetAngleTrfc))
-                    {
-                        case float f when Mathf.Abs(targetAngleTrfc) > 50:
-                            Debug.Log(this.transform.gameObject.name + " Sharp Curve, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
-                            accelTrfc = 0.1f;
-                            brakeTrfc = 0.06f;
-                            break;
-                        case float f when Mathf.Abs(targetAngleTrfc) > 25:
-                            Debug.Log(this.transform.gameObject.name + " Curve, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
-                            accelTrfc = 0.3f;
-                            brakeTrfc = 0.02f;
-                            break;
-                        default:
-                            Debug.Log(this.transform.gameObject.name + " Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
-                            Debug.Log(this.transform.gameObject.name + " drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
-                            switch (mphSpeedInt) // CONTROLLING ONGOING SPEED WHILE GOING STRAIGHT!
-                            {
-                                case int i when mphSpeedInt < 25:
-                                    Debug.Log(this.transform.gameObject.name + " Bring it up => 25mph");
-                                    accelTrfc = 0.8f;
-                                    brakeTrfc = 0f;
-                                    break;
-                                case int i when mphSpeedInt > 25:
-                                    Debug.Log(this.transform.gameObject.name + " Bring it down below 26mph");
-                                    accelTrfc = publicAccel;
-                                    brakeTrfc = publicBrake;
-                                    break;
-                                default:
-                                    // the current speed is between 20 and 25mph
-                                    break;
-                            }
-                            break;
-                    }
+                    case float f when Mathf.Abs(targetAngleTrfc) > 50:
+                        Debug.Log(this.transform.gameObject.name + " Sharp Curve, more than 50 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                        accelTrfc = 0.1f;
+                        brakeTrfc = 0.2f;
+                        break;
+                    case float f when Mathf.Abs(targetAngleTrfc) > 25:
+                        Debug.Log(this.transform.gameObject.name + " Curve, more than 25 Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                        accelTrfc = 0.15f;
+                        brakeTrfc = 0.1f;
+                        break;
+                    default:
+                        Debug.Log(this.transform.gameObject.name + " Straight, 25 or less Mathf.Abs(targetAngle): " + Mathf.Abs(targetAngleTrfc));
+                        Debug.Log(this.transform.gameObject.name + " drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
+                        switch (mphSpeedInt) // CONTROLLING ONGOING SPEED WHILE GOING STRAIGHT!
+                        {
+                            case int i when mphSpeedInt < 20:
+                                Debug.Log(this.transform.gameObject.name + " Bring it up => 20mph");
+                                accelTrfc = 0.3f;
+                                brakeTrfc = 0f;
+                                break;
+                            case int i when mphSpeedInt > 25:
+                                Debug.Log(this.transform.gameObject.name + " Keep it at 25mph or below");
+                                accelTrfc = 0.1f;
+                                brakeTrfc = 0.2f;
+                                break;
+                            default:
+                                // the current speed is between 20 and 25mph
+                                break;
+                        }
+                        break;
                 }
             }
 
-            //Find out the next waypoint's y position to be at uphill or downhill; MY AI CODE!
+            // 5/01/22 Trfc Ctrl, Not modified for Trfc Ctrl use; Finding out the next waypoint's y position to be at uphill or downhill
             if (currentPointTrfc != 0) //avoiding subtracting -1 from currentPoint[0]
             {
                 float nextWaypointTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position.y;
@@ -987,7 +984,7 @@ public class AI_Controller : MonoBehaviour
             isHittingFrontHalf = false;
             isHittingLeft = false;
             isHittingFront = false;
-            isHittingFrontTrfc = false; // For Traffic Control Codes
+            atThresholdTrfc = false; // For Traffic Control Codes
             hitFrontHalfDownRayText = null; // 6/06 Trfc Ctrl
             isHittingRight = false;
             //
@@ -1000,7 +997,7 @@ public class AI_Controller : MonoBehaviour
             //if (mphSpeedInt > 9 && Time.time > unStickTime) // if driving 10mph or faster & not being stuck
             if (mphSpeedInt > 5 && Time.time > unStickTime) // 6/12 Trfc Ctrl, if driving 6mph or faster & not being stuck
             {
-                Debug.Log(this.transform.gameObject.name + " Speed > 6mph & Not Being Stuck == " + (Time.time > unStickTime));
+                Debug.Log(this.transform.gameObject.name + " Speed > 5mph & Being Stuck == " + (unStickTime > Time.time));
                 //Debug.Log(this.transform.gameObject.name + " Speed > 0mph & Not Being Stuck == " + (Time.time > unStickTime)); // 6/12 Trfc Ctrl
 
                 // About to hit far ahead, 6/12 Trfc Ctrl
@@ -1108,6 +1105,12 @@ public class AI_Controller : MonoBehaviour
                                                                                                        // Enabling it back after the traffic gets cleared.
                 }
 
+                IEnumerator Wait(int way) // 6/22 Trfc Ctrl Test Codes
+                {
+                    yield return new WaitForSecondsRealtime(3);
+                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                }
+
                 if (currentPointTrfc == 5) // 6/14 Trfc Ctrl, just arrived at Cube (4), WORKS WITHOUT raycasting.atThresholdTrfc
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
@@ -1148,8 +1151,34 @@ public class AI_Controller : MonoBehaviour
                 }
 
                 // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.atThresholdTrfc BEGINS
-                if (currentPointTrfc == 9) // if/when the car has reached at the Cube (8), NOT at Cube (9),
+                //if (currentPointTrfc == 9 && raycasting.atThresholdTrfc == true) // if/when the car has reached at the Cube (8), NOT at Cube (9),
+                //{
+                //    int randomNumber = Random.Range(1, 3);
+                //    if (randomNumber == 1) // left turn
+                //    {
+                //        currentPointTrfc = 9; // setting the next waypoint to the Cube (9), which is a left turn
+                //        leftTurn = true;
+                //        //Debug.Log("TRFC, " + this.transform.gameObject.name + "'s leftTurn = " + leftTurn + " and currentPointTrfc is " + currentPointTrfc);
+                //    }
+                //    else // right turn
+                //    {
+                //        currentPointTrfc = 10;
+                //    }
+                //}
+                //if (leftTurn == true && currentPointTrfc == 9) // if the car has made a left turn at Cube (8) and the next waypoint has been set to the Cube (9),
+                //{
+                //    currentPointTrfc = 10; // Wait until the car reaches the Cube (9). At that point, setting currentPointTrfc to (10).
+                //}
+                //if (leftTurn == true && currentPointTrfc == 10) // if the car has made a left turn and has reached the Cube (9),
+                //{
+                //    currentPointTrfc = 0; // Only then can you set the currentPointTrfc to (0)!
+                //                          // In actuality, the car goes directly from Cube (8) to (0), so Cube (0) and (9) are placed next to each other in the scene to workaround!
+                //}
+                // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.atThresholdTrfc ENDS
+
+                if (currentPointTrfc == 9 && raycasting.atThresholdTrfc == true) // at Cube (8), T
                 {
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // left turn
                     {
@@ -1161,17 +1190,16 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 10;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
+                    raycasting.atThresholdTrfc = false;
                 }
-                if (leftTurn == true && currentPointTrfc == 9) // if the car has made a left turn at Cube (8) and the next waypoint has been set to the Cube (9),
+
+                if (currentPointTrfc == 10 && raycasting.atThresholdTrfc == true) // at Cube (9), 6/22 Trfc Ctrl
                 {
-                    currentPointTrfc = 10; // Wait until the car reaches the Cube (9). At that point, setting currentPointTrfc to (10).
+                    currentPointTrfc = 1;
+                    raycasting.atThresholdTrfc = false;
                 }
-                if (leftTurn == true && currentPointTrfc == 10) // if the car has made a left turn and has reached the Cube (9),
-                {
-                    currentPointTrfc = 0; // Only then can you set the currentPointTrfc to (0)!
-                                          // In actuality, the car goes directly from Cube (8) to (0), so Cube (0) and (9) are placed next to each other in the scene to workaround!
-                }
-                // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.atThresholdTrfc ENDS
 
                 if (currentPointTrfc == 15) // just arrived at Cube (14), WORKS WITHOUT raycasting.atThresholdTrfc
                 {
@@ -1207,9 +1235,10 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 25 && raycasting.atThresholdTrfc == true) // at Cube (24)
+                if (currentPointTrfc == 25 && raycasting.atThresholdTrfc == true) // at Cube (24), 4-way Stop
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
                     if (randomNumber == 1) // turning right
                     {
@@ -1221,14 +1250,23 @@ public class AI_Controller : MonoBehaviour
                     }
                     else // turning left
                     {
-                        currentPointTrfc = 51;
+                        currentPointTrfc = 83;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
+                    raycasting.atThresholdTrfc = false;
+                }
+
+                if (current == 24 && currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // at Cube (83), 6/22 Trfc Ctrl Test Codes
+                {
+                    currentPointTrfc = 51;
                     raycasting.atThresholdTrfc = false;
                 }
 
                 if (currentPointTrfc == 28 && raycasting.atThresholdTrfc == true) // just arrived at Cube (27)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    int current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // left
                     {
@@ -1238,6 +1276,8 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 31;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
                     raycasting.atThresholdTrfc = false; 
                 }
 
@@ -1283,9 +1323,10 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 45 && raycasting.atThresholdTrfc == true) // at Cube (44)
+                if (currentPointTrfc == 45 && raycasting.atThresholdTrfc == true) // at Cube (44), 4-way Stop
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
                     if (randomNumber == 1) // straight
                     {
@@ -1297,8 +1338,16 @@ public class AI_Controller : MonoBehaviour
                     }
                     else
                     {
-                        currentPointTrfc = 49; // left turn
+                        currentPointTrfc = 83; // left turn
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
+                    raycasting.atThresholdTrfc = false;
+                }
+
+                if (current == 44 && currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // at Cube (83), 6/22 Trfc Ctrl Test Codes
+                {
+                    currentPointTrfc = 49;
                     raycasting.atThresholdTrfc = false;
                 }
 
@@ -1367,9 +1416,10 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 38 && raycasting.atThresholdTrfc == true) // at Cube (37) 
+                if (currentPointTrfc == 38 && raycasting.atThresholdTrfc == true) // at Cube (37), T
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // right turn
                     {
@@ -1379,6 +1429,8 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 43;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
@@ -1406,6 +1458,7 @@ public class AI_Controller : MonoBehaviour
                 if (currentPointTrfc == 48 && raycasting.atThresholdTrfc == true) // at Cube (47) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // right turn
                     {
@@ -1415,12 +1468,15 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 54;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
                 if (currentPointTrfc == 54 && raycasting.atThresholdTrfc == true) // at Cube (53) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // right turn
                     {
@@ -1430,6 +1486,8 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 74;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
@@ -1439,9 +1497,10 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 65 && raycasting.atThresholdTrfc == true) // at Cube (64)
+                if (currentPointTrfc == 65 && raycasting.atThresholdTrfc == true) // at Cube (64), 4-way Stop
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
                     if (randomNumber == 1) // straight
                     {
@@ -1453,14 +1512,23 @@ public class AI_Controller : MonoBehaviour
                     }
                     else
                     {
-                        currentPointTrfc = 45; // left turn
+                        currentPointTrfc = 83; // left turn
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
+                    raycasting.atThresholdTrfc = false;
+                }
+
+                if (current == 64 && currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // at Cube (83), 6/22 Trfc Ctrl Test Codes
+                {
+                    currentPointTrfc = 45;
                     raycasting.atThresholdTrfc = false;
                 }
 
                 if (currentPointTrfc == 66 && raycasting.atThresholdTrfc == true) // at Cube (65) 
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // right turn
                     {
@@ -1470,6 +1538,8 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 79;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
@@ -1575,9 +1645,10 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 82 && raycasting.atThresholdTrfc == true) // at Cube (81)
+                if (currentPointTrfc == 82 && raycasting.atThresholdTrfc == true) // at Cube (81), 4-way Stop
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
                     if (randomNumber == 1) // straight
                     {
@@ -1589,8 +1660,16 @@ public class AI_Controller : MonoBehaviour
                     }
                     else
                     {
-                        currentPointTrfc = 50; // left turn
+                        currentPointTrfc = 83; // left turn
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
+                    raycasting.atThresholdTrfc = false;
+                }
+
+                if (current == 81 && currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // at Cube (83), 6/22 Trfc Ctrl Test Codes
+                {
+                    currentPointTrfc = 50;
                     raycasting.atThresholdTrfc = false;
                 }
 
@@ -1619,13 +1698,13 @@ public class AI_Controller : MonoBehaviour
             } 
 
             // Getting Cars Unstuck, 6/18 Trfc Ctrl Test Code
-            if (mphSpeedInt < 6 && raycasting.hitFrontHalfDownRayText == "Untagged") // hardly moving at 5 mph or less and not at intersections
+            if (mphSpeedInt < 6 /*&& raycasting.hitFrontHalfDownRayText == "Untagged"*/) // hardly moving at 5 mph or less /*and not at intersections*/
             {
                 if (!(currentPointTrfc == 0 && roundTrip == false)) // The car is not at the starting point of the race
                 {
-                    if (raycasting.isHittingFrontHalf == true && raycasting.isHittingRear == false) // if any gameObject is blocking front half but no "Car" is directly behind
+                    if ((raycasting.isHittingLeft == true || raycasting.isHittingRight) && raycasting.isHittingRear == false) // if any gameObject is blocking front half but no "Car" is directly behind
                     {
-                        unStickTime = Time.time + unStickDuration; // Setting the time to do unstuck codes for unStickDuration
+                        unStickTime = Time.time + unStickDurationTrfc; // Setting the time to do unstuck codes for unStickDuration
                         if (Time.time < unStickTime) // if unStickTime hasn't reached Time.time yet, drive backward toward -2 previous waypoint at minus 800 wheelColliders[i].motorTorque
                         {
                             if (currentPointTrfc > 1)
