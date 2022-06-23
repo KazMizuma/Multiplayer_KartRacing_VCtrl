@@ -43,7 +43,7 @@ public class AI_Controller : MonoBehaviour
     public float targetAngleTrfc; 
 
     public float unStickDuration = 2f;
-    public float unStickDurationTrfc = 1f;
+    public float unStickDurationTrfc = 0.5f;
     public float unStickTime = 0f; // Setting the time for unstuck code according to the unStickDuration length
                                    //float orgTargetAngle = 0f;
 
@@ -1131,7 +1131,7 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 7 && raycasting.atThresholdTrfc == true) // just arrived at Cube (6), Box Collider & is Trigger MUST BE CHECKED!
+                if (currentPointTrfc == 7 && raycasting.atThresholdTrfc == true) // just arrived at Cube (6) Lights, Box Collider & is Trigger MUST BE CHECKED!
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
@@ -1225,7 +1225,7 @@ public class AI_Controller : MonoBehaviour
                     }
                 }
 
-                if (currentPointTrfc == 19 && raycasting.atThresholdTrfc == true) // Arrived at Cube (18), atThresholdTrfc Threshold logic FIXES/WORKS!
+                if (currentPointTrfc == 19 && raycasting.atThresholdTrfc == true) // Arrived at Cube (18) Lights, atThresholdTrfc Threshold logic FIXES/WORKS!
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
@@ -1369,7 +1369,7 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 47 && raycasting.atThresholdTrfc == true) // at Cube (46)
+                if (currentPointTrfc == 47 && raycasting.atThresholdTrfc == true) // at Cube (46) Lights
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
@@ -1418,7 +1418,7 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 37 && raycasting.atThresholdTrfc == true) // at Cube (36)
+                if (currentPointTrfc == 37 && raycasting.atThresholdTrfc == true) // at Cube (36) Lights
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
@@ -1738,7 +1738,7 @@ public class AI_Controller : MonoBehaviour
             {
                 if (!(currentPointTrfc == 0 && roundTrip == false)) // The car is not at the starting point of the race
                 {
-                    if ((raycasting.isHittingLeft == true || raycasting.isHittingRight) && raycasting.isHittingRear == false) // if any gameObject is blocking front half but no "Car" is directly behind
+                    if ((raycasting.isHittingLeft == true || raycasting.isHittingRight) && raycasting.isHittingRear == false) // if any "Car" is blocking the right or left but no "Car" is directly behind
                     {
                         unStickTime = Time.time + unStickDurationTrfc; // Setting the time to do unstuck codes for unStickDuration
                         if (Time.time < unStickTime) // if unStickTime hasn't reached Time.time yet, drive backward toward -2 previous waypoint at minus 800 wheelColliders[i].motorTorque
