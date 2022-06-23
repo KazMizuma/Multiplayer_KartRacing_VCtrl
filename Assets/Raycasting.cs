@@ -33,7 +33,7 @@ public class Raycasting : MonoBehaviour
     public bool isHittingLeft = false;
     public bool isHittingFront = false;
     public bool atThresholdTrfc = false; // 5/13 Traffic Control Test Codes
-    public string hitFrontHalfDownRayText; // 5/30 Traffic Control Test Codes, casting rays downward, debug purpose only
+    public string downRayText; // 5/30 Traffic Control Test Codes, casting rays downward, debug purpose only
     public bool isHittingRight = false;
     //
     public bool isHittingRearHalf = false;
@@ -122,11 +122,30 @@ public class Raycasting : MonoBehaviour
 
         Ray downRay = new Ray(gameObject.transform.position, gameObject.transform.up * -0.8f); // 6/22 Trfc Ctrl, raycast down, not wasting 16 rays!
         Debug.DrawRay(gameObject.transform.position, gameObject.transform.up * -0.8f, Color.green);
-        if (Physics.Raycast(downRay, out hit, 0.8f))
+
+        if (Physics.Raycast(downRay, out hit, 0.8f)) // 5/30 Traffic Control Test Codes, casting rays downward
         {
-            if (hit.transform.gameObject.tag == "Car")
+            Debug.Log(transform.gameObject.name + " IS ON " + hit.transform.gameObject.name + ", TRFC");
+            downRayText = hit.transform.gameObject.tag;
+            switch (hit.transform.gameObject.tag)
             {
-                Debug.Log(transform.gameObject.name + " HIT " + hit.transform.gameObject.name + "!!!");
+                case "T":
+                    Debug.Log(transform.gameObject.name + " IS AT T INTERSECTION, TRFC");
+                    break;
+                case "RightOfT":
+                    Debug.Log(transform.gameObject.name + " IS AT THE RIGHT OF T INTERSECTION, TRFC");
+                    break;
+                case "LeftOfT":
+                    Debug.Log(transform.gameObject.name + " IS AT THE LEFT OF T INTERSECTION, TRFC");
+                    break;
+                case "4Way":
+                    Debug.Log(transform.gameObject.name + " IS AT THE 4-WAY INTERSECTION, TRFC");
+                    break;
+                case "Lights":
+                    Debug.Log(transform.gameObject.name + " IS AT THE TRAFFIC LIGHTS, TRFC");
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -343,32 +362,6 @@ public class Raycasting : MonoBehaviour
                         atThresholdTrfc = true;
                         Debug.Log(transform.parent.gameObject.name + " IS AT " + hit.transform.gameObject.name + " THRESHOLD");
                     }
-                }
-            }
-
-            if (Physics.Raycast(downRay, out hit, 0.8f)) // 5/30 Traffic Control Test Codes, casting rays downward
-            {
-                Debug.Log(transform.gameObject.name + " IS ON " + hit.transform.gameObject.name + ", TRFC");
-                hitFrontHalfDownRayText = hit.transform.gameObject.tag;
-                switch (hit.transform.gameObject.tag)
-                {
-                    case "T":
-                        Debug.Log(transform.gameObject.name + " IS AT T INTERSECTION, TRFC");
-                        break;
-                    case "RightOfT":
-                        Debug.Log(transform.gameObject.name + " IS AT THE RIGHT OF T INTERSECTION, TRFC");
-                        break;
-                    case "LeftOfT":
-                        Debug.Log(transform.gameObject.name + " IS AT THE LEFT OF T INTERSECTION, TRFC");
-                        break;
-                    case "4Way":
-                        Debug.Log(transform.gameObject.name + " IS AT THE 4-WAY INTERSECTION, TRFC");
-                        break;
-                    case "Lights":
-                        Debug.Log(transform.gameObject.name + " IS AT THE TRAFFIC LIGHTS, TRFC");
-                        break;
-                    default:
-                        break;
                 }
             }
 

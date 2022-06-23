@@ -860,7 +860,7 @@ public class AI_Controller : MonoBehaviour
             }
             else // if not at the initial starting point
             {
-                if (raycasting.hitFrontHalfDownRayText == "Untagged")
+                if (raycasting.downRayText == "Untagged")
                 {
                     accelTrfc = 0.3f;
                     brakeTrfc = 0f;
@@ -985,7 +985,7 @@ public class AI_Controller : MonoBehaviour
             isHittingLeft = false;
             isHittingFront = false;
             atThresholdTrfc = false; // For Traffic Control Codes
-            hitFrontHalfDownRayText = null; // 6/06 Trfc Ctrl
+            downRayText = null; // 6/22 Trfc Ctrl Test Codes
             isHittingRight = false;
             //
             isHittingRearHalf = false;
@@ -1134,6 +1134,7 @@ public class AI_Controller : MonoBehaviour
                 if (currentPointTrfc == 7 && raycasting.atThresholdTrfc == true) // just arrived at Cube (6), Box Collider & is Trigger MUST BE CHECKED!
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
                     if (randomNumber == 1) // right turn
                     {
@@ -1145,9 +1146,17 @@ public class AI_Controller : MonoBehaviour
                     }
                     else // left turn
                     {
-                        currentPointTrfc = 7;
+                        currentPointTrfc = 84;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
+                }
+
+                if (current == 6 && currentPointTrfc == 85 && raycasting.atThresholdTrfc == true) // at Cube (84), 6/22 Trfc Ctrl Test Codes
+                {
+                    currentPointTrfc = 7;
+                    raycasting.atThresholdTrfc = false;
                 }
 
                 // A SOLUTION I CAME UP BEFORE IMPLEMENTING raycasting.atThresholdTrfc BEGINS
@@ -1219,6 +1228,7 @@ public class AI_Controller : MonoBehaviour
                 if (currentPointTrfc == 19 && raycasting.atThresholdTrfc == true) // Arrived at Cube (18), atThresholdTrfc Threshold logic FIXES/WORKS!
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
                     if (randomNumber == 1) // turning right
                     {
@@ -1230,9 +1240,17 @@ public class AI_Controller : MonoBehaviour
                     }
                     else // turning left
                     {
-                        currentPointTrfc = 23;
+                        currentPointTrfc = 84;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
+                }
+
+                if (current == 18 && currentPointTrfc == 85 && raycasting.atThresholdTrfc == true) // at Cube (84), 6/22 Trfc Ctrl Test Codes
+                {
+                    currentPointTrfc = 23;
+                    raycasting.atThresholdTrfc = false;
                 }
 
                 if (currentPointTrfc == 25 && raycasting.atThresholdTrfc == true) // at Cube (24), 4-way Stop
@@ -1354,6 +1372,7 @@ public class AI_Controller : MonoBehaviour
                 if (currentPointTrfc == 47 && raycasting.atThresholdTrfc == true) // at Cube (46)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
                     if (randomNumber == 1) // straight
                     {
@@ -1365,8 +1384,16 @@ public class AI_Controller : MonoBehaviour
                     }
                     else
                     {
-                        currentPointTrfc = 22; // left turn
+                        currentPointTrfc = 84; // left turn
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
+                    raycasting.atThresholdTrfc = false;
+                }
+
+                if (current == 46 && currentPointTrfc == 85 && raycasting.atThresholdTrfc == true) // at Cube (84), 6/22 Trfc Ctrl Test Codes
+                {
+                    currentPointTrfc = 22;
                     raycasting.atThresholdTrfc = false;
                 }
 
@@ -1394,6 +1421,7 @@ public class AI_Controller : MonoBehaviour
                 if (currentPointTrfc == 37 && raycasting.atThresholdTrfc == true) // at Cube (36)
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
                     if (randomNumber == 1) // straight
                     {
@@ -1405,9 +1433,17 @@ public class AI_Controller : MonoBehaviour
                     }
                     else
                     {
-                        currentPointTrfc = 25;
+                        currentPointTrfc = 84;
                     }
+                    wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
+                    StartCoroutine(Wait(current));
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
+                }
+
+                if (current == 36 && currentPointTrfc == 85 && raycasting.atThresholdTrfc == true) // at Cube (84), 6/22 Trfc Ctrl Test Codes
+                {
+                    currentPointTrfc = 25;
+                    raycasting.atThresholdTrfc = false;
                 }
 
                 if (currentPointTrfc == 23 && raycasting.atThresholdTrfc == true) // when at Cube (22)
