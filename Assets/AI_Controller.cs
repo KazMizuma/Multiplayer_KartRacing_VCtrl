@@ -1130,11 +1130,8 @@ public class AI_Controller : MonoBehaviour
                                 else
                                 {
                                     Debug.Log("TrafficCtrl, turning right, the course is not clear!");
-                                    while (Time.deltaTime < 5 + Time.deltaTime && !(raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)"))
-                                    {
-                                        rightTurn = true;
-                                        StartCoroutine(Wait(way));
-                                    }
+                                    rightTurn = true;
+                                    StartCoroutine(Wait(way));
                                 }
                             }
                             else if (leftTurn == true)
@@ -1147,11 +1144,8 @@ public class AI_Controller : MonoBehaviour
                                 else
                                 {
                                     Debug.Log("TrafficCtrl, turning left, the course is not clear!");
-                                    while (Time.deltaTime < 5 + Time.deltaTime && !(raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)" && raycastingTrfc3.nameOfPoint == "Cube (34)" && raycastingTrfc4.nameOfPoint == "Cube (9)"))
-                                    {
-                                        leftTurn = true;
-                                        StartCoroutine(Wait(way));
-                                    }
+                                    leftTurn = true;
+                                    StartCoroutine(Wait(way));
                                 }
                             }
                             else // straight
