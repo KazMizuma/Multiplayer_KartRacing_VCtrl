@@ -152,7 +152,7 @@ public class Raycasting : MonoBehaviour
         Ray rightSideRay = new Ray(gameObject.transform.position, gameObject.transform.right * 1.55f); // 6/23 Trfc Ctrl, raycast right side, not wasting 16 rays!
         Debug.DrawRay(gameObject.transform.position, gameObject.transform.right * 1.55f, Color.red);
 
-        ////Combining my code, detecting right mid-side collision with another car
+        // Detecting right mid-side collision with another car
         if (Physics.Raycast(rightSideRay, out hit, 1.55f))
         {
             if (hit.transform.gameObject.tag == "Car")
@@ -165,7 +165,7 @@ public class Raycasting : MonoBehaviour
         Ray leftSideRay = new Ray(gameObject.transform.position, gameObject.transform.right * -1.55f); // 6/23 Trfc Ctrl, raycast left side, not wasting 16 rays!
         Debug.DrawRay(gameObject.transform.position, gameObject.transform.right * -1.55f, Color.green);
 
-        ////Combining my code, detecting left mid-side collision with another car
+        // Detecting left mid-side collision with another car
         if (Physics.Raycast(leftSideRay, out hit, 1.55f))
         {
             if (hit.transform.gameObject.tag == "Car")

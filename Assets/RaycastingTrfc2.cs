@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RaycastingTrfc2 : MonoBehaviour
 {
+    // Attached to Cube (10)
     public string nameOfPoint;
     //public bool carOnRight = false;
     //public bool carOnLeft = false;
