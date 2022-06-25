@@ -18,6 +18,11 @@ public class AI_Controller : MonoBehaviour
 
     drivingControl drivingControl;
     Raycasting raycasting; //Accessing Raycasting script to control collisions
+    RaycastingTrfc raycastingTrfc; // 6/23 Trfc Ctrl
+    RaycastingTrfc2 raycastingTrfc2;
+    RaycastingTrfc3 raycastingTrfc3;
+    RaycastingTrfc4 raycastingTrfc4;
+
     public float steeringSensitivity = 0.01f;
 
     Vector3 target;
@@ -43,7 +48,7 @@ public class AI_Controller : MonoBehaviour
     public float targetAngleTrfc; 
 
     public float unStickDuration = 2f;
-    public float unStickDurationTrfc = 0.5f;
+    public float unStickDurationTrfc = 1f;
     public float unStickTime = 0f; // Setting the time for unstuck code according to the unStickDuration length
                                    //float orgTargetAngle = 0f;
 
@@ -61,6 +66,10 @@ public class AI_Controller : MonoBehaviour
     {
         drivingControl = this.GetComponent<drivingControl>();
         raycasting = this.transform.GetComponentInChildren<Raycasting>(); //Accessing Raycasting script to control collisions
+        raycastingTrfc = GameObject.Find("Cube (42)").GetComponent<RaycastingTrfc>(); // 6/24 Trfc Ctrl Test Codes
+        raycastingTrfc2 = GameObject.Find("Cube (10)").GetComponent<RaycastingTrfc2>();
+        raycastingTrfc3 = GameObject.Find("Cube (34)").GetComponent<RaycastingTrfc3>();
+        raycastingTrfc4 = GameObject.Find("Cube (9)").GetComponent<RaycastingTrfc4>();
 
         if (this.transform.gameObject.tag == "Odd")
         {
@@ -847,27 +856,27 @@ public class AI_Controller : MonoBehaviour
             targetAngleTrfc = Mathf.Atan2(localTargetTrfc.x, localTargetTrfc.z) * Mathf.Rad2Deg; // 6/05 Trfc Ctrl, Accessing from Raycasting.cs
             float distanceToTargetTrfc = Vector3.Distance(targetTrfc, drivingControl.rb.gameObject.transform.position);
 
-            leftTurn = false; // 6/12 Trfc Ctrl
-            rightTurn = false;
-            straight = false;
+            //leftTurn = false; // 6/24 Trfc Ctrl
+            //rightTurn = false;
+            //straight = false;
 
             // 6/17 TRFC CTRL TEST CODES
             float steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -2, 2);
             if (currentPointTrfc < 2 && roundTrip == false) // if at the initial starting point
             {
-                accelTrfc = 0.5f;
+                accelTrfc = 0.4f;
                 brakeTrfc = 0f;
             }
             else // if not at the initial starting point
             {
                 if (raycasting.downRayText == "Untagged")
                 {
-                    accelTrfc = 0.3f;
+                    accelTrfc = 0.275f;
                     brakeTrfc = 0f;
                 }
                 else // at where intersections are; 4Way Stop sign at 24 44 64 81
                 {
-                    accelTrfc = 0.2f;
+                    accelTrfc = 0.25f;
                     brakeTrfc = 0f;
                 }
             }
@@ -907,11 +916,11 @@ public class AI_Controller : MonoBehaviour
                         {
                             case int i when mphSpeedInt < 20:
                                 Debug.Log(this.transform.gameObject.name + " Bring it up => 20mph");
-                                accelTrfc = 0.3f;
+                                accelTrfc = 0.2f;
                                 brakeTrfc = 0f;
                                 break;
-                            case int i when mphSpeedInt > 25:
-                                Debug.Log(this.transform.gameObject.name + " Keep it at 25mph or below");
+                            case int i when mphSpeedInt > 24:
+                                Debug.Log(this.transform.gameObject.name + " Keep it at below 25mph");
                                 accelTrfc = 0.1f;
                                 brakeTrfc = 0.2f;
                                 break;
@@ -995,7 +1004,7 @@ public class AI_Controller : MonoBehaviour
             */
             //Testing Overtaking, targetAngle += to turn right, -= to turn left 
             //if (mphSpeedInt > 9 && Time.time > unStickTime) // if driving 10mph or faster & not being stuck
-            if (mphSpeedInt > 5 && Time.time > unStickTime) // 6/12 Trfc Ctrl, if driving 6mph or faster & not being stuck
+            if (mphSpeedInt >= 1 && Time.time > unStickTime) // 6/12 Trfc Ctrl, if driving 1mph or faster & not being stuck
             {
                 Debug.Log(this.transform.gameObject.name + " Speed > 5mph & Being Stuck == " + (unStickTime > Time.time));
                 //Debug.Log(this.transform.gameObject.name + " Speed > 0mph & Not Being Stuck == " + (Time.time > unStickTime)); // 6/12 Trfc Ctrl
@@ -1010,7 +1019,7 @@ public class AI_Controller : MonoBehaviour
                 if (raycasting.aboutToHitFarDirectly == true) // Avoiding frontal collisions with other cars
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Far Frontal Collisions, TRFC");
-                    brakeTrfc = 4f;
+                    brakeTrfc = 5f;
                 }
                 if (raycasting.aboutToHitFarRightAhead == true)
                 {
@@ -1028,7 +1037,7 @@ public class AI_Controller : MonoBehaviour
                 if (raycasting.aboutToHitDirectlyAhead == true) // Avoiding frontal collisions with other cars
                 {
                     Debug.Log(this.transform.gameObject.name + " Avoiding Frontal Collisions!!!");
-                    brakeTrfc = 5f;
+                    brakeTrfc = 6f;
                 }
                 if (raycasting.aboutToHitRightAhead == true)
                 {
@@ -1107,9 +1116,52 @@ public class AI_Controller : MonoBehaviour
 
                 IEnumerator Wait(int way) // 6/22 Trfc Ctrl Test Codes
                 {
-                    yield return new WaitForSecondsRealtime(3);
+                    yield return new WaitForSecondsRealtime(1f);
+                    switch (way) // 6/24 Trfc Ctrl Test Codes
+                    {
+                        case (8):
+                            if (rightTurn == true)
+                            {
+                                if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)")
+                                {
+                                    Debug.Log("TrafficCtrl, turning right, the course is clear!");
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                }
+                                else
+                                {
+                                    Debug.Log("TrafficCtrl, turning right, the course is not clear!");
+                                }
+                            }
+                            else if (leftTurn == true)
+                            {
+                                if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)" && raycastingTrfc3.nameOfPoint == "Cube (34)" && raycastingTrfc4.nameOfPoint == "Cube (9)")
+                                {
+                                    Debug.Log("TrafficCtrl, turning left, the course is clear!");
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                }
+                                else
+                                {
+                                    Debug.Log("TrafficCtrl, turning left, the course is not clear!");
+                                }
+                            }
+                            else // straight
+                            {
+                                Debug.Log("TrafficCtrl, going straight = " + straight);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    rightTurn = false;
+                    leftTurn = false;
+                    straight = false;
                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                 }
+
+                //void TrafficCtrl(int way) // 6/24 Trfc Ctrl Test Codes
+                //{
+
+                //}
 
                 if (currentPointTrfc == 5) // 6/14 Trfc Ctrl, just arrived at Cube (4), WORKS WITHOUT raycasting.atThresholdTrfc
                 {
@@ -1193,14 +1245,15 @@ public class AI_Controller : MonoBehaviour
                     {
                         currentPointTrfc = 9; // setting the next waypoint to the Cube (9), which is a left turn
                         leftTurn = true;
-                        //Debug.Log("TRFC, " + this.transform.gameObject.name + "'s leftTurn = " + leftTurn + " and currentPointTrfc is " + currentPointTrfc);
                     }
                     else // right turn
                     {
                         currentPointTrfc = 10;
+                        rightTurn = true;
                     }
                     wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false; // 6/22 Trfc Ctrl Test Codes
                     StartCoroutine(Wait(current));
+                    //TrafficCtrl(current); // 6/24 Trfc Ctrl Test Codes
                     raycasting.atThresholdTrfc = false;
                 }
 
@@ -1734,7 +1787,7 @@ public class AI_Controller : MonoBehaviour
             } 
 
             // Getting Cars Unstuck, 6/18 Trfc Ctrl Test Code
-            if (mphSpeedInt < 6 /*&& raycasting.hitFrontHalfDownRayText == "Untagged"*/) // hardly moving at 5 mph or less /*and not at intersections*/
+            if (mphSpeedInt < 1 /*&& raycasting.hitFrontHalfDownRayText == "Untagged"*/) // hardly moving at 1 mph or less /*and not at intersections*/
             {
                 if (!(currentPointTrfc == 0 && roundTrip == false)) // The car is not at the starting point of the race
                 {

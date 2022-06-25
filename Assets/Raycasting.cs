@@ -150,7 +150,7 @@ public class Raycasting : MonoBehaviour
         }
 
         Ray rightSideRay = new Ray(gameObject.transform.position, gameObject.transform.right * 1.55f); // 6/23 Trfc Ctrl, raycast right side, not wasting 16 rays!
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.right * 1.55f, Color.green);
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.right * 1.55f, Color.red);
 
         ////Combining my code, detecting right mid-side collision with another car
         if (Physics.Raycast(rightSideRay, out hit, 1.55f))
@@ -249,7 +249,7 @@ public class Raycasting : MonoBehaviour
             if (Physics.Raycast(hittingRayTrfc, out hit, 8f)) // 6/05 Trfc Ctrl
             {
                 aboutToHitFarAhead = true;
-                Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " FAR AHEAD, TRFC"); 
+                //Debug.Log(transform.gameObject.name + " IS ABOUT TO HIT " + hit.transform.gameObject.name + " FAR AHEAD, TRFC"); 
                 if (hit.transform.gameObject.tag == "Car" && Mathf.Abs(ai_controller.targetAngleTrfc) <= 25) // 6/07 Trfc Ctrl, if driving straight
                 {
                     aboutToHitFarDirectly = true;
