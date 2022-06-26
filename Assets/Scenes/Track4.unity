@@ -6343,6 +6343,7 @@ GameObject:
   - component: {fileID: 1082614309}
   - component: {fileID: 1082614308}
   - component: {fileID: 1082614307}
+  - component: {fileID: 1082614310}
   m_Layer: 0
   m_Name: Cube (29)
   m_TagString: Threshold
@@ -6424,6 +6425,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1082614305}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1082614310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082614305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff48bde57403abc4b92906c3e28462f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameOfPoint: 
 --- !u!1 &1092281757
 GameObject:
   m_ObjectHideFlags: 0
@@ -10887,6 +10901,7 @@ GameObject:
   - component: {fileID: 1895732680}
   - component: {fileID: 1895732679}
   - component: {fileID: 1895732678}
+  - component: {fileID: 1895732681}
   m_Layer: 0
   m_Name: Cube (31)
   m_TagString: Threshold
@@ -10968,6 +10983,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895732676}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1895732681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895732676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b06e19f133324304197dd2a0227158bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameOfPoint: 
 --- !u!1 &1896125056
 GameObject:
   m_ObjectHideFlags: 0
@@ -11833,6 +11861,7 @@ GameObject:
   - component: {fileID: 2035850282}
   - component: {fileID: 2035850281}
   - component: {fileID: 2035850280}
+  - component: {fileID: 2035850283}
   m_Layer: 0
   m_Name: Cube (14)
   m_TagString: Untagged
@@ -11848,7 +11877,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035850278}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -51.5, y: 0.44000003, z: 4.4}
+  m_LocalPosition: {x: -49.93, y: 0.44000003, z: 4.25}
   m_LocalScale: {x: 2.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8786127298013302164}
@@ -11914,6 +11943,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035850278}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2035850283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035850278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7b5b23af8872a439aba0d765ff4b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameOfPoint: 
 --- !u!1 &2052629838
 GameObject:
   m_ObjectHideFlags: 0
@@ -12037,6 +12079,7 @@ GameObject:
   - component: {fileID: 2067121514}
   - component: {fileID: 2067121513}
   - component: {fileID: 2067121512}
+  - component: {fileID: 2067121515}
   m_Layer: 0
   m_Name: Cube (73)
   m_TagString: Threshold
@@ -12118,6 +12161,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067121510}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2067121515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067121510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 377bba5d1971c704a9a9e777951de07c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameOfPoint: 
 --- !u!64 &2068304192
 MeshCollider:
   m_ObjectHideFlags: 0
