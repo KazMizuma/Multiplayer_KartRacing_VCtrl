@@ -1132,6 +1132,7 @@ public class AI_Controller : MonoBehaviour
                                     Debug.Log("TrafficCtrl, turning right, the course is not clear!");
                                     rightTurn = true;
                                     StartCoroutine(Wait(way));
+                                    Debug.Log("TrafficCtrl, calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
                             else if (leftTurn == true)
@@ -1146,6 +1147,7 @@ public class AI_Controller : MonoBehaviour
                                     Debug.Log("TrafficCtrl, turning left, the course is not clear!");
                                     leftTurn = true;
                                     StartCoroutine(Wait(way));
+                                    Debug.Log("TrafficCtrl, calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
                             else // straight
@@ -1156,10 +1158,13 @@ public class AI_Controller : MonoBehaviour
                         default:
                             break;
                     }
-                    rightTurn = false;
-                    leftTurn = false;
-                    straight = false;
-                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                    if (way != 8) // 6/25 Trfc Ctrl For Testing Only 
+                    {
+                        rightTurn = false;
+                        leftTurn = false;
+                        straight = false;
+                        wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                    }
                 }
 
                 //void TrafficCtrl(int way) // 6/24 Trfc Ctrl Test Codes
