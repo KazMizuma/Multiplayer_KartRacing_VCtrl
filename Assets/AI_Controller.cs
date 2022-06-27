@@ -1387,6 +1387,144 @@ public class AI_Controller : MonoBehaviour
                                 Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
                             }
                             break;
+                        case (34): // 6/26 Trfc Ctrl, Left turn yield
+                            if (leftTurn == true)
+                            {
+                                if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)")
+                                {
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " : the course is clear!");
+                                }
+                                else
+                                {
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " : the course is NOT clear!");
+                                    leftTurn = true;
+                                    StartCoroutine(Wait(way));
+                                    Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
+                                }
+                            }
+                            else // straight
+                            {
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                                straight = false;
+                            }
+                            break;
+                        case (4): // 6/26 Trfc Ctrl, Left turn yield
+                            if (leftTurn == true)
+                            {
+                                if (raycastingTrfc21.nameOfPoint == "Cube (72)" && raycastingTrfc22.nameOfPoint == "Cube (38)")
+                                {
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc21.nameOfPoint + " " + raycastingTrfc22.nameOfPoint + " : the course is clear!");
+                                }
+                                else
+                                {
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc21.nameOfPoint + " " + raycastingTrfc22.nameOfPoint + " : the course is NOT clear!");
+                                    leftTurn = true;
+                                    StartCoroutine(Wait(way));
+                                    Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
+                                }
+                            }
+                            else // straight
+                            {
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                                straight = false;
+                            }
+                            break;
+                        case (28): // 6/26 Trfc Ctrl, Left turn yield
+                            if (leftTurn == true)
+                            {
+                                if (raycastingTrfc17.nameOfPoint == "Cube (70)" && raycastingTrfc18.nameOfPoint == "Cube (71)")
+                                {
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc17.nameOfPoint + " " + raycastingTrfc18.nameOfPoint + " : the course is clear!");
+                                }
+                                else
+                                {
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc17.nameOfPoint + " " + raycastingTrfc18.nameOfPoint + " : the course is NOT clear!");
+                                    leftTurn = true;
+                                    StartCoroutine(Wait(way));
+                                    Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
+                                }
+                            }
+                            else // straight
+                            {
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                                straight = false;
+                            }
+                            break;
+                        case (58): // 6/26 Trfc Ctrl, Left turn yield
+                            if (leftTurn == true)
+                            {
+                                if (raycastingTrfc13.nameOfPoint == "Cube (78)" && raycastingTrfc14.nameOfPoint == "Cube (66)")
+                                {
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc13.nameOfPoint + " " + raycastingTrfc14.nameOfPoint + " : the course is clear!");
+                                }
+                                else
+                                {
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc13.nameOfPoint + " " + raycastingTrfc14.nameOfPoint + " : the course is NOT clear!");
+                                    leftTurn = true;
+                                    StartCoroutine(Wait(way));
+                                    Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
+                                }
+                            }
+                            else // straight
+                            {
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                                straight = false;
+                            }
+                            break;
+                        case (62): // 6/26 Trfc Ctrl, Left turn yield
+                            if (leftTurn == true)
+                            {
+                                if (raycastingTrfc9.nameOfPoint == "Cube (19)" && raycastingTrfc10.nameOfPoint == "Cube (48)")
+                                {
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc9.nameOfPoint + " " + raycastingTrfc10.nameOfPoint + " : the course is clear!");
+                                }
+                                else
+                                {
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc9.nameOfPoint + " " + raycastingTrfc10.nameOfPoint + " : the course is NOT clear!");
+                                    leftTurn = true;
+                                    StartCoroutine(Wait(way));
+                                    Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
+                                }
+                            }
+                            else // straight
+                            {
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                                straight = false;
+                            }
+                            break;
+                        case (73): // 6/26 Trfc Ctrl, Left turn yield
+                            if (leftTurn == true)
+                            {
+                                if (raycastingTrfc6.nameOfPoint == "Cube (31)" && raycastingTrfc5.nameOfPoint == "Cube (14)")
+                                {
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc6.nameOfPoint + " " + raycastingTrfc5.nameOfPoint + " : the course is clear!");
+                                }
+                                else
+                                {
+                                    Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc6.nameOfPoint + " " + raycastingTrfc5.nameOfPoint + " : the course is NOT clear!");
+                                    leftTurn = true;
+                                    StartCoroutine(Wait(way));
+                                    Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
+                                }
+                            }
+                            else // straight
+                            {
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                                straight = false;
+                            }
+                            break;
                         default:
                             leftTurn = false;
                             rightTurn = false;
@@ -1401,18 +1539,24 @@ public class AI_Controller : MonoBehaviour
 
                 //}
 
-                if (currentPointTrfc == 5) // 6/14 Trfc Ctrl, just arrived at Cube (4), WORKS WITHOUT raycasting.atThresholdTrfc
+                if (currentPointTrfc == 5 && raycasting.atThresholdTrfc == true) // 6/26 Trfc Ctrl Left turn yield, at Cube (4), 6/14 WORKED WITHOUT atThresholdTrfc
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/26 Trfc Ctrl, Left turn yield
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // straight
                     {
                         currentPointTrfc = 43;
+                        straight = true;
                     }
-                    else // 6/12 Trfc Ctrl test codes, turning left
+                    else // Left turn yield
                     {
+                        wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                         currentPointTrfc = 5;
+                        leftTurn = true;
+                        StartCoroutine(Wait(current));
                     }
+                    raycasting.atThresholdTrfc = false;
                 }
 
                 if (currentPointTrfc == 44 && raycasting.atThresholdTrfc == true) // 6/14 Trfc Ctrl, at Cube (43)
@@ -1592,17 +1736,22 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false; 
                 }
 
-                if (currentPointTrfc == 29 && raycasting.atThresholdTrfc == true) // just arrived at Cube (28)
+                if (currentPointTrfc == 29 && raycasting.atThresholdTrfc == true) // at Cube (28), 6/26 Trfc Ctrl, Left turn yield
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/26 Trfc Ctrl, Left turn yield
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // straight
                     {
                         currentPointTrfc = 54;
+                        straight = true;
                     }
                     else // left turn
                     {
+                        wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                         currentPointTrfc = 63;
+                        leftTurn = true;
+                        StartCoroutine(Wait(current));
                     }
                     raycasting.atThresholdTrfc = false; 
                 }
@@ -1702,17 +1851,22 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 35 && raycasting.atThresholdTrfc == true) // at Cube (34)
+                if (currentPointTrfc == 35 && raycasting.atThresholdTrfc == true) // at Cube (34), 6/26 Trfc Ctrl, Left turn yield
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/26 Trfc Ctrl, Left turn yield
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // straight
                     {
                         currentPointTrfc = 0;
+                        straight = true;
                     }
-                    else // right turn
+                    else // left turn
                     {
+                        wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                         currentPointTrfc = 35;
+                        leftTurn = true;
+                        StartCoroutine(Wait(current));
                     }
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
@@ -1898,32 +2052,42 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                if (currentPointTrfc == 59 && raycasting.atThresholdTrfc == true) // at Cube (58) 
+                if (currentPointTrfc == 59 && raycasting.atThresholdTrfc == true) // at Cube (58), 6/26 Trfc Ctrl, Left turn yield
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/26 Trfc Ctrl, Left turn yield
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // left turn
                     {
+                        wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                         currentPointTrfc = 80;
+                        straight = true;
+                        StartCoroutine(Wait(current));
                     }
                     else // straight
                     {
                         currentPointTrfc = 79;
+                        leftTurn = true;
                     }
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
 
-                if (currentPointTrfc == 63 && raycasting.atThresholdTrfc == true) // at Cube (62) 
+                if (currentPointTrfc == 63 && raycasting.atThresholdTrfc == true) // at Cube (62), 6/26 Trfc Ctrl, Left turn yield
                 {
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
+                    current = currentPointTrfc - 1; // 6/26 Trfc Ctrl, Left turn yield
                     int randomNumber = Random.Range(1, 3);
                     if (randomNumber == 1) // left turn
                     {
+                        wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                         currentPointTrfc = 20;
+                        leftTurn = true;
+                        StartCoroutine(Wait(current));
                     }
                     else // straight
                     {
                         currentPointTrfc = 73;
+                        straight = true;
                     }
                     raycasting.atThresholdTrfc = false; // Set it back to false immediately!
                 }
