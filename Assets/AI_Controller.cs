@@ -49,10 +49,17 @@ public class AI_Controller : MonoBehaviour
     RaycastingTrfc23 raycastingTrfc23;
     RaycastingTrfc24 raycastingTrfc24;
 
-    Raycasting4way1 raycasting4way1; // 6/28 Trfc Ctrl, 4-way Stop
-    Raycasting4way2 raycasting4way2;
-    Raycasting4way3 raycasting4way3;
-    Raycasting4way4 raycasting4way4;
+    //Raycasting4way1 raycasting4way1; // 6/28 Trfc Ctrl, For Cube (81)
+    //Raycasting4way2 raycasting4way2; // Cube (24)
+    //Raycasting4way3 raycasting4way3; // Cube (44)
+    //Raycasting4way4 raycasting4way4; // Cube (64)
+
+    timeStamp4Way timeStamp4Way; // 6/30 Trfc Ctrl Test Codes
+
+    public float timeAt81; // 6/30 Trfc Ctrl
+    public float timeAt24;
+    public float timeAt44;
+    public float timeAt64;
 
     public float steeringSensitivity = 0.01f;
 
@@ -92,9 +99,6 @@ public class AI_Controller : MonoBehaviour
 
     public int current; // 6/22 Trfc Ctrl
 
-    public float timeAtPoint; // 6/28 Trfc Ctrl
-    public string fourWayBool;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -131,10 +135,12 @@ public class AI_Controller : MonoBehaviour
         raycastingTrfc23 = GameObject.Find("Cube (4)").GetComponent<RaycastingTrfc23>();
         raycastingTrfc24 = GameObject.Find("Cube (43)").GetComponent<RaycastingTrfc24>();
 
-        raycasting4way1 = GameObject.Find("Cube (81)").GetComponent<Raycasting4way1>(); // 6/28 Trfc Ctrl, 4-way Stop
-        raycasting4way2 = GameObject.Find("Cube (24)").GetComponent<Raycasting4way2>();
-        raycasting4way3 = GameObject.Find("Cube (44)").GetComponent<Raycasting4way3>();
-        raycasting4way4 = GameObject.Find("Cube (64)").GetComponent<Raycasting4way4>();
+        //raycasting4way1 = GameObject.Find("Cube (81)").GetComponent<Raycasting4way1>(); // 6/28 Trfc Ctrl, 4-way Stop
+        //raycasting4way2 = GameObject.Find("Cube (24)").GetComponent<Raycasting4way2>();
+        //raycasting4way3 = GameObject.Find("Cube (44)").GetComponent<Raycasting4way3>();
+        //raycasting4way4 = GameObject.Find("Cube (64)").GetComponent<Raycasting4way4>();
+
+        timeStamp4Way = GameObject.Find("4WayStop").GetComponent<timeStamp4Way>(); // 6/30 Trfc Ctrl Test Codes
 
         if (this.transform.gameObject.tag == "Odd")
         {
@@ -1550,152 +1556,76 @@ public class AI_Controller : MonoBehaviour
                                 straight = false;
                             }
                             break;
-                        // 4-Way Stops Begins
-                        /* IEnumerator Wait(int way) // 6/22 Trfc Ctrl Test Codes
+                        // 4-Way Stop Begins
+                        /* IEnumerator Wait(int way) // 6/30 Trfc Ctrl Test Codes
                         {
                             yield return new WaitForSecondsRealtime(1f);
                             switch (way) */
-                        case (81): // 6/29 Trfc Ctrl, 4-way
-                            if (raycasting4way2.nameOfPoint != "Cube 24")
+                        case (81): // 6/30 Trfc Ctrl, 4-way, raycasting4way1
+                            float time2481 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt81;
+                            float time4481 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt81;
+                            float time6481 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt81;
+                            if (Mathf.Abs(time2481) <= 3 || Mathf.Abs(time4481) <= 3 || Mathf.Abs(time6481) <= 3)
                             {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[88].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[88].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
+                                yield return new WaitForSecondsRealtime(4f);
+                                Debug.Log("case (81): if <=3 " + Mathf.Abs(time2481) + ", " + Mathf.Abs(time4481) + ", " + Mathf.Abs(time6481));
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
-                            if (raycasting4way3.nameOfPoint != "Cube 44")
+                            else
                             {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[86].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[86].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
-                            }
-                            if (raycasting4way4.nameOfPoint != "Cube 64")
-                            {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[89].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[89].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
+                                Debug.Log("case (81): else " + Mathf.Abs(time2481) + ", " + Mathf.Abs(time4481) + ", " + Mathf.Abs(time6481));
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
-                        case (64): // 6/29 Trfc Ctrl, 4-way
-                            if (raycasting4way2.nameOfPoint != "Cube 24")
+                        case (24): // 6/30 Trfc Ctrl, 4-way, raycasting4way4
+                            float time8124 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt24;
+                            float time4424 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt24;
+                            float time6424 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt24;
+                            if (Mathf.Abs(time8124) <= 3 || Mathf.Abs(time4424) <= 3 || Mathf.Abs(time6424) <= 3)
                             {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[88].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[88].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
+                                yield return new WaitForSecondsRealtime(4f);
+                                Debug.Log("case (24): if <=3 " + Mathf.Abs(time8124) + ", " + Mathf.Abs(time4424) + ", " + Mathf.Abs(time6424));
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
-                            if (raycasting4way3.nameOfPoint != "Cube 44")
+                            else
                             {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[86].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[86].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
-                            }
-                            if (raycasting4way1.nameOfPoint != "Cube 81")
-                            {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[87].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[87].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
+                                Debug.Log("case (24): else " + Mathf.Abs(time8124) + ", " + Mathf.Abs(time4424) + ", " + Mathf.Abs(time6424));
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
-                        case (24): // 6/29 Trfc Ctrl, 4-way
-                            if (raycasting4way4.nameOfPoint != "Cube 64")
+                        case (44): // 6/30 Trfc Ctrl, 4-way, raycasting4way2
+                            float time8144 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt44;
+                            float time2444 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt44;
+                            float time6444 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt44;
+                            if (Mathf.Abs(time8144) <= 3 || Mathf.Abs(time2444) <= 3 || Mathf.Abs(time6444) <= 3)
                             {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[89].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[89].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
+                                yield return new WaitForSecondsRealtime(4f);
+                                Debug.Log("case (44): if <=3 " + Mathf.Abs(time8144) + ", " + Mathf.Abs(time2444) + ", " + Mathf.Abs(time6444));
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
-                            if (raycasting4way3.nameOfPoint != "Cube 44")
+                            else
                             {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[86].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[86].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
-                            }
-                            if (raycasting4way1.nameOfPoint != "Cube 81")
-                            {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[87].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[87].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
+                                Debug.Log("case (44): else " + Mathf.Abs(time8144) + ", " + Mathf.Abs(time2444) + ", " + Mathf.Abs(time6444));
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
-                        case (44): // 6/29 Trfc Ctrl, 4-way
-                            if (raycasting4way4.nameOfPoint != "Cube 64")
+                        case (64): // 6/30 Trfc Ctrl, 4-way, raycasting4way3
+                            float time8164 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt64;
+                            float time2464 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt64;
+                            float time4464 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt64;
+                            if (Mathf.Abs(time8164) <= 3 || Mathf.Abs(time2464) <= 3 || Mathf.Abs(time4464) <= 3)
                             {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[89].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[89].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
+                                yield return new WaitForSecondsRealtime(4f);
+                                Debug.Log("case (64): if <=3 " + Mathf.Abs(time8164) + ", " + Mathf.Abs(time2464) + ", " + Mathf.Abs(time4464));
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
-                            if (raycasting4way2.nameOfPoint != "Cube 24")
+                            else
                             {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[88].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[88].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
-                            }
-                            if (raycasting4way1.nameOfPoint != "Cube 81")
-                            {
-                                if (currentPointTrfc == 84 && raycasting.atThresholdTrfc == true) // the center of 4-way
-                                {
-                                    wayPointsTrfc.waypoints[87].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                }
-                                else
-                                {
-                                    wayPointsTrfc.waypoints[87].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                }
+                                Debug.Log("case (64): else " + Mathf.Abs(time8164) + ", " + Mathf.Abs(time2464) + ", " + Mathf.Abs(time4464));
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
-                        // 4-Way Stops Ends
+                        // 4-Way Stop Ends
                         default:
                             leftTurn = false;
                             rightTurn = false;
@@ -1868,7 +1798,7 @@ public class AI_Controller : MonoBehaviour
 
                 if (currentPointTrfc == 25 && raycasting.atThresholdTrfc == true) // at Cube (24), 4-way Stop
                 {
-                    timeAtPoint = Time.time;
+                    timeStamp4Way.timeAt24 = Time.time;
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
@@ -1977,7 +1907,7 @@ public class AI_Controller : MonoBehaviour
 
                 if (currentPointTrfc == 45 && raycasting.atThresholdTrfc == true) // at Cube (44), 4-way Stop
                 {
-                    timeAtPoint = Time.time;
+                    timeStamp4Way.timeAt44 = Time.time;
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
@@ -2188,7 +2118,7 @@ public class AI_Controller : MonoBehaviour
 
                 if (currentPointTrfc == 65 && raycasting.atThresholdTrfc == true) // at Cube (64), 4-way Stop
                 {
-                    timeAtPoint = Time.time;
+                    timeStamp4Way.timeAt64 = Time.time;
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);
@@ -2375,8 +2305,8 @@ public class AI_Controller : MonoBehaviour
 
                 if (currentPointTrfc == 82 && raycasting.atThresholdTrfc == true) // at Cube (81), 4-way Stop
                 {
-                    timeAtPoint = Time.time;
-                    fourWayBool = raycasting.downRayText;
+                    timeStamp4Way.timeAt81 = Time.time;
+                    // fourWayBool = raycasting.downRayText;
                     Debug.Log(this.gameObject.name + "'s Time at Threshold Cube (" + (currentPointTrfc - 1) + ") is " + Time.time);
                     current = currentPointTrfc - 1; // 6/22 Trfc Ctrl Test Codes
                     int randomNumber = Random.Range(1, 4);

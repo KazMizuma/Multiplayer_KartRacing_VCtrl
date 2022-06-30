@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Raycasting4way1 : MonoBehaviour
 {
-    // Attached to Cube (81)
+    // Attached to 4WayStop
     public string nameOfPoint;
+    //public string tempText;
     //public bool carOnRight = false;
     //public bool carOnLeft = false;
 
@@ -15,12 +16,16 @@ public class Raycasting4way1 : MonoBehaviour
         nameOfPoint = this.transform.gameObject.name;
     }
 
-    //void OnTriggerStay(Collider other)
+    //void OnTriggerEnter (Collider other)
     //{
     //    if (other.transform.gameObject.tag == "Car")
     //    {
-    //        Debug.Log(nameOfPoint + " OnTriggerStay, Car: " + other.transform.gameObject.tag);
-    //        nameOfPoint = transform.gameObject.name;
+    //        //Debug.Log(FourWayStop + " OnTriggerStay, Car: " + other.transform.parent.name);
+    //        tempText = other.transform.parent.name;
+    //    }
+    //    else
+    //    {
+    //        tempText = this.transform.gameObject.name;
     //    }
     //}
 
@@ -29,14 +34,15 @@ public class Raycasting4way1 : MonoBehaviour
     {
         //carOnRight = false;
         //carOnLeft = false;
-        nameOfPoint = this.transform.gameObject.name;
+
+        //FourWayStop = tempText;
 
         RaycastHit hitTrfc;
 
-        Ray leftRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -4f); // 6/28 Trfc Ctrl, raycasting to the left
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * -4f, Color.green);
+        Ray rightRay = new Ray(gameObject.transform.position, gameObject.transform.forward * 10f); // 6/28 Trfc Ctrl, raycasting to the left
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 10f, Color.green);
 
-        if (Physics.Raycast(leftRay, out hitTrfc, 4f))
+        if (Physics.Raycast(rightRay, out hitTrfc, 10f))
         {
             if (hitTrfc.transform.gameObject.tag == "Car")
             {

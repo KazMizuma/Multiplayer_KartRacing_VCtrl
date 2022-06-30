@@ -18,6 +18,7 @@ TagManager:
   - LeftOfT
   - Lights
   - 4Way
+  - 4WayStop
   layers:
   - Default
   - TransparentFX

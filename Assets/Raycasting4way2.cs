@@ -33,10 +33,10 @@ public class Raycasting4way2 : MonoBehaviour
 
         RaycastHit hitTrfc;
 
-        Ray rightRay = new Ray(gameObject.transform.position, gameObject.transform.forward * 4f); // 6/28 Trfc Ctrl, raycasting to the left
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 4f, Color.green);
+        Ray leftRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -10f); // 6/28 Trfc Ctrl, raycasting to the left
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * -10f, Color.green);
 
-        if (Physics.Raycast(rightRay, out hitTrfc, 4f))
+        if (Physics.Raycast(leftRay, out hitTrfc, 10f))
         {
             if (hitTrfc.transform.gameObject.tag == "Car")
             {
