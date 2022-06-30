@@ -23,9 +23,9 @@ public class timeStamp4Way : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeAt81 = ai_Controller.timeAt81;
-        timeAt24 = ai_Controller.timeAt24;
-        timeAt44 = ai_Controller.timeAt44;
-        timeAt64 = ai_Controller.timeAt64;
+        //timeAt81 = ai_Controller.timeAt81;
+        //timeAt24 = ai_Controller.timeAt24;
+        //timeAt44 = ai_Controller.timeAt44;
+        //timeAt64 = ai_Controller.timeAt64;
     }
 }

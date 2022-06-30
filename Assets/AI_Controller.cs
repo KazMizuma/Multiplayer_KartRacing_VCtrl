@@ -931,6 +931,11 @@ public class AI_Controller : MonoBehaviour
             //rightTurn = false;
             //straight = false;
 
+            //timeAt81 = timeStamp4Way.timeAt81; // 6/30 Trfc Ctrl
+            //timeAt24 = timeStamp4Way.timeAt24;
+            //timeAt44 = timeStamp4Way.timeAt44;
+            //timeAt64 = timeStamp4Way.timeAt64;
+
             // 6/17 TRFC CTRL TEST CODES
             float steer = Mathf.Clamp(targetAngleTrfc * steeringSensitivity, -2, 2);
             if (currentPointTrfc < 2 && roundTrip == false) // if at the initial starting point
@@ -1562,66 +1567,66 @@ public class AI_Controller : MonoBehaviour
                             yield return new WaitForSecondsRealtime(1f);
                             switch (way) */
                         case (81): // 6/30 Trfc Ctrl, 4-way, raycasting4way1
-                            float time2481 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt81;
-                            float time4481 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt81;
-                            float time6481 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt81;
-                            if (Mathf.Abs(time2481) <= 3 || Mathf.Abs(time4481) <= 3 || Mathf.Abs(time6481) <= 3)
+                            float time8124 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt24;
+                            float time8144 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt44;
+                            float time8164 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt64;
+                            if ((time8124 > 0 && time8124 < 4) || (time8144 > 0 && time8144 < 4) || (time8164 > 0 && time8164 < 4))
                             {
-                                yield return new WaitForSecondsRealtime(4f);
-                                Debug.Log("case (81): if <=3 " + Mathf.Abs(time2481) + ", " + Mathf.Abs(time4481) + ", " + Mathf.Abs(time6481));
+                                yield return new WaitForSecondsRealtime(5f);
+                                Debug.Log("case (81): if < 4 " + time8124 + ", " + time8144 + ", " + time8164);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             else
                             {
-                                Debug.Log("case (81): else " + Mathf.Abs(time2481) + ", " + Mathf.Abs(time4481) + ", " + Mathf.Abs(time6481));
+                                Debug.Log("case (81): else " + time8124 + ", " + time8144 + ", " + time8164);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
                         case (24): // 6/30 Trfc Ctrl, 4-way, raycasting4way4
-                            float time8124 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt24;
-                            float time4424 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt24;
-                            float time6424 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt24;
-                            if (Mathf.Abs(time8124) <= 3 || Mathf.Abs(time4424) <= 3 || Mathf.Abs(time6424) <= 3)
+                            float time2481 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt81;
+                            float time2444 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt44;
+                            float time2464 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt64;
+                            if ((time2481 > 0 && time2481 < 4) || (time2444 > 0 && time2444 < 4) || (time2464 > 0 && time2464 < 4))
                             {
-                                yield return new WaitForSecondsRealtime(4f);
-                                Debug.Log("case (24): if <=3 " + Mathf.Abs(time8124) + ", " + Mathf.Abs(time4424) + ", " + Mathf.Abs(time6424));
+                                yield return new WaitForSecondsRealtime(5f);
+                                Debug.Log("case (24): if < 4 " + time2481 + ", " + time2444 + ", " + time2464);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             else
                             {
-                                Debug.Log("case (24): else " + Mathf.Abs(time8124) + ", " + Mathf.Abs(time4424) + ", " + Mathf.Abs(time6424));
+                                Debug.Log("case (24): else " + time2481 + ", " + time2444 + ", " + time2464);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
                         case (44): // 6/30 Trfc Ctrl, 4-way, raycasting4way2
-                            float time8144 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt44;
-                            float time2444 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt44;
-                            float time6444 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt44;
-                            if (Mathf.Abs(time8144) <= 3 || Mathf.Abs(time2444) <= 3 || Mathf.Abs(time6444) <= 3)
+                            float time4481 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt81;
+                            float time4424 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt24;
+                            float time4464 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt64;
+                            if ((time4481 > 0 && time4481 < 4) || (time4424 > 0 && time4424 < 4) || (time4464 > 0 && time4464 < 4))
                             {
-                                yield return new WaitForSecondsRealtime(4f);
-                                Debug.Log("case (44): if <=3 " + Mathf.Abs(time8144) + ", " + Mathf.Abs(time2444) + ", " + Mathf.Abs(time6444));
+                                yield return new WaitForSecondsRealtime(5f);
+                                Debug.Log("case (44): if < 4 " + time4481 + ", " + time4424 + ", " + time4464);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             else
                             {
-                                Debug.Log("case (44): else " + Mathf.Abs(time8144) + ", " + Mathf.Abs(time2444) + ", " + Mathf.Abs(time6444));
+                                Debug.Log("case (44): else " + time4481 + ", " + time4424 + ", " + time4464);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
                         case (64): // 6/30 Trfc Ctrl, 4-way, raycasting4way3
-                            float time8164 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt64;
-                            float time2464 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt64;
-                            float time4464 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt64;
-                            if (Mathf.Abs(time8164) <= 3 || Mathf.Abs(time2464) <= 3 || Mathf.Abs(time4464) <= 3)
+                            float time6481 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt81;
+                            float time6424 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt24;
+                            float time6444 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt44;
+                            if ((time6481 > 0 && time6481 < 4) || (time6424 > 0 && time6424 < 4) || (time6444 > 0 && time6444 < 4))
                             {
-                                yield return new WaitForSecondsRealtime(4f);
-                                Debug.Log("case (64): if <=3 " + Mathf.Abs(time8164) + ", " + Mathf.Abs(time2464) + ", " + Mathf.Abs(time4464));
+                                yield return new WaitForSecondsRealtime(5f);
+                                Debug.Log("case (64): if < 4 " + time6481 + ", " + time6424 + ", " + time6444);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             else
                             {
-                                Debug.Log("case (64): else " + Mathf.Abs(time8164) + ", " + Mathf.Abs(time2464) + ", " + Mathf.Abs(time4464));
+                                Debug.Log("case (64): else " + time6481 + ", " + time6424 + ", " + time6444);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;

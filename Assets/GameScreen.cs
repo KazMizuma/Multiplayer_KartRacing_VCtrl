@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameScreen : MonoBehaviour
 {
     public GameObject miniMap;
-    int miniMapOnOff = 1;
+    int miniMapOnOff = -1; // 6/30 Trfc Ctrl, Disabling MiniMap Upon Start
 
     // Start is called before the first frame update
     void Start()
