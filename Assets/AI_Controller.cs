@@ -1575,6 +1575,7 @@ public class AI_Controller : MonoBehaviour
                                 yield return new WaitForSecondsRealtime(5f);
                                 Debug.Log("case (81): if < 4 " + time8124 + ", " + time8144 + ", " + time8164);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                timeStamp4Way.timeAt81 -= 6; // 7/01 Trfc Ctrl Test Code, subtracting 1 + 5 seconds waited
                             }
                             else
                             {
@@ -1591,6 +1592,7 @@ public class AI_Controller : MonoBehaviour
                                 yield return new WaitForSecondsRealtime(5f);
                                 Debug.Log("case (24): if < 4 " + time2481 + ", " + time2444 + ", " + time2464);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                timeStamp4Way.timeAt24 -= 6; // 7/01 Trfc Ctrl Test Code, subtracting 1 + 5 seconds waited
                             }
                             else
                             {
@@ -1607,6 +1609,7 @@ public class AI_Controller : MonoBehaviour
                                 yield return new WaitForSecondsRealtime(5f);
                                 Debug.Log("case (44): if < 4 " + time4481 + ", " + time4424 + ", " + time4464);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                timeStamp4Way.timeAt44 -= 6; // 7/01 Trfc Ctrl Test Code, subtracting 1 + 5 seconds waited
                             }
                             else
                             {
@@ -1623,6 +1626,7 @@ public class AI_Controller : MonoBehaviour
                                 yield return new WaitForSecondsRealtime(5f);
                                 Debug.Log("case (64): if < 4 " + time6481 + ", " + time6424 + ", " + time6444);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                timeStamp4Way.timeAt64 -= 6; // 7/01 Trfc Ctrl Test Code, subtracting 1 + 5 seconds waited
                             }
                             else
                             {
