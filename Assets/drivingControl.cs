@@ -171,7 +171,7 @@ public class drivingControl : MonoBehaviour
             }
             else
             {
-                Debug.Log(this.transform.gameObject.name + " wheelColliders[" + i + "] " + wheelColliders[i] + " else clause");
+                //Debug.Log(this.transform.gameObject.name + " wheelColliders[" + i + "] " + wheelColliders[i] + " else clause");
             }
             Vector3 Vec3pos;
             Quaternion quat;
@@ -181,8 +181,8 @@ public class drivingControl : MonoBehaviour
             //Debug.Log(wheelColliders[i] + " wheelColliders[i]");
         }
 
-        Debug.Log(this.transform.gameObject.name + " wheelColliders[i].motorTorque: " + thrustTorque);
-        Debug.Log(this.transform.gameObject.name + " wheelColliders[i].brakeTorque: " + brake);
+        //Debug.Log(this.transform.gameObject.name + " wheelColliders[i].motorTorque: " + thrustTorque); // 7/01 Trfc Ctrl
+        //Debug.Log(this.transform.gameObject.name + " wheelColliders[i].brakeTorque: " + brake);
 
         if (brake != 0)
         {

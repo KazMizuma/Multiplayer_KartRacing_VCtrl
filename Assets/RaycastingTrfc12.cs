@@ -42,7 +42,7 @@ public class RaycastingTrfc12 : MonoBehaviour
             {
                 //carOnRight = true;
                 nameOfPoint = "Front Not Clear";
-                Debug.Log("At " + nameOfPoint + ", " + hitTrfc.transform.parent.name + " is on the front!");
+                //Debug.Log("At " + nameOfPoint + ", " + hitTrfc.transform.parent.name + " is on the front!");
             }
         }
 
