@@ -1316,7 +1316,7 @@ PrefabInstance:
     - target: {fileID: 6899926063092891019, guid: 7f1894a1293f58c40bf34ac657aa9c6e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.54
+      value: 12.44
       objectReference: {fileID: 0}
     - target: {fileID: 6899926063092891019, guid: 7f1894a1293f58c40bf34ac657aa9c6e,
         type: 3}
@@ -4614,7 +4614,7 @@ PrefabInstance:
     - target: {fileID: 741660177627673669, guid: 6744a2eb4ee9c1a419b744f439613a9e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.83
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 741660177627673669, guid: 6744a2eb4ee9c1a419b744f439613a9e,
         type: 3}
@@ -8998,7 +8998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1325423868
 Transform:
   m_ObjectHideFlags: 0
@@ -9021,8 +9021,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325423867}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
+  m_IsTrigger: 0
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -13466,7 +13466,7 @@ PrefabInstance:
     - target: {fileID: 4600757163701347980, guid: f2c37ee9fc35073449a9e7df9044b2b8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.74
+      value: 7.57
       objectReference: {fileID: 0}
     - target: {fileID: 4600757163701347980, guid: f2c37ee9fc35073449a9e7df9044b2b8,
         type: 3}
@@ -21267,6 +21267,7 @@ MonoBehaviour:
   - {fileID: 1269199920}
   - {fileID: 815450187}
   - {fileID: 919586758}
+  - {fileID: 1325423867}
 --- !u!4 &8786127298985541037
 Transform:
   m_ObjectHideFlags: 0
