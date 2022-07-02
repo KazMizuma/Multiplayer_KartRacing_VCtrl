@@ -1215,6 +1215,7 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)" && raycastingTrfc3.nameOfPoint == "Cube (34)" && raycastingTrfc4.nameOfPoint == "Cube (9)")
                                 {
+                                    yield return new WaitForSecondsRealtime(3f); // 7/01 Trfc Ctrl Test Code
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " " + raycastingTrfc3.nameOfPoint + " " + raycastingTrfc4.nameOfPoint + " " + " the course is clear!");
                                 }
@@ -1251,6 +1252,7 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (raycastingTrfc5.nameOfPoint == "Cube (14)" && raycastingTrfc6.nameOfPoint == "Cube (31)" && raycastingTrfc7.nameOfPoint == "Cube (73)" && raycastingTrfc8.nameOfPoint == "Cube (29)")
                                 {
+                                    yield return new WaitForSecondsRealtime(3f); // 7/01 Trfc Ctrl Test Code
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc5.nameOfPoint + " " + raycastingTrfc6.nameOfPoint + " " + raycastingTrfc7.nameOfPoint + " " + raycastingTrfc8.nameOfPoint + " " + " : the course is clear!");
                                 }
@@ -1287,6 +1289,7 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (raycastingTrfc9.nameOfPoint == "Cube (19)" && raycastingTrfc10.nameOfPoint == "Cube (48)" && raycastingTrfc11.nameOfPoint == "Cube (62)" && raycastingTrfc12.nameOfPoint == "Cube (74)")
                                 {
+                                    yield return new WaitForSecondsRealtime(3f); // 7/01 Trfc Ctrl Test Code
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc9.nameOfPoint + " " + raycastingTrfc10.nameOfPoint + " " + raycastingTrfc11.nameOfPoint + " " + raycastingTrfc12.nameOfPoint + " " + " : the course is clear!");
                                 }
@@ -1323,6 +1326,7 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (raycastingTrfc13.nameOfPoint == "Cube (78)" && raycastingTrfc14.nameOfPoint == "Cube (66)" && raycastingTrfc15.nameOfPoint == "Cube (58)" && raycastingTrfc16.nameOfPoint == "Cube (79)")
                                 {
+                                    yield return new WaitForSecondsRealtime(3f); // 7/01 Trfc Ctrl Test Code
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc13.nameOfPoint + " " + raycastingTrfc14.nameOfPoint + " " + raycastingTrfc15.nameOfPoint + " " + raycastingTrfc16.nameOfPoint + " " + " : the course is clear!");
                                 }
@@ -1359,6 +1363,7 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (raycastingTrfc17.nameOfPoint == "Cube (70)" && raycastingTrfc18.nameOfPoint == "Cube (71)" && raycastingTrfc19.nameOfPoint == "Cube (28)" && raycastingTrfc20.nameOfPoint == "Cube (54)")
                                 {
+                                    yield return new WaitForSecondsRealtime(3f); // 7/01 Trfc Ctrl Test Code
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc17.nameOfPoint + " " + raycastingTrfc18.nameOfPoint + " " + raycastingTrfc19.nameOfPoint + " " + raycastingTrfc20.nameOfPoint + " " + " : the course is clear!");
                                 }
@@ -1395,6 +1400,7 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (raycastingTrfc21.nameOfPoint == "Cube (72)" && raycastingTrfc22.nameOfPoint == "Cube (38)" && raycastingTrfc23.nameOfPoint == "Cube (4)" && raycastingTrfc24.nameOfPoint == "Cube (43)")
                                 {
+                                    yield return new WaitForSecondsRealtime(3f); // 7/01 Trfc Ctrl Test Code
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc21.nameOfPoint + " " + raycastingTrfc22.nameOfPoint + " " + raycastingTrfc23.nameOfPoint + " " + raycastingTrfc24.nameOfPoint + " " + " : the course is clear!");
                                 }
@@ -1573,10 +1579,10 @@ public class AI_Controller : MonoBehaviour
                             if ((time8124 > 0 && time8124 < 4) || (time8144 > 0 && time8144 < 4) || (time8164 > 0 && time8164 < 4))
                             {
                                 Debug.Log("case (81): if < 4 " + time8124 + ", " + time8144 + ", " + time8164);
-                                Debug.Log("case (81): subtracting 6 from timeStamp4Way.timeAt81: " + timeStamp4Way.timeAt81);
-                                timeStamp4Way.timeAt81 += 6; // 7/01 Trfc Ctrl Test Code, adding 1 + 5 for next traffic
                                 yield return new WaitForSecondsRealtime(5f);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                Debug.Log("case (81): adding 6 to timeStamp4Way.timeAt81: " + timeStamp4Way.timeAt81);
+                                timeStamp4Way.timeAt81 += 6; // 7/01 Trfc Ctrl Test Code, adding 1 + 5 for next traffic
                             }
                             else
                             {
@@ -1591,11 +1597,10 @@ public class AI_Controller : MonoBehaviour
                             if ((time2481 > 0 && time2481 < 4) || (time2444 > 0 && time2444 < 4) || (time2464 > 0 && time2464 < 4))
                             {
                                 Debug.Log("case (24): if < 4 " + time2481 + ", " + time2444 + ", " + time2464);
-                                Debug.Log("case (24): subtracting 6 from timeStamp4Way.timeAt24: " + timeStamp4Way.timeAt24);
-                                timeStamp4Way.timeAt24 += 6; // 7/01 Trfc Ctrl Test Code, adding 1 + 5 for next traffic
                                 yield return new WaitForSecondsRealtime(5f);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-
+                                Debug.Log("case (24): adding 6 to timeStamp4Way.timeAt24: " + timeStamp4Way.timeAt24);
+                                timeStamp4Way.timeAt24 += 6; // 7/01 Trfc Ctrl Test Code, adding 1 + 5 for next traffic
                             }
                             else
                             {
@@ -1610,10 +1615,10 @@ public class AI_Controller : MonoBehaviour
                             if ((time4481 > 0 && time4481 < 4) || (time4424 > 0 && time4424 < 4) || (time4464 > 0 && time4464 < 4))
                             {
                                 Debug.Log("case (44): if < 4 " + time4481 + ", " + time4424 + ", " + time4464);
-                                Debug.Log("case (44): subtracting 6 from timeStamp4Way.timeAt44: " + timeStamp4Way.timeAt44);
-                                timeStamp4Way.timeAt44 += 6; // 7/01 Trfc Ctrl Test Code, adding 1 + 5 for next traffic
                                 yield return new WaitForSecondsRealtime(5f);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                Debug.Log("case (44): adding 6 to timeStamp4Way.timeAt44: " + timeStamp4Way.timeAt44);
+                                timeStamp4Way.timeAt44 += 6; // 7/01 Trfc Ctrl Test Code, adding 1 + 5 for next traffic
                             }
                             else
                             {
@@ -1628,10 +1633,10 @@ public class AI_Controller : MonoBehaviour
                             if ((time6481 > 0 && time6481 < 4) || (time6424 > 0 && time6424 < 4) || (time6444 > 0 && time6444 < 4))
                             {
                                 Debug.Log("case (64): if < 4 " + time6481 + ", " + time6424 + ", " + time6444);
-                                Debug.Log("case (64): subtracting 6 from timeStamp4Way.timeAt64: " + timeStamp4Way.timeAt64);
-                                timeStamp4Way.timeAt64 += 6; // 7/01 Trfc Ctrl Test Code, adding 1 + 5 for next traffic
                                 yield return new WaitForSecondsRealtime(5f);
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                Debug.Log("case (64): adding 6 to timeStamp4Way.timeAt64: " + timeStamp4Way.timeAt64);
+                                timeStamp4Way.timeAt64 += 6; // 7/01 Trfc Ctrl Test Code, adding 1 + 5 for next traffic
                             }
                             else
                             {

@@ -63,7 +63,8 @@ public class SmoothFollow : MonoBehaviour
             for (int i = 0; i < cars.Length; i++)
             {
                 target[i] = cars[i].transform;
-                Debug.Log(cars[i].name + " " + i);
+                //Debug.Log(cars[i].name + " " + i); // 7/01 Trfc Ctrl Test Code
+                Debug.Log(cars[i].transform.parent.name + "'s index is " + i);
             }
             target[index].Find("RearViewCam").gameObject.GetComponent<Camera>().targetTexture = 
                                                             (rearCamView.texture as RenderTexture);
