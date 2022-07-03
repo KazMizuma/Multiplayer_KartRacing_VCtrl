@@ -1184,7 +1184,7 @@ public class AI_Controller : MonoBehaviour
                     roundTrip = true;
                 }
 
-                if (this.transform.gameObject.name == "CarPurple (2)") // 7/01 Trfc Ctrl
+                if (this.transform.gameObject.name == "CarPurple (3)") // 7/02 Trfc Ctrl
                 {
                     wayPointsTrfc.waypoints[34].gameObject.GetComponent<BoxCollider>().enabled = true; // (34) messes the traffic at the starting point.
                                                                                                        // Enabling it back after the traffic gets cleared.

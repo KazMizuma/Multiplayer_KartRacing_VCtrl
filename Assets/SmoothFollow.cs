@@ -7,11 +7,19 @@ using UnityEngine.UI;
 public class SmoothFollow : MonoBehaviour
 {
     Transform[] target;
-    public float distance = 4.0f;
-    public float height = 2.0f;
+
+    public float distance = 2.0f; // 7/03 Trfc Ctrl Test Codes
+    public float height = 1.0f;
     public float heightOffset = 0f;
-    public float heightDamping = 4.0f;
-    public float rotationDamping = 2.0f;
+    //public float distance = 4.0f; 
+    //public float height = 2.0f;
+    //public float heightOffset = 0f;
+
+    public float heightDamping = 2.0f; // 7/03 Trfc Ctrl Test Codes
+    public float rotationDamping = 1f;
+    //public float heightDamping = 4.0f;
+    //public float rotationDamping = 2.0f;
+
     public RawImage rearCamView;
     int index = 0; 
 

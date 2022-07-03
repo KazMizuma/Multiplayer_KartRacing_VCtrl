@@ -33,10 +33,10 @@ public class RaycastingTrfc12 : MonoBehaviour
 
         RaycastHit hitTrfc;
 
-        Ray rightRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -15f); // 6/24 Trfc Ctrl, raycasting to the right
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * -15f, Color.green);
+        Ray rightRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -16f); // 6/24 Trfc Ctrl, raycasting to the right
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * -16f, Color.green);
 
-        if (Physics.Raycast(rightRay, out hitTrfc, 15f))
+        if (Physics.Raycast(rightRay, out hitTrfc, 16f))
         {
             if (hitTrfc.transform.gameObject.tag == "Car")
             {
