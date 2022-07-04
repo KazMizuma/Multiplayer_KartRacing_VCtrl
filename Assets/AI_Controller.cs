@@ -1424,7 +1424,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     // yield return new WaitForSecondsRealtime(1f); 7/01 Trfc Ctrl Test Code
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                    targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+                                    //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1449,7 +1449,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc21.nameOfPoint == "Cube (72)" && raycastingTrfc22.nameOfPoint == "Cube (38)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                    targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+                                    //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc21.nameOfPoint + " " + raycastingTrfc22.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1474,7 +1474,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc17.nameOfPoint == "Cube (70)" && raycastingTrfc18.nameOfPoint == "Cube (71)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                    targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+                                    //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc17.nameOfPoint + " " + raycastingTrfc18.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1499,7 +1499,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc13.nameOfPoint == "Cube (78)" && raycastingTrfc14.nameOfPoint == "Cube (66)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                    targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+                                    //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc13.nameOfPoint + " " + raycastingTrfc14.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1524,7 +1524,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc9.nameOfPoint == "Cube (19)" && raycastingTrfc10.nameOfPoint == "Cube (48)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                    targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+                                    //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc9.nameOfPoint + " " + raycastingTrfc10.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1549,7 +1549,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc6.nameOfPoint == "Cube (31)" && raycastingTrfc5.nameOfPoint == "Cube (14)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                    targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+                                    //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc6.nameOfPoint + " " + raycastingTrfc5.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1573,7 +1573,7 @@ public class AI_Controller : MonoBehaviour
                         {
                             yield return new WaitForSecondsRealtime(1f);
                             switch (way) */
-                        case (81): // 6/30 Trfc Ctrl, 4-way, raycasting4way1
+                        case (81): // 6/30 Trfc Ctrl, 4-way, raycasting4way1 not used
                             float time8124 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt24;
                             float time8144 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt44;
                             float time8164 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt64;
@@ -1591,7 +1591,7 @@ public class AI_Controller : MonoBehaviour
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
-                        case (24): // 6/30 Trfc Ctrl, 4-way, raycasting4way4
+                        case (24): // 6/30 Trfc Ctrl, 4-way, raycasting4way4 not used
                             float time2481 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt81;
                             float time2444 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt44;
                             float time2464 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt64;
@@ -1609,7 +1609,7 @@ public class AI_Controller : MonoBehaviour
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
-                        case (44): // 6/30 Trfc Ctrl, 4-way, raycasting4way2
+                        case (44): // 6/30 Trfc Ctrl, 4-way, raycasting4way2 not used
                             float time4481 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt81;
                             float time4424 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt24;
                             float time4464 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt64;
@@ -1627,7 +1627,7 @@ public class AI_Controller : MonoBehaviour
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             }
                             break;
-                        case (64): // 6/30 Trfc Ctrl, 4-way, raycasting4way3
+                        case (64): // 6/30 Trfc Ctrl, 4-way, raycasting4way3 not used
                             float time6481 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt81;
                             float time6424 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt24;
                             float time6444 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt44;
@@ -2371,11 +2371,23 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // Finally, the target angle is processed accordingly. 
+                // 7/04 Trfc Ctrl Test Codes
+                if (currentPointTrfc >=0 || currentPointTrfc <= 86)
+                {
+                    targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
+                    nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name;
+                }
+                else
+                {
+                    targetTrfc = wayPointsTrfc.waypoints[0].transform.position;
+                    nextWaypointNameTrfc = wayPointsTrfc.waypoints[0].name;
+                }
 
-                //Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPointsTrfc.waypoints[currentPointTrfc].name);
-                nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name; // For debug purpose only
-            } 
+                // 7/04 Trfc Ctrl Test, disabling the followings for the test above 
+                //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // Finally, the target angle is processed accordingly. 
+                ////Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPointsTrfc.waypoints[currentPointTrfc].name);
+                //nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name; // For debug purpose only
+            }
 
             // Getting Cars Unstuck, 6/18 Trfc Ctrl Test Code
             if (mphSpeedInt < 1 /*&& raycasting.hitFrontHalfDownRayText == "Untagged"*/) // hardly moving at 1 mph or less /*and not at intersections*/
