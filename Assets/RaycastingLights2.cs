@@ -2,30 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Raycasting4way1 : MonoBehaviour
+public class RaycastingLights2 : MonoBehaviour
 {
-    // Attached to 4WayStop
-    public string nameOfPoint;
-    //public string tempText;
+    // Attached to Cube (24)
+    public string nameIs;
     //public bool carOnRight = false;
     //public bool carOnLeft = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        nameOfPoint = this.transform.gameObject.name;
+        nameIs = this.transform.gameObject.name;
     }
 
-    //void OnTriggerEnter (Collider other)
+    //void OnTriggerStay(Collider other)
     //{
     //    if (other.transform.gameObject.tag == "Car")
     //    {
-    //        //Debug.Log(FourWayStop + " OnTriggerStay, Car: " + other.transform.parent.name);
-    //        tempText = other.transform.parent.name;
-    //    }
-    //    else
-    //    {
-    //        tempText = this.transform.gameObject.name;
+    //        Debug.Log(nameOfPoint + " OnTriggerStay, Car: " + other.transform.gameObject.tag);
+    //        nameOfPoint = transform.gameObject.name;
     //    }
     //}
 
@@ -34,20 +29,19 @@ public class Raycasting4way1 : MonoBehaviour
     {
         //carOnRight = false;
         //carOnLeft = false;
-
-        //FourWayStop = tempText;
+        nameIs = this.transform.gameObject.name;
 
         RaycastHit hitTrfc;
 
-        Ray rightRay = new Ray(gameObject.transform.position, gameObject.transform.forward * 10f); // 6/28 Trfc Ctrl, raycasting to the left
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 10f, Color.green);
+        Ray leftRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -20f); // 6/28 Trfc Ctrl, raycasting to the left
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * -20f, Color.green);
 
-        if (Physics.Raycast(rightRay, out hitTrfc, 10f))
+        if (Physics.Raycast(leftRay, out hitTrfc, 20f))
         {
             if (hitTrfc.transform.gameObject.tag == "Car")
             {
                 //carOnRight = true;
-                nameOfPoint = hitTrfc.transform.parent.name;
+                nameIs = hitTrfc.transform.parent.name;
                 //Debug.Log("At " + nameOfPoint + ", " + hitTrfc.transform.parent.name + " is on the front!");
             }
         }

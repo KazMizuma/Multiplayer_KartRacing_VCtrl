@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Raycasting4way2 : MonoBehaviour
+public class RaycastingLights3 : MonoBehaviour
 {
-    // Attached to Cube (24)
-    public string nameOfPoint;
+    // Attached to Cube (44)
+    public string nameIs;
     //public bool carOnRight = false;
     //public bool carOnLeft = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        nameOfPoint = this.transform.gameObject.name;
+        nameIs = this.transform.gameObject.name;
     }
 
     //void OnTriggerStay(Collider other)
@@ -29,19 +29,19 @@ public class Raycasting4way2 : MonoBehaviour
     {
         //carOnRight = false;
         //carOnLeft = false;
-        nameOfPoint = this.transform.gameObject.name;
+        nameIs = this.transform.gameObject.name;
 
         RaycastHit hitTrfc;
 
-        Ray leftRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -10f); // 6/28 Trfc Ctrl, raycasting to the left
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * -10f, Color.green);
+        Ray forwardRay = new Ray(gameObject.transform.position, gameObject.transform.forward * 20f); // 6/28 Trfc Ctrl, raycasting to the left
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 20f, Color.green);
 
-        if (Physics.Raycast(leftRay, out hitTrfc, 10f))
+        if (Physics.Raycast(forwardRay, out hitTrfc, 20f))
         {
             if (hitTrfc.transform.gameObject.tag == "Car")
             {
                 //carOnRight = true;
-                nameOfPoint = hitTrfc.transform.parent.name;
+                nameIs = hitTrfc.transform.parent.name;
                 //Debug.Log("At " + nameOfPoint + ", " + hitTrfc.transform.parent.name + " is on the front!");
             }
         }

@@ -17,7 +17,11 @@ public class drivingControl : MonoBehaviour
     public ParticleSystem smokePrefab; //tire skidding smoke prefab
     ParticleSystem[] skidSmoke = new ParticleSystem[4]; //for four tires to instantiate the prefab
 
-    public GameObject brakeLight;
+    public GameObject brakeLight; // 7/09 Trfc Ctrl
+    public GameObject brakeLight1;
+
+    Raycasting raycasting; // 7/10 Trfc Ctrl
+
     public AudioSource AccelHigh;
     public Rigidbody rb;
     public float gearLength;
@@ -76,6 +80,9 @@ public class drivingControl : MonoBehaviour
         }
 
         brakeLight.SetActive(false);
+        brakeLight1.SetActive(false); // 7/09 Trfc Ctrl
+
+        raycasting = GetComponentInChildren<Raycasting>(); // 7/10 Trfc Ctrl
 
         GameObject driverName = Instantiate<GameObject>(driverNamePrefab);
         driverName.GetComponent<driverNameUI>().targetCar = rb.gameObject.transform;
@@ -184,13 +191,15 @@ public class drivingControl : MonoBehaviour
         //Debug.Log(this.transform.gameObject.name + " wheelColliders[i].motorTorque: " + thrustTorque); // 7/01 Trfc Ctrl
         //Debug.Log(this.transform.gameObject.name + " wheelColliders[i].brakeTorque: " + brake);
 
-        if (brake != 0)
+        if (brake != 0 || raycasting.atThresholdTrfc == true) // 7/10 Trfc Ctrl Test Code
         {
             brakeLight.SetActive(true);
+            brakeLight1.SetActive(true); // 7/09 Trfc Ctrl
         }
         else
         {
             brakeLight.SetActive(false);
+            brakeLight1.SetActive(false); // 7/09 Trfc Ctrl
         }
     }
 
