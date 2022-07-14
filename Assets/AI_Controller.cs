@@ -1637,7 +1637,27 @@ public class AI_Controller : MonoBehaviour
                             yield return new WaitForSecondsRealtime(1f);
                             switch (way) */
                         case (81):
-                            // 7/12 Trfc Ctrl Test Code, List
+                            // 7/13 Trfc Ctrl Test Code
+                            //float time2481 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt81;
+                            //float time4481 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt81;
+                            //float time6481 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt81;
+                            //if ((time2481 > 0 /*&& time2481 < 4*/) || (time4481 > 0 /*&& time4481 < 4*/) || (time6481 > 0 /*&& time6481 < 4*/))
+                            //{
+                            //    yield return new WaitForSecondsRealtime(2f);
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //}
+                            //else if ((time2481 < 0 /*&& time2481 < 4*/) && (time4481 < 0 /*&& time4481 < 4*/) && (time6481 < 0 /*&& time6481 < 4*/))
+                            //{
+                            //    yield return new WaitForSecondsRealtime(2f);
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //}
+                            //else
+                            //{
+                            //    StartCoroutine(Wait(way));
+                            //}
+                            // 7/13 Trfc Ctrl Test Code Ends
+
+                            // 7/12 Trfc Ctrl Test Code Begins, List
                             //timeStamp4Way.timeStamps = new List<float> { timeStamp4Way.timeAt81, timeStamp4Way.timeAt24, timeStamp4Way.timeAt44, timeStamp4Way.timeAt64 };
                             //timeStamp4Way.timeStamps.Sort();
                             //if (timeStamp4Way.timeAt81 == timeStamp4Way.timeStamps[0])
@@ -1653,36 +1673,48 @@ public class AI_Controller : MonoBehaviour
                             //}
                             // 7/12 Trfc Ctrl Test Code Ends
 
-                            //6 / 30 Trfc Ctrl Begins, 4 - way, raycasting4way1 not used
+                            // 6/30 Trfc Ctrl Begins, 4 - way, raycasting4way3 not used
                             float time8124 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt24;
                             float time8144 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt44;
                             float time8164 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt64;
                             if ((time8124 > 0 && time8124 < 4) || (time8144 > 0 && time8144 < 4) || (time8164 > 0 && time8164 < 4))
                             {
-                                // 7/13 Trfc Ctrl Test Code
-                                yield return new WaitForSecondsRealtime(2f);
-                                timeStamp4Way.timeAt81 = Time.time + 2; 
-                                StartCoroutine(Wait(way));
-
-                                // 7/01 Trfc Ctrl Test Code
+                                //7 / 01 Trfc Ctrl Test Code
                                 //Debug.Log("case (81): if < 4 " + time8124 + ", " + time8144 + ", " + time8164);
-                                //yield return new WaitForSecondsRealtime(5f);
-                                //wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                //Debug.Log("case (81): adding 6 to timeStamp4Way.timeAt81: " + timeStamp4Way.timeAt81);
-                                //timeStamp4Way.timeAt81 += 6; Adding 1 + 5 for next traffic
+                                yield return new WaitForSecondsRealtime(5f);
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                //Debug.Log("case (81): adding 6 to timeStamp4Way.timeAt24: " + timeStamp4Way.timeAt24);
+                                timeStamp4Way.timeAt81 += 6; // Adding 1 + 5 for next traffic
                             }
                             else
                             {
                                 //Debug.Log("case (81): else " + time8124 + ", " + time8144 + ", " + time8164);
-
-                                // 7/13 Trfc Ctrl Test Code
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                //timeStamp4Way.timeAt81 = Time.time;
                             }
 
                             break;
                         case (24):
-                            // 7/12 Trfc Ctrl Test Code, List
+                            // 7/13 Trfc Ctrl Test Code
+                            //float time8124 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt24;
+                            //float time4424 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt24;
+                            //float time6424 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt24;
+                            //if ((time8124 > 0 /*&& time8124 < 4*/) || (time4424 > 0 /*&& time4424 < 4*/) || (time6424 > 0 /*&& time6424 < 4*/))
+                            //{
+                            //    yield return new WaitForSecondsRealtime(2f);
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //}
+                            //else if ((time8124 < 0 /*&& time8124 < 4*/) && (time4424 < 0 /*&& time4424 < 4*/) && (time6424 < 0 /*&& time6424 < 4*/))
+                            //{
+                            //    yield return new WaitForSecondsRealtime(2f);
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //}
+                            //else
+                            //{
+                            //    StartCoroutine(Wait(way));
+                            //}
+                            // 7/13 Trfc Ctrl Test Code Ends
+
+                            // 7/12 Trfc Ctrl Test Code Begins, List
                             //timeStamp4Way.timeStamps = new List<float> { timeStamp4Way.timeAt81, timeStamp4Way.timeAt24, timeStamp4Way.timeAt44, timeStamp4Way.timeAt64 };
                             //timeStamp4Way.timeStamps.Sort();
                             //if (timeStamp4Way.timeAt24 == timeStamp4Way.timeStamps[0])
@@ -1691,7 +1723,6 @@ public class AI_Controller : MonoBehaviour
                             //    yield return new WaitForSecondsRealtime(6f);
                             //    timeStamp4Way.timeStamps.Remove(timeStamp4Way.timeAt24);
                             //    timeStamp4Way.timeAt24 += timeStamp4Way.timeAt24;
-
                             //}
                             //else
                             //{
@@ -1699,36 +1730,48 @@ public class AI_Controller : MonoBehaviour
                             //}
                             // 7/12 Trfc Ctrl Test Code Ends
 
-                            //6 / 30 Trfc Ctrl Begins, 4 - way, raycasting4way4 not used
+                            //6 / 30 Trfc Ctrl Begins, 4 - way, raycasting4way3 not used
                             float time2481 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt81;
                             float time2444 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt44;
                             float time2464 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt64;
                             if ((time2481 > 0 && time2481 < 4) || (time2444 > 0 && time2444 < 4) || (time2464 > 0 && time2464 < 4))
                             {
-                                // 7/13 Trfc Ctrl Test Code
-                                yield return new WaitForSecondsRealtime(4f);
-                                timeStamp4Way.timeAt24 = Time.time + 4;
-                                StartCoroutine(Wait(way));
-
-                                // 7/01 Trfc Ctrl Test Code
+                                //7 / 01 Trfc Ctrl Test Code
                                 //Debug.Log("case (24): if < 4 " + time2481 + ", " + time2444 + ", " + time2464);
-                                //yield return new WaitForSecondsRealtime(5f);
-                                //wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                yield return new WaitForSecondsRealtime(5f);
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                 //Debug.Log("case (24): adding 6 to timeStamp4Way.timeAt24: " + timeStamp4Way.timeAt24);
-                                //timeStamp4Way.timeAt24 += 6; Adding 1 + 5 for next traffic
+                                timeStamp4Way.timeAt24 += 6; // Adding 1 + 5 for next traffic
                             }
                             else
                             {
                                 //Debug.Log("case (24): else " + time2481 + ", " + time2444 + ", " + time2464);
-
-                                // 7/13 Trfc Ctrl Test Code
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                //timeStamp4Way.timeAt24 = Time.time;
                             }
 
                             break;
                         case (44):
-                            // 7/12 Trfc Ctrl Test Code, List
+                            // 7/13 Trfc Ctrl Test Code
+                            //float time8144 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt44;
+                            //float time2444 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt44;
+                            //float time6444 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt44;
+                            //if ((time8144 > 0 /*&& time8144 < 4*/) || (time2444 > 0 /*&& time2444 < 4*/) || (time6444 > 0 /*&& time6444 < 4*/))
+                            //{
+                            //    yield return new WaitForSecondsRealtime(2f);
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //}
+                            //else if ((time8144 < 0 /*&& time8144 < 4*/) && (time2444 < 0 /*&& time2444 < 4*/) && (time6444 < 0 /*&& time6444 < 4*/))
+                            //{
+                            //    yield return new WaitForSecondsRealtime(2f);
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //}
+                            //else
+                            //{
+                            //    StartCoroutine(Wait(way));
+                            //}
+                            // 7/13 Trfc Ctrl Test Code Ends
+
+                            // 7/12 Trfc Ctrl Test Code Begins, List
                             //timeStamp4Way.timeStamps = new List<float> { timeStamp4Way.timeAt81, timeStamp4Way.timeAt24, timeStamp4Way.timeAt44, timeStamp4Way.timeAt64 };
                             //timeStamp4Way.timeStamps.Sort();
                             //if (timeStamp4Way.timeAt44 == timeStamp4Way.timeStamps[0])
@@ -1744,36 +1787,48 @@ public class AI_Controller : MonoBehaviour
                             //}
                             // 7/12 Trfc Ctrl Test Code Ends
 
-                            //6 / 30 Trfc Ctrl Begins, 4 - way, raycasting4way2 not used
+                            //6 / 30 Trfc Ctrl Begins, 4 - way, raycasting4way3 not used
                             float time4481 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt81;
                             float time4424 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt24;
                             float time4464 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt64;
                             if ((time4481 > 0 && time4481 < 4) || (time4424 > 0 && time4424 < 4) || (time4464 > 0 && time4464 < 4))
                             {
-                                // 7/13 Trfc Ctrl Test Code
-                                yield return new WaitForSecondsRealtime(1f);
-                                timeStamp4Way.timeAt44 = Time.time + 1;
-                                StartCoroutine(Wait(way));
-
-                                // 7/01 Trfc Ctrl Test Code
+                                //7 / 01 Trfc Ctrl Test Code
                                 //Debug.Log("case (44): if < 4 " + time4481 + ", " + time4424 + ", " + time4464);
-                                //yield return new WaitForSecondsRealtime(5f);
-                                //wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                yield return new WaitForSecondsRealtime(5f);
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                 //Debug.Log("case (44): adding 6 to timeStamp4Way.timeAt44: " + timeStamp4Way.timeAt44);
-                                //timeStamp4Way.timeAt44 += 6; Adding 1 + 5 for next traffic
+                                timeStamp4Way.timeAt44 += 6; // Adding 1 + 5 for next traffic
                             }
                             else
                             {
                                 //Debug.Log("case (44): else " + time4481 + ", " + time4424 + ", " + time4464);
-
-                                // 7/13 Trfc Ctrl Test Code
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                //timeStamp4Way.timeAt44 = Time.time;
                             }
 
                             break;
                         case (64):
-                            // 7/12 Trfc Ctrl Test Code, List
+                            // 7/13 Trfc Ctrl Test Code
+                            //float time8164 = timeStamp4Way.timeAt81 - timeStamp4Way.timeAt64;
+                            //float time2464 = timeStamp4Way.timeAt24 - timeStamp4Way.timeAt64;
+                            //float time4464 = timeStamp4Way.timeAt44 - timeStamp4Way.timeAt64;
+                            //if ((time8164 > 0 /*&& time8164 < 4*/) || (time2464 > 0 /*&& time2464 < 4*/) || (time4464 > 0 /*&& time4464 < 4*/))
+                            //{
+                            //    yield return new WaitForSecondsRealtime(2f);
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //}
+                            //else if ((time8164 < 0 /*&& time8164 < 4*/) && (time2464 < 0 /*&& time2464 < 4*/) && (time4464 < 0 /*&& time4464 < 4*/))
+                            //{
+                            //    yield return new WaitForSecondsRealtime(2f);
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //}
+                            //else
+                            //{
+                            //    StartCoroutine(Wait(way));
+                            //}
+                            // 7/13 Trfc Ctrl Test Code Ends
+
+                            // 7/12 Trfc Ctrl Test Code Begins, List
                             //timeStamp4Way.timeStamps = new List<float> { timeStamp4Way.timeAt81, timeStamp4Way.timeAt24, timeStamp4Way.timeAt44, timeStamp4Way.timeAt64 };
                             //timeStamp4Way.timeStamps.Sort();
                             //if (timeStamp4Way.timeAt64 == timeStamp4Way.timeStamps[0])
@@ -1789,37 +1844,31 @@ public class AI_Controller : MonoBehaviour
                             //}
                             // 7/12 Trfc Ctrl Test Code Ends
 
-                            // 6/30 Trfc Ctrl Begins, 4-way, raycasting4way3 not used
+                            //6 / 30 Trfc Ctrl Begins, 4 - way, raycasting4way3 not used
                             float time6481 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt81;
                             float time6424 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt24;
                             float time6444 = timeStamp4Way.timeAt64 - timeStamp4Way.timeAt44;
                             if ((time6481 > 0 && time6481 < 4) || (time6424 > 0 && time6424 < 4) || (time6444 > 0 && time6444 < 4))
                             {
-                                // 7/13 Trfc Ctrl Test Code
-                                yield return new WaitForSecondsRealtime(3f);
-                                timeStamp4Way.timeAt64 = Time.time + 3;
-                                StartCoroutine(Wait(way));
-
-                                // 7/01 Trfc Ctrl Test Code
+                                //7 / 01 Trfc Ctrl Test Code
                                 //Debug.Log("case (64): if < 4 " + time6481 + ", " + time6424 + ", " + time6444);
-                                //yield return new WaitForSecondsRealtime(5f);
-                                //wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                yield return new WaitForSecondsRealtime(5f);
+                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                 //Debug.Log("case (64): adding 6 to timeStamp4Way.timeAt64: " + timeStamp4Way.timeAt64);
-                                //timeStamp4Way.timeAt64 += 6; Adding 1 + 5 for next traffic
+                                timeStamp4Way.timeAt64 += 6; // Adding 1 + 5 for next traffic
                             }
                             else
                             {
                                 //Debug.Log("case (64): else " + time6481 + ", " + time6424 + ", " + time6444);
-
-                                // 7/13 Trfc Ctrl Test Code
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                //timeStamp4Way.timeAt64 = Time.time;
                             }
 
                             break;
                         // 4-Way Stop Ends
+
                         // Lights Begins
                             
+
                         default:
                             leftTurn = false;
                             rightTurn = false;
