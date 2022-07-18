@@ -33,10 +33,13 @@ public class RaycastingLights3 : MonoBehaviour
 
         RaycastHit hitTrfc;
 
-        Ray forwardRay = new Ray(gameObject.transform.position, gameObject.transform.forward * 20f); // 6/28 Trfc Ctrl, raycasting to the left
+        Ray forwardRay = new Ray(gameObject.transform.position, gameObject.transform.forward * 20f); // 6/28 Trfc Ctrl, raycasting forward
         Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 20f, Color.green);
 
-        if (Physics.Raycast(forwardRay, out hitTrfc, 20f))
+        Ray backwardRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -9f); // 7/17 Trfc Ctrl, raycasting backward
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * -9f, Color.green);
+
+        if (Physics.Raycast(forwardRay, out hitTrfc, 20f) || Physics.Raycast(backwardRay, out hitTrfc, 9f))
         {
             if (hitTrfc.transform.gameObject.tag == "Car")
             {

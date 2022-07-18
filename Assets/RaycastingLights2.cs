@@ -36,7 +36,10 @@ public class RaycastingLights2 : MonoBehaviour
         Ray leftRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -20f); // 6/28 Trfc Ctrl, raycasting to the left
         Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * -20f, Color.green);
 
-        if (Physics.Raycast(leftRay, out hitTrfc, 20f))
+        Ray rightRay = new Ray(gameObject.transform.position, gameObject.transform.forward * 9f); // 7/17 Trfc Ctrl, raycasting to the right
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 9f, Color.green);
+
+        if (Physics.Raycast(leftRay, out hitTrfc, 20f) || Physics.Raycast(rightRay, out hitTrfc, 9f))
         {
             if (hitTrfc.transform.gameObject.tag == "Car")
             {

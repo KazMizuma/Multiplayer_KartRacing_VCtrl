@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class TimeStampTrafficLight : MonoBehaviour
 {
-    public float timeAt6; // 7/09 Trfc Ctrl, North
-    public GameObject Light0;  
-    public float timeAt18; // South
-    public GameObject Light2;
-    public float timeAt36; // East
-    public GameObject Light3;
-    public float timeAt46; // West
-    public GameObject Light1;
+    public GameObject Light0; // 7/16 Trfc Ctrl, North
+    public string LightAt6;
+    public float timeAt6;
+
+    public GameObject Light2; // South
+    public string LightAt18;
+    public float timeAt18;
+
+    public GameObject Light3; // East
+    public string LightAt36;
+    public float timeAt36;
+
+    public GameObject Light1; // West
+    public string LightAt46;
+    public float timeAt46;
 
     public float trafficLightTime = 0.0f;
     //public float trafficLightTime2 = 0.0f;
@@ -83,8 +90,10 @@ public class TimeStampTrafficLight : MonoBehaviour
 
         Light0 = GameObject.Find("Light0Green");
         Light0.GetComponent<Light>().enabled = true;
+        LightAt6 = "Green";
         Light2 = GameObject.Find("Light2Green");
         Light2.GetComponent<Light>().enabled = true;
+        LightAt18 = "Green";
     }
 
     public void At6At18Yellow()
@@ -97,8 +106,10 @@ public class TimeStampTrafficLight : MonoBehaviour
 
         Light0 = GameObject.Find("Light0Yellow");
         Light0.GetComponent<Light>().enabled = true;
+        LightAt6 = "Yellow";
         Light2 = GameObject.Find("Light2Yellow");
         Light2.GetComponent<Light>().enabled = true;
+        LightAt18 = "Yellow";
     }
 
     public void At6At18Red()
@@ -111,8 +122,10 @@ public class TimeStampTrafficLight : MonoBehaviour
 
         Light0 = GameObject.Find("Light0Red");
         Light0.GetComponent<Light>().enabled = true;
+        LightAt6 = "Red";
         Light2 = GameObject.Find("Light2Red");
         Light2.GetComponent<Light>().enabled = true;
+        LightAt18 = "Red";
     }
 
     public void At36At46Green()
@@ -125,8 +138,10 @@ public class TimeStampTrafficLight : MonoBehaviour
 
         Light3 = GameObject.Find("Light3Green");
         Light3.GetComponent<Light>().enabled = true;
+        LightAt36 = "Green";
         Light1 = GameObject.Find("Light1Green");
         Light1.GetComponent<Light>().enabled = true;
+        LightAt46 = "Green";
     }
 
     public void At36At46Yellow()
@@ -139,8 +154,10 @@ public class TimeStampTrafficLight : MonoBehaviour
 
         Light3 = GameObject.Find("Light3Yellow");
         Light3.GetComponent<Light>().enabled = true;
+        LightAt36 = "Yellow";
         Light1 = GameObject.Find("Light1Yellow");
         Light1.GetComponent<Light>().enabled = true;
+        LightAt46 = "Yellow";
     }
 
     public void At36At46Red()
@@ -153,8 +170,10 @@ public class TimeStampTrafficLight : MonoBehaviour
 
         Light3 = GameObject.Find("Light3Red");
         Light3.GetComponent<Light>().enabled = true;
+        LightAt36 = "Red";
         Light1 = GameObject.Find("Light1Red");
         Light1.GetComponent<Light>().enabled = true;
+        LightAt46 = "Red";
     }
 
     public void trafficLightAt6At18(string light)
