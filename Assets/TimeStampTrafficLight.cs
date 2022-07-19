@@ -241,30 +241,30 @@ public class TimeStampTrafficLight : MonoBehaviour
         {
             trafficLightAt6At18("yellow");
         }
-        if (trafficLightTime >= 22 && trafficLightTime < 42)
+        if (trafficLightTime >= 22 && trafficLightTime < 44)
         {
             trafficLightAt6At18("red");
         }
-        if (trafficLightTime >= 42)
+        if (trafficLightTime >= 44)
         {
             trafficLightTime = 0;
         }
 
         //trafficLightTime2 += Time.deltaTime;
-        if (trafficLightTime >= 0 && trafficLightTime < 20)
+        if (trafficLightTime >= 0 && trafficLightTime < 22)
         {
             //Debug.Log("if (trafficLightTime2 >= 0)");
             trafficLightAt36At46("red");
         }
-        if (trafficLightTime >= 20 && trafficLightTime < 40)
+        if (trafficLightTime >= 22 && trafficLightTime < 42)
         {
             trafficLightAt36At46("green");
         }
-        if (trafficLightTime >= 40 && trafficLightTime < 42)
+        if (trafficLightTime >= 42 && trafficLightTime < 44)
         {
             trafficLightAt36At46("yellow");
         }
-        //if (trafficLightTime >= 42)
+        //if (trafficLightTime >= 44)
         //{
         //    trafficLightTime2 = 0;
         //}
