@@ -11,6 +11,8 @@ public class Raycasting : MonoBehaviour
     public GameObject frontRotation; // Rays for front half
     public GameObject rearRotation; // Rays for rear half 
 
+    //public Quaternion rotationAngleAxTrfc; // 7/21 Trfc Ctrl TEST
+
     // For AI_Controller to grab
     public bool aboutToHitAhead = false;
     public bool aboutToHitLeftAhead = false; 
@@ -431,7 +433,18 @@ public class Raycasting : MonoBehaviour
             //var rotationFrontDown = frontRotation.transform.rotation; // 5/30 Traffic Control Test Codes, casting rays downward
             var rotationRearHalf = rearRotation.transform.rotation; // Rays for rear half
             var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * 25 - 13, this.transform.up); // For the front and back
+
+            // 7/21 Trfc Ctrl, fixing null ref exception error
             var rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1 / 2), this.transform.up); // 6/05 Trfc Ctrl, the front long ray that angles to targetAngleTrfc
+            //try
+            //{
+            //    rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1 / 2), this.transform.up); // 6/05 Trfc Ctrl, the front long ray that angles to targetAngleTrfc
+            //}
+            //catch (System.NullReferenceException err)
+            //{
+            //    //Debug.Log("NullReferenceException: " + err);
+            //}
+
             //var rotationAngleAxSides = Quaternion.AngleAxis(i / (float)numberOfRays * 160 - 80, this.transform.up); // 6/23 Trfc Ctrl, For the sides
             var rotationAngleAxFront = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, frontRotation.transform.up); // Rays for front half
             //var rotationAngleAxFrontDown = Quaternion.AngleAxis(1, frontRotation.transform.up); // 5/30 Traffic Control Test Codes, casting rays downward
