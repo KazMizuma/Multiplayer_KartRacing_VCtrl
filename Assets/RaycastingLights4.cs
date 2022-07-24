@@ -40,15 +40,14 @@ public class RaycastingLights4 : MonoBehaviour
 
         //Ray hittingRay = new Ray(this.transform.position, forwardVec3 * 5f);
 
-        //Ray backRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -30f); // 6/28 Trfc Ctrl, raycasting to the left
-        Ray backRay = new Ray(gameObject.transform.position, forwardVec3 * -20f); // 7/06 Trfc Ctrl Test Code
-
-        Ray forwardRay = new Ray(gameObject.transform.position, gameObject.transform.forward * 9f); // 7/17 Trfc Ctrl
-
         RaycastHit hitTrfc;
 
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 9f, Color.green); // 7/17 Trfc Ctrl
+        //Ray backRay = new Ray(gameObject.transform.position, gameObject.transform.forward * -30f); // 6/28 Trfc Ctrl, raycasting to the left
+        Ray backRay = new Ray(gameObject.transform.position, forwardVec3 * -20f); // 7/06 Trfc Ctrl Test Code
         Debug.DrawRay(gameObject.transform.position, forwardVec3 * -20f, Color.green);
+
+        Ray forwardRay = new Ray(gameObject.transform.position, gameObject.transform.forward * 9f); // 7/17 Trfc Ctrl
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 9f, Color.green); // 7/17 Trfc Ctrl
 
         if (Physics.Raycast(backRay, out hitTrfc, 20f) || Physics.Raycast(forwardRay, out hitTrfc, 9f))
         {

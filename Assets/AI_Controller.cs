@@ -34,7 +34,7 @@ public class AI_Controller : MonoBehaviour
     RaycastingTrfc11 raycastingTrfc11;
     RaycastingTrfc12 raycastingTrfc12;
 
-    RaycastingTrfc13 raycastingTrfc13; // 6/26 Trfc Ctrl, For Cube (53)
+    RaycastingTrfc13 raycastingTrfc13; // 6/26 Trfc Ctrl, For Cube (65)
     RaycastingTrfc14 raycastingTrfc14;
     RaycastingTrfc15 raycastingTrfc15;
     RaycastingTrfc16 raycastingTrfc16;
@@ -1209,6 +1209,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    rightTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning right, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1235,6 +1236,7 @@ public class AI_Controller : MonoBehaviour
                                         crssTrfcTurnLeft = false;
                                     }
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " " + raycastingTrfc3.nameOfPoint + " " + raycastingTrfc4.nameOfPoint + " " + " the course is clear!");
                                 }
                                 else
@@ -1256,6 +1258,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc5.nameOfPoint == "Cube (14)" && raycastingTrfc6.nameOfPoint == "Cube (31)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    rightTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning right, " + raycastingTrfc5.nameOfPoint + " " + raycastingTrfc6.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1282,6 +1285,7 @@ public class AI_Controller : MonoBehaviour
                                         crssTrfcTurnLeft = false;
                                     }
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc5.nameOfPoint + " " + raycastingTrfc6.nameOfPoint + " " + raycastingTrfc7.nameOfPoint + " " + raycastingTrfc8.nameOfPoint + " " + " : the course is clear!");
                                 }
                                 else
@@ -1303,6 +1307,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc9.nameOfPoint == "Cube (19)" && raycastingTrfc10.nameOfPoint == "Cube (48)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    rightTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning right, " + raycastingTrfc9.nameOfPoint + " " + raycastingTrfc10.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1329,6 +1334,7 @@ public class AI_Controller : MonoBehaviour
                                         crssTrfcTurnLeft = false;
                                     }
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc9.nameOfPoint + " " + raycastingTrfc10.nameOfPoint + " " + raycastingTrfc11.nameOfPoint + " " + raycastingTrfc12.nameOfPoint + " " + " : the course is clear!");
                                 }
                                 else
@@ -1350,6 +1356,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc13.nameOfPoint == "Cube (78)" && raycastingTrfc14.nameOfPoint == "Cube (66)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    rightTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning right, " + raycastingTrfc13.nameOfPoint + " " + raycastingTrfc14.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1376,6 +1383,7 @@ public class AI_Controller : MonoBehaviour
                                         crssTrfcTurnLeft = false;
                                     }
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc13.nameOfPoint + " " + raycastingTrfc14.nameOfPoint + " " + raycastingTrfc15.nameOfPoint + " " + raycastingTrfc16.nameOfPoint + " " + " : the course is clear!");
                                 }
                                 else
@@ -1397,6 +1405,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc17.nameOfPoint == "Cube (70)" && raycastingTrfc18.nameOfPoint == "Cube (71)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    rightTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning right, " + raycastingTrfc17.nameOfPoint + " " + raycastingTrfc18.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1423,6 +1432,7 @@ public class AI_Controller : MonoBehaviour
                                         crssTrfcTurnLeft = false;
                                     }
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc17.nameOfPoint + " " + raycastingTrfc18.nameOfPoint + " " + raycastingTrfc19.nameOfPoint + " " + raycastingTrfc20.nameOfPoint + " " + " : the course is clear!");
                                 }
                                 else
@@ -1444,6 +1454,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc21.nameOfPoint == "Cube (72)" && raycastingTrfc22.nameOfPoint == "Cube (38)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    rightTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning right, " + raycastingTrfc21.nameOfPoint + " " + raycastingTrfc22.nameOfPoint + " : the course is clear!");
                                 }
                                 else
@@ -1470,6 +1481,7 @@ public class AI_Controller : MonoBehaviour
                                         crssTrfcTurnLeft = false;
                                     }
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc21.nameOfPoint + " " + raycastingTrfc22.nameOfPoint + " " + raycastingTrfc23.nameOfPoint + " " + raycastingTrfc24.nameOfPoint + " " + " : the course is clear!");
                                 }
                                 else
@@ -1492,6 +1504,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     // yield return new WaitForSecondsRealtime(1f); 7/01 Trfc Ctrl Test Code
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " : the course is clear!");
                                 }
@@ -1507,6 +1520,7 @@ public class AI_Controller : MonoBehaviour
                             else // straight
                             {
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                straight = false;
                                 //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
                                 //straight = false;
                             }
@@ -1517,6 +1531,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc21.nameOfPoint == "Cube (72)" && raycastingTrfc22.nameOfPoint == "Cube (38)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc21.nameOfPoint + " " + raycastingTrfc22.nameOfPoint + " : the course is clear!");
                                 }
@@ -1542,6 +1557,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc17.nameOfPoint == "Cube (70)" && raycastingTrfc18.nameOfPoint == "Cube (71)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc17.nameOfPoint + " " + raycastingTrfc18.nameOfPoint + " : the course is clear!");
                                 }
@@ -1557,6 +1573,7 @@ public class AI_Controller : MonoBehaviour
                             else // straight
                             {
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                straight = false;
                                 //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
                                 //straight = false;
                             }
@@ -1567,6 +1584,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc13.nameOfPoint == "Cube (78)" && raycastingTrfc14.nameOfPoint == "Cube (66)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc13.nameOfPoint + " " + raycastingTrfc14.nameOfPoint + " : the course is clear!");
                                 }
@@ -1582,6 +1600,7 @@ public class AI_Controller : MonoBehaviour
                             else // straight
                             {
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                straight = false;
                                 //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
                                 //straight = false;
                             }
@@ -1592,6 +1611,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc9.nameOfPoint == "Cube (19)" && raycastingTrfc10.nameOfPoint == "Cube (48)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc9.nameOfPoint + " " + raycastingTrfc10.nameOfPoint + " : the course is clear!");
                                 }
@@ -1607,6 +1627,7 @@ public class AI_Controller : MonoBehaviour
                             else // straight
                             {
                                 wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                straight = false;
                                 //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
                                 //straight = false;
                             }
@@ -1617,6 +1638,7 @@ public class AI_Controller : MonoBehaviour
                                 if (raycastingTrfc6.nameOfPoint == "Cube (31)" && raycastingTrfc5.nameOfPoint == "Cube (14)")
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    leftTurn = false;
                                     //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc6.nameOfPoint + " " + raycastingTrfc5.nameOfPoint + " : the course is clear!");
                                 }
@@ -1871,7 +1893,7 @@ public class AI_Controller : MonoBehaviour
                             break;
                         // 4-Way Stop Ends
 
-                        // Lights Begins
+                        // Lights Begins, 7/24 Trfc Ctrl TEST
                         case (6):
                             // Right Turn
                             if (rightTurn == true) 
@@ -1880,6 +1902,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     straight = false;
+                                    timeStampTrafficLight.at6Direction = "";
                                 }
                                 else
                                 {
@@ -1887,6 +1910,7 @@ public class AI_Controller : MonoBehaviour
                                     {
                                         wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                         rightTurn = false;
+                                        timeStampTrafficLight.at6Direction = "";
                                     }
                                     else
                                     {
@@ -1904,6 +1928,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     straight = false;
+                                    timeStampTrafficLight.at6Direction = "";
                                 }
                                 else
                                 {
@@ -1919,27 +1944,35 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (timeStampTrafficLight.LightAt6 == "Green")
                                 {
-                                    if (wayPointsTrfc.waypoints[18].GetComponent<RaycastingLights4>().nameIs == wayPointsTrfc.waypoints[18].name || wayPointsTrfc.waypoints[18].gameObject.GetComponent<BoxCollider>().isTrigger == true)
+                                    if (wayPointsTrfc.waypoints[18].GetComponent<RaycastingLights4>().nameIs == wayPointsTrfc.waypoints[18].name && wayPointsTrfc.waypoints[18].gameObject.GetComponent<BoxCollider>().isTrigger == true)
                                     {
                                         //currentPointTrfc = 84;
                                         //targetAngleTrfc -= 30;
                                         wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                         leftTurn = false;
+                                        timeStampTrafficLight.at6Direction = "";
                                     }
                                     else
                                     {
-                                        if (timeStampTrafficLight.timeAt18 > 0 && timeStampTrafficLight.timeAt6 < timeStampTrafficLight.timeAt18)
+                                        if (wayPointsTrfc.waypoints[18].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at18Direction != "Left")
                                         {
-                                            //currentPointTrfc = 84;
+                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                                            yield return new WaitForSecondsRealtime(3f);
+                                            leftTurn = true;
+                                            StartCoroutine(Wait(way));
+                                        }
+
+                                        if ((timeStampTrafficLight.timeAt18 > 0 && timeStampTrafficLight.timeAt6 < timeStampTrafficLight.timeAt18) && (timeStampTrafficLight.at18Direction == "Left"))
+                                        {
                                             //targetAngleTrfc -= 30;
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                             leftTurn = false;
+                                            timeStampTrafficLight.at6Direction = "";
                                         }
                                         else
                                         {
-                                            //currentPointTrfc = 84;
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(4f);
+                                            yield return new WaitForSecondsRealtime(3f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
@@ -1947,7 +1980,6 @@ public class AI_Controller : MonoBehaviour
                                 }
                                 else
                                 {
-                                    //currentPointTrfc = 84;
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                                     if (timeStampTrafficLight.trafficLightTime < 22)
                                     {
@@ -1972,6 +2004,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     straight = false;
+                                    timeStampTrafficLight.at18Direction = "";
                                 }
                                 else
                                 {
@@ -1979,6 +2012,7 @@ public class AI_Controller : MonoBehaviour
                                     {
                                         wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                         rightTurn = false;
+                                        timeStampTrafficLight.at18Direction = "";
                                     }
                                     else
                                     {
@@ -1995,6 +2029,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     straight = false;
+                                    timeStampTrafficLight.at18Direction = "";
                                 }
                                 else
                                 {
@@ -2009,24 +2044,34 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (timeStampTrafficLight.LightAt18 == "Green")
                                 {
-                                    if (wayPointsTrfc.waypoints[6].GetComponent<RaycastingLights3>().nameIs == wayPointsTrfc.waypoints[6].name || wayPointsTrfc.waypoints[6].gameObject.GetComponent<BoxCollider>().isTrigger == true)
+                                    if (wayPointsTrfc.waypoints[6].GetComponent<RaycastingLights3>().nameIs == wayPointsTrfc.waypoints[6].name && wayPointsTrfc.waypoints[6].gameObject.GetComponent<BoxCollider>().isTrigger == true)
                                     {
                                         //targetAngleTrfc -= 30;
                                         wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                         leftTurn = false;
+                                        timeStampTrafficLight.at18Direction = "";
                                     }
                                     else
                                     {
-                                        if (timeStampTrafficLight.timeAt6 > 0 && timeStampTrafficLight.timeAt18 < timeStampTrafficLight.timeAt6)
+                                        if (wayPointsTrfc.waypoints[6].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at6Direction != "Left")
+                                        {
+                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                                            yield return new WaitForSecondsRealtime(3f);
+                                            leftTurn = true;
+                                            StartCoroutine(Wait(way));
+                                        }
+
+                                        if ((timeStampTrafficLight.timeAt6 > 0 && timeStampTrafficLight.timeAt18 < timeStampTrafficLight.timeAt6) && (timeStampTrafficLight.at6Direction == "Left"))
                                         {
                                             //targetAngleTrfc -= 30;
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                             leftTurn = false;
+                                            timeStampTrafficLight.at18Direction = "";
                                         }
                                         else
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(4f);
+                                            yield return new WaitForSecondsRealtime(3f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
@@ -2058,6 +2103,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     straight = false;
+                                    timeStampTrafficLight.at36Direction = "";
                                 }
                                 else
                                 {
@@ -2065,6 +2111,7 @@ public class AI_Controller : MonoBehaviour
                                     {
                                         wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                         rightTurn = false;
+                                        timeStampTrafficLight.at36Direction = "";
                                     }
                                     else
                                     {
@@ -2081,6 +2128,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     straight = false;
+                                    timeStampTrafficLight.at36Direction = "";
                                 }
                                 else
                                 {
@@ -2095,24 +2143,34 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (timeStampTrafficLight.LightAt36 == "Green")
                                 {
-                                    if (wayPointsTrfc.waypoints[46].GetComponent<RaycastingLights2>().nameIs == wayPointsTrfc.waypoints[46].name || wayPointsTrfc.waypoints[46].gameObject.GetComponent<BoxCollider>().isTrigger == true)
+                                    if (wayPointsTrfc.waypoints[46].GetComponent<RaycastingLights2>().nameIs == wayPointsTrfc.waypoints[46].name && wayPointsTrfc.waypoints[46].gameObject.GetComponent<BoxCollider>().isTrigger == true)
                                     {
                                         //targetAngleTrfc -= 30;
                                         wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                         leftTurn = false;
+                                        timeStampTrafficLight.at36Direction = "";
                                     }
                                     else
                                     {
-                                        if (timeStampTrafficLight.timeAt46 > 0 && timeStampTrafficLight.timeAt36 < timeStampTrafficLight.timeAt46)
+                                        if (wayPointsTrfc.waypoints[46].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at46Direction != "Left")
+                                        {
+                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                                            yield return new WaitForSecondsRealtime(3f);
+                                            leftTurn = true;
+                                            StartCoroutine(Wait(way));
+                                        }
+
+                                        if ((timeStampTrafficLight.timeAt46 > 0 && timeStampTrafficLight.timeAt36 < timeStampTrafficLight.timeAt46) && (timeStampTrafficLight.at46Direction == "Left"))
                                         {
                                             //targetAngleTrfc -= 30;
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                             leftTurn = false;
+                                            timeStampTrafficLight.at36Direction = "";
                                         }
                                         else
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(4f);
+                                            yield return new WaitForSecondsRealtime(3f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
@@ -2144,6 +2202,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     straight = false;
+                                    timeStampTrafficLight.at46Direction = "";
                                 }
                                 else
                                 {
@@ -2151,6 +2210,7 @@ public class AI_Controller : MonoBehaviour
                                     {
                                         wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                         rightTurn = false;
+                                        timeStampTrafficLight.at46Direction = "";
                                     }
                                     else
                                     {
@@ -2167,6 +2227,7 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                     straight = false;
+                                    timeStampTrafficLight.at46Direction = "";
                                 }
                                 else
                                 {
@@ -2181,24 +2242,34 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (timeStampTrafficLight.LightAt46 == "Green")
                                 {
-                                    if (wayPointsTrfc.waypoints[36].GetComponent<RaycastingLights1>().nameIs == wayPointsTrfc.waypoints[36].name || wayPointsTrfc.waypoints[36].gameObject.GetComponent<BoxCollider>().isTrigger == true)
+                                    if (wayPointsTrfc.waypoints[36].GetComponent<RaycastingLights1>().nameIs == wayPointsTrfc.waypoints[36].name && wayPointsTrfc.waypoints[36].gameObject.GetComponent<BoxCollider>().isTrigger == true)
                                     {
                                         //targetAngleTrfc -= 30;
                                         wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                         leftTurn = false;
+                                        timeStampTrafficLight.at46Direction = "";
                                     }
                                     else
                                     {
-                                        if (timeStampTrafficLight.timeAt36 > 0 && timeStampTrafficLight.timeAt46 < timeStampTrafficLight.timeAt36)
+                                        if (wayPointsTrfc.waypoints[36].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at36Direction != "Left")
+                                        {
+                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                                            yield return new WaitForSecondsRealtime(3f);
+                                            leftTurn = true;
+                                            StartCoroutine(Wait(way));
+                                        }
+
+                                        if ((timeStampTrafficLight.timeAt36 > 0 && timeStampTrafficLight.timeAt46 < timeStampTrafficLight.timeAt36) && (timeStampTrafficLight.at36Direction == "Left"))
                                         {
                                             //targetAngleTrfc -= 30;
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                                             leftTurn = false;
+                                            timeStampTrafficLight.at46Direction = "";
                                         }
                                         else
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(4f);
+                                            yield return new WaitForSecondsRealtime(3f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
@@ -2306,14 +2377,17 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt6 == "Green")
                         {
                             rightTurn = true;
+                            timeStampTrafficLight.at6Direction = "Right";
                             currentPointTrfc = 23;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             rightTurn = false;
+                            timeStampTrafficLight.at6Direction = "";
                         }
                         else
                         {
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             rightTurn = true;
+                            timeStampTrafficLight.at6Direction = "Right";
                             currentPointTrfc = 23;
                             StartCoroutine(Wait(current));
                         }
@@ -2324,14 +2398,17 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt6 == "Green")
                         {
                             straight = true;
+                            timeStampTrafficLight.at6Direction = "Straight";
                             currentPointTrfc = 25;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             straight = false;
+                            timeStampTrafficLight.at6Direction = "";
                         }
                         else
                         {
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             straight = true;
+                            timeStampTrafficLight.at6Direction = "Straight";
                             currentPointTrfc = 25;
                             StartCoroutine(Wait(current));
                         }
@@ -2342,15 +2419,18 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt6 == "Green")
                         {
                             leftTurn = true;
+                            timeStampTrafficLight.at6Direction = "Left";
                             //targetAngleTrfc -= 30;
                             currentPointTrfc = 84;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             leftTurn = false;
+                            timeStampTrafficLight.at6Direction = "";
                         }
                         else
                         {
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             leftTurn = true;
+                            timeStampTrafficLight.at6Direction = "Left";
                             currentPointTrfc = 84;
                             StartCoroutine(Wait(current));
                         }
@@ -2467,14 +2547,17 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt18 == "Green")
                         {
                             rightTurn = true;
+                            timeStampTrafficLight.at18Direction = "Right";
                             currentPointTrfc = 7;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             rightTurn = false;
+                            timeStampTrafficLight.at18Direction = "";
                         }
                         else
                         {
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             rightTurn = true;
+                            timeStampTrafficLight.at18Direction = "Right";
                             currentPointTrfc = 7;
                             StartCoroutine(Wait(current));
                         }
@@ -2485,13 +2568,16 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt18 == "Green")
                         {
                             straight = true;
+                            timeStampTrafficLight.at18Direction = "Straight";
                             currentPointTrfc = 22;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             straight = false;
+                            timeStampTrafficLight.at18Direction = "";
                         }
                         else
                         {
                             straight = true;
+                            timeStampTrafficLight.at18Direction = "Straight";
                             currentPointTrfc = 22;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             StartCoroutine(Wait(current));
@@ -2503,15 +2589,18 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt18 == "Green")
                         {
                             leftTurn = true;
+                            timeStampTrafficLight.at18Direction = "Left";
                             //targetAngleTrfc -= 30;
                             currentPointTrfc = 86;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             leftTurn = false;
+                            timeStampTrafficLight.at18Direction = "";
                         }
                         else
                         {
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             leftTurn = true;
+                            timeStampTrafficLight.at18Direction = "Left";
                             currentPointTrfc = 86;
                             StartCoroutine(Wait(current));
                         }
@@ -2699,13 +2788,16 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt46 == "Green")
                         {
                             rightTurn = true;
+                            timeStampTrafficLight.at46Direction = "Right";
                             currentPointTrfc = 25;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             rightTurn = false;
+                            timeStampTrafficLight.at46Direction = "";
                         }
                         else
                         {
                             rightTurn = true;
+                            timeStampTrafficLight.at46Direction = "Right";
                             currentPointTrfc = 25;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             StartCoroutine(Wait(current));
@@ -2717,13 +2809,16 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt46 == "Green")
                         {
                             straight = true;
+                            timeStampTrafficLight.at46Direction = "Straight";
                             currentPointTrfc = 7;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             straight = false;
+                            timeStampTrafficLight.at46Direction = "";
                         }
                         else
                         {
                             straight = true;
+                            timeStampTrafficLight.at46Direction = "Straight";
                             currentPointTrfc = 7;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             StartCoroutine(Wait(current));
@@ -2735,14 +2830,17 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt46 == "Green")
                         {
                             leftTurn = true;
+                            timeStampTrafficLight.at46Direction = "Left";
                             //targetAngleTrfc -= 30;
                             currentPointTrfc = 86;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             leftTurn = false;
+                            timeStampTrafficLight.at46Direction = "";
                         }
                         else
                         {
                             leftTurn = true;
+                            timeStampTrafficLight.at46Direction = "Left";
                             currentPointTrfc = 86;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             StartCoroutine(Wait(current));
@@ -2826,13 +2924,16 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt36 == "Green")
                         {
                             rightTurn = true;
+                            timeStampTrafficLight.at36Direction = "Right";
                             currentPointTrfc = 22;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             rightTurn = false;
+                            timeStampTrafficLight.at36Direction = "";
                         }
                         else
                         {
                             rightTurn = true;
+                            timeStampTrafficLight.at36Direction = "Right";
                             currentPointTrfc = 22;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             StartCoroutine(Wait(current));
@@ -2844,13 +2945,16 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt36 == "Green")
                         {
                             straight = true;
+                            timeStampTrafficLight.at36Direction = "Straight";
                             currentPointTrfc = 23;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             straight = false;
+                            timeStampTrafficLight.at36Direction = "";
                         }
                         else
                         {
                             straight = true;
+                            timeStampTrafficLight.at36Direction = "Straight";
                             currentPointTrfc = 23;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             StartCoroutine(Wait(current));
@@ -2862,14 +2966,17 @@ public class AI_Controller : MonoBehaviour
                         if (timeStampTrafficLight.LightAt36 == "Green")
                         {
                             leftTurn = true;
+                            timeStampTrafficLight.at36Direction = "Left";
                             //targetAngleTrfc -= 30;
                             currentPointTrfc = 84;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                             leftTurn = false;
+                            timeStampTrafficLight.at36Direction = "";
                         }
                         else
                         {
                             leftTurn = true;
+                            timeStampTrafficLight.at36Direction = "Left";
                             currentPointTrfc = 84;
                             wayPointsTrfc.waypoints[current].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                             StartCoroutine(Wait(current));

@@ -7,18 +7,22 @@ public class TimeStampTrafficLight : MonoBehaviour
     public GameObject Light0; // 7/16 Trfc Ctrl, North
     public string LightAt6;
     public float timeAt6;
+    public string at6Direction;
 
     public GameObject Light2; // South
     public string LightAt18;
     public float timeAt18;
+    public string at18Direction;
 
     public GameObject Light3; // East
     public string LightAt36;
     public float timeAt36;
+    public string at36Direction;
 
     public GameObject Light1; // West
     public string LightAt46;
     public float timeAt46;
+    public string at46Direction;
 
     public float trafficLightTime = 0.0f;
     //public float trafficLightTime2 = 0.0f;
