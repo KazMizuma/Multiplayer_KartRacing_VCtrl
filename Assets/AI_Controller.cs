@@ -57,10 +57,10 @@ public class AI_Controller : MonoBehaviour
     timeStamp4Way timeStamp4Way; // 6/30 Trfc Ctrl Test Codes
     TimeStampTrafficLight timeStampTrafficLight; // 7/06 Trfc Ctrl Test Code
 
-    public float timeAt81; // 6/30 Trfc Ctrl
-    public float timeAt24;
-    public float timeAt44;
-    public float timeAt64;
+    //public float timeAt81; // 6/30 Trfc Ctrl, 7/25 Trfc Ctrl TEST (commenting out)
+    //public float timeAt24;
+    //public float timeAt44;
+    //public float timeAt64;
 
     public float steeringSensitivity = 0.01f;
 
@@ -958,7 +958,7 @@ public class AI_Controller : MonoBehaviour
                 //    accelTrfc = 0.225f;
                 //    brakeTrfc = 0.025f;
                 //}
-                else // at where intersections are; 4Way Stop sign at 24 44 64 81
+                else // at where intersections are; 4Way Stop sign at 24 44 64 81 & Lights at 6 18 36 46
                 {
                     accelTrfc = 0.25f;
                     brakeTrfc = 0f;
@@ -998,7 +998,7 @@ public class AI_Controller : MonoBehaviour
                         //Debug.Log(this.transform.gameObject.name + " drivingControl.currentSpeed: " + mphSpeedInt + " MPH"); //showing the current speed in MPH
                         switch (mphSpeedInt) // CONTROLLING ONGOING SPEED WHILE GOING STRAIGHT!
                         {
-                            case int i when mphSpeedInt < 20:
+                            case int i when mphSpeedInt < 20 && raycasting.downRayText == "Untagged": // 7/25 Trfc Ctrl TEST
                                 //Debug.Log(this.transform.gameObject.name + " Bring it up => 20mph");
                                 accelTrfc = 0.2f;
                                 brakeTrfc = 0f;
@@ -1206,51 +1206,52 @@ public class AI_Controller : MonoBehaviour
                         case (8): // T intersection
                             if (rightTurn == true)
                             {
-                                if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)")
+                                if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)") // the cross traffic is clear
                                 {
-                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true; // go
                                     rightTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning right, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " : the course is clear!");
                                 }
-                                else
+                                else // the cross traffic is not clear
                                 {
                                     //Debug.Log("TrafficCtrl, At " + way + " turning right, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " : the course is NOT clear!");
                                     rightTurn = true;
-                                    StartCoroutine(Wait(way));
+                                    StartCoroutine(Wait(way)); // call back the coroutine
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else if (leftTurn == true)
+                            if (leftTurn == true)
                             {
-                                if (wayPointsTrfc.waypoints[34].gameObject.GetComponent<BoxCollider>().isTrigger == false)
+                                if (wayPointsTrfc.waypoints[34].gameObject.GetComponent<BoxCollider>().isTrigger == false) // the cross traffic is yielding traffic to turn left
                                 {
                                     leftTurn = true;
                                     crssTrfcTurnLeft = true;
-                                    StartCoroutine(Wait(way));
+                                    StartCoroutine(Wait(way)); // call back the coroutine
                                 }
+                                // currently there is no cross traffic approaching from both directions
                                 if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)" && raycastingTrfc3.nameOfPoint == "Cube (34)" && raycastingTrfc4.nameOfPoint == "Cube (9)")
                                 {
-                                    if (crssTrfcTurnLeft == true)
+                                    if (crssTrfcTurnLeft == true) // a vehicle across from me was/is yielding its oncoming traffic to turn left
                                     {
-                                        yield return new WaitForSecondsRealtime(3f);
+                                        yield return new WaitForSecondsRealtime(3f); // I yield to the vehicle for 3 seconds
                                         crssTrfcTurnLeft = false;
                                     }
-                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true; // go
                                     leftTurn = false;
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " " + raycastingTrfc3.nameOfPoint + " " + raycastingTrfc4.nameOfPoint + " " + " the course is clear!");
                                 }
-                                else
+                                else // there is some cross traffic approaching from either direction or both directions
                                 {
                                     //Debug.Log("TrafficCtrl, At " + way + " turning left, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " " + raycastingTrfc3.nameOfPoint + " " + raycastingTrfc4.nameOfPoint + " " + " the course is NOT clear!");
                                     leftTurn = true;
-                                    StartCoroutine(Wait(way));
+                                    StartCoroutine(Wait(way)); // call back the coroutine
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                            }
+                            //else // straight, not used
+                            //{
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //}
                             break;
                         case (27): // T intersection
                             if (rightTurn == true)
@@ -1269,7 +1270,7 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else if (leftTurn == true)
+                            if (leftTurn == true)
                             {
                                 if (wayPointsTrfc.waypoints[73].gameObject.GetComponent<BoxCollider>().isTrigger == false)
                                 {
@@ -1296,10 +1297,10 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                            }
+                            //else // straight
+                            //{
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //}
                             break;
                         case (53): // T intersection
                             if (rightTurn == true)
@@ -1318,7 +1319,7 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else if (leftTurn == true)
+                            if (leftTurn == true)
                             {
                                 if (wayPointsTrfc.waypoints[62].gameObject.GetComponent<BoxCollider>().isTrigger == false)
                                 {
@@ -1345,10 +1346,10 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                            }
+                            //else // straight
+                            //{
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //}
                             break;
                         case (65): // T intersection
                             if (rightTurn == true)
@@ -1367,7 +1368,7 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else if (leftTurn == true)
+                            if (leftTurn == true)
                             {
                                 if (wayPointsTrfc.waypoints[58].gameObject.GetComponent<BoxCollider>().isTrigger == false)
                                 {
@@ -1394,10 +1395,10 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                            }
+                            //else // straight
+                            //{
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //}
                             break;
                         case (47): // T intersection
                             if (rightTurn == true)
@@ -1416,7 +1417,7 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else if (leftTurn == true)
+                            if (leftTurn == true)
                             {
                                 if (wayPointsTrfc.waypoints[28].gameObject.GetComponent<BoxCollider>().isTrigger == false)
                                 {
@@ -1443,10 +1444,10 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                            }
+                            //else // straight
+                            //{
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //}
                             break;
                         case (37): // T intersection
                             if (rightTurn == true)
@@ -1465,7 +1466,7 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else if (leftTurn == true)
+                            if (leftTurn == true)
                             {
                                 if (wayPointsTrfc.waypoints[4].gameObject.GetComponent<BoxCollider>().isTrigger == false)
                                 {
@@ -1492,38 +1493,38 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                            }
+                            //else // straight
+                            //{
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //}
                             break;
                         case (34): // 6/26 Trfc Ctrl, Left turn yield
                             if (leftTurn == true)
                             {
-                                if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)")
+                                if (raycastingTrfc.nameOfPoint == "Cube (42)" && raycastingTrfc2.nameOfPoint == "Cube (10)") // no oncoming traffic & no traffic on my left
                                 {
                                     // yield return new WaitForSecondsRealtime(1f); 7/01 Trfc Ctrl Test Code
-                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true; // go
                                     leftTurn = false;
                                     //targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position; // 7/04 Trfc Ctrl Testing
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " : the course is clear!");
                                 }
-                                else
+                                else // there is an oncoming traffic or there is a traffic on my left
                                 {
                                     //Debug.Log("TrafficCtrl, At " + way + " left turn yielding, " + raycastingTrfc.nameOfPoint + " " + raycastingTrfc2.nameOfPoint + " : the course is NOT clear!");
                                     leftTurn = true;
                                     currentPointTrfc = 35;
-                                    StartCoroutine(Wait(way));
+                                    StartCoroutine(Wait(way)); // call back coroutine
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                straight = false;
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                                //straight = false;
-                            }
+                            //else // straight, 7/25 Trfc Ctrl TEST (commenting out)
+                            //{
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true; // go
+                            //    straight = false;
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //    //straight = false;
+                            //}
                             break;
                         case (4): // 6/26 Trfc Ctrl, Left turn yield
                             if (leftTurn == true)
@@ -1544,12 +1545,12 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                                straight = false;
-                            }
+                            //else // straight
+                            //{
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //    straight = false;
+                            //}
                             break;
                         case (28): // 6/26 Trfc Ctrl, Left turn yield
                             if (leftTurn == true)
@@ -1570,13 +1571,13 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                straight = false;
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                                //straight = false;
-                            }
+                            //else // straight
+                            //{
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //    straight = false;
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //    //straight = false;
+                            //}
                             break;
                         case (58): // 6/26 Trfc Ctrl, Left turn yield
                             if (leftTurn == true)
@@ -1597,13 +1598,13 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                straight = false;
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                                //straight = false;
-                            }
+                            //else // straight
+                            //{
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //    straight = false;
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //    //straight = false;
+                            //}
                             break;
                         case (62): // 6/26 Trfc Ctrl, Left turn yield
                             if (leftTurn == true)
@@ -1624,13 +1625,13 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                straight = false;
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                                //straight = false;
-                            }
+                            //else // straight
+                            //{
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //    straight = false;
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //    //straight = false;
+                            //}
                             break;
                         case (73): // 6/26 Trfc Ctrl, Left turn yield
                             if (leftTurn == true)
@@ -1651,12 +1652,12 @@ public class AI_Controller : MonoBehaviour
                                     //Debug.Log("TrafficCtrl, At " + way + " calling StartCoroutine(Wait(way)) again!");
                                 }
                             }
-                            else // straight
-                            {
-                                wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
-                                //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
-                                straight = false;
-                            }
+                            //else // straight
+                            //{
+                            //    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                            //    //Debug.Log("TrafficCtrl, At " + way + " going straight = " + straight);
+                            //    straight = false;
+                            //}
                             break;
                         // 4-Way Stop Begins
                         /* IEnumerator Wait(int way) // 6/30 Trfc Ctrl Test Codes
@@ -1900,23 +1901,23 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (timeStampTrafficLight.LightAt6 == "Green")
                                 {
-                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true; // go
                                     straight = false;
                                     timeStampTrafficLight.at6Direction = "";
                                 }
-                                else
+                                else // Red
                                 {
-                                    if (wayPointsTrfc.waypoints[36].GetComponent<RaycastingLights1>().nameIs == wayPointsTrfc.waypoints[36].name)
+                                    if (wayPointsTrfc.waypoints[36].GetComponent<RaycastingLights1>().nameIs == wayPointsTrfc.waypoints[36].name) // if the cross traffic is clear
                                     {
-                                        wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                        wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true; // go
                                         rightTurn = false;
                                         timeStampTrafficLight.at6Direction = "";
                                     }
-                                    else
+                                    else // the cross traffic is not clear
                                     {
                                         //currentPointTrfc = 23;
                                         rightTurn = true;
-                                        StartCoroutine(Wait(way));
+                                        StartCoroutine(Wait(way)); // calling back coroutine
                                     }
                                 }
                             }
@@ -1926,61 +1927,61 @@ public class AI_Controller : MonoBehaviour
                             {
                                 if (timeStampTrafficLight.LightAt6 == "Green")
                                 {
-                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true; // go
                                     straight = false;
                                     timeStampTrafficLight.at6Direction = "";
                                 }
                                 else
                                 {
                                     //currentPointTrfc = 25;
-                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false; // hold
                                     straight = true;
-                                    StartCoroutine(Wait(way));
+                                    StartCoroutine(Wait(way)); // calling back coroutine
                                 }
                             }
                             
                             // Left Turn
                             if (leftTurn == true)
                             {
-                                if (timeStampTrafficLight.LightAt6 == "Green")
+                                if (timeStampTrafficLight.LightAt6 == "Green") // if Green & if oncoming traffic is all clear
                                 {
                                     if (wayPointsTrfc.waypoints[18].GetComponent<RaycastingLights4>().nameIs == wayPointsTrfc.waypoints[18].name && wayPointsTrfc.waypoints[18].gameObject.GetComponent<BoxCollider>().isTrigger == true)
                                     {
                                         //currentPointTrfc = 84;
                                         //targetAngleTrfc -= 30;
-                                        wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                        wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true; // go
                                         leftTurn = false;
                                         timeStampTrafficLight.at6Direction = "";
                                     }
-                                    else
+                                    else // oncoming traffic is not clear & if the traffic is going straight or turning right
                                     {
                                         if (wayPointsTrfc.waypoints[18].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at18Direction != "Left")
                                         {
-                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(3f);
+                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false; // hold
+                                            yield return new WaitForSecondsRealtime(1f); // yield for total of 2 seconds
                                             leftTurn = true;
-                                            StartCoroutine(Wait(way));
+                                            StartCoroutine(Wait(way)); // calling back the coroutine
                                         }
-
+                                        // if I arrived earlier than the oncoming traffic and the traffic is turning left
                                         if ((timeStampTrafficLight.timeAt18 > 0 && timeStampTrafficLight.timeAt6 < timeStampTrafficLight.timeAt18) && (timeStampTrafficLight.at18Direction == "Left"))
                                         {
                                             //targetAngleTrfc -= 30;
-                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true;
+                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = true; // I get to go first
                                             leftTurn = false;
                                             timeStampTrafficLight.at6Direction = "";
                                         }
-                                        else
+                                        else // if the oncoming arrived earlier
                                         {
-                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(3f);
+                                            wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false; // hold
+                                            yield return new WaitForSecondsRealtime(1f); // yield for total of 2 seconds
                                             leftTurn = true;
-                                            StartCoroutine(Wait(way));
+                                            StartCoroutine(Wait(way)); // calling back the coroutine
                                         }
                                     }
                                 }
-                                else
+                                else // Red
                                 {
-                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                                    wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false; // hold for the remainder of the red light duration
                                     if (timeStampTrafficLight.trafficLightTime < 22)
                                     {
                                         yield return new WaitForSecondsRealtime(22f - timeStampTrafficLight.trafficLightTime);
@@ -1990,7 +1991,7 @@ public class AI_Controller : MonoBehaviour
                                         yield return new WaitForSecondsRealtime(44f - timeStampTrafficLight.trafficLightTime);
                                     }
                                     leftTurn = true;
-                                    StartCoroutine(Wait(way));
+                                    StartCoroutine(Wait(way)); // calling back the coroutine
                                 }
                             }
 
@@ -2056,7 +2057,7 @@ public class AI_Controller : MonoBehaviour
                                         if (wayPointsTrfc.waypoints[6].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at6Direction != "Left")
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(3f);
+                                            yield return new WaitForSecondsRealtime(1f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
@@ -2071,7 +2072,7 @@ public class AI_Controller : MonoBehaviour
                                         else
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(3f);
+                                            yield return new WaitForSecondsRealtime(1f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
@@ -2155,7 +2156,7 @@ public class AI_Controller : MonoBehaviour
                                         if (wayPointsTrfc.waypoints[46].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at46Direction != "Left")
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(3f);
+                                            yield return new WaitForSecondsRealtime(1f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
@@ -2170,7 +2171,7 @@ public class AI_Controller : MonoBehaviour
                                         else
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(3f);
+                                            yield return new WaitForSecondsRealtime(1f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
@@ -2254,7 +2255,7 @@ public class AI_Controller : MonoBehaviour
                                         if (wayPointsTrfc.waypoints[36].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at36Direction != "Left")
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(3f);
+                                            yield return new WaitForSecondsRealtime(1f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
@@ -2269,7 +2270,7 @@ public class AI_Controller : MonoBehaviour
                                         else
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
-                                            yield return new WaitForSecondsRealtime(3f);
+                                            yield return new WaitForSecondsRealtime(1f);
                                             leftTurn = true;
                                             StartCoroutine(Wait(way));
                                         }
