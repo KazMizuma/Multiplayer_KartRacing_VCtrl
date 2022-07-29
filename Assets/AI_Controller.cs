@@ -107,44 +107,6 @@ public class AI_Controller : MonoBehaviour
         drivingControl = this.GetComponent<drivingControl>();
         raycasting = this.transform.GetComponentInChildren<Raycasting>(); //Accessing Raycasting script to control collisions
 
-        raycastingTrfc = GameObject.Find("Cube (42)").GetComponent<RaycastingTrfc>(); // 6/24 Trfc Ctrl, For Cube (8)
-        raycastingTrfc2 = GameObject.Find("Cube (10)").GetComponent<RaycastingTrfc2>();
-        raycastingTrfc3 = GameObject.Find("Cube (34)").GetComponent<RaycastingTrfc3>();
-        raycastingTrfc4 = GameObject.Find("Cube (9)").GetComponent<RaycastingTrfc4>();
-
-        raycastingTrfc5 = GameObject.Find("Cube (14)").GetComponent<RaycastingTrfc5>(); // 6/25 Trfc Ctrl, For Cube (27)
-        raycastingTrfc6 = GameObject.Find("Cube (31)").GetComponent<RaycastingTrfc6>();
-        raycastingTrfc7 = GameObject.Find("Cube (73)").GetComponent<RaycastingTrfc7>();
-        raycastingTrfc8 = GameObject.Find("Cube (29)").GetComponent<RaycastingTrfc8>();
-
-        raycastingTrfc9 = GameObject.Find("Cube (19)").GetComponent<RaycastingTrfc9>(); // 6/26 Trfc Ctrl, For Cube (53)
-        raycastingTrfc10 = GameObject.Find("Cube (48)").GetComponent<RaycastingTrfc10>();
-        raycastingTrfc11 = GameObject.Find("Cube (62)").GetComponent<RaycastingTrfc11>();
-        raycastingTrfc12 = GameObject.Find("Cube (74)").GetComponent<RaycastingTrfc12>();
-
-        raycastingTrfc13 = GameObject.Find("Cube (78)").GetComponent<RaycastingTrfc13>(); // 6/26 Trfc Ctrl, For Cube (65)
-        raycastingTrfc14 = GameObject.Find("Cube (66)").GetComponent<RaycastingTrfc14>();
-        raycastingTrfc15 = GameObject.Find("Cube (58)").GetComponent<RaycastingTrfc15>();
-        raycastingTrfc16 = GameObject.Find("Cube (79)").GetComponent<RaycastingTrfc16>();
-
-        raycastingTrfc17 = GameObject.Find("Cube (70)").GetComponent<RaycastingTrfc17>(); // 6/26 Trfc Ctrl, For Cube (47)
-        raycastingTrfc18 = GameObject.Find("Cube (71)").GetComponent<RaycastingTrfc18>();
-        raycastingTrfc19 = GameObject.Find("Cube (28)").GetComponent<RaycastingTrfc19>();
-        raycastingTrfc20 = GameObject.Find("Cube (54)").GetComponent<RaycastingTrfc20>();
-
-        raycastingTrfc21 = GameObject.Find("Cube (72)").GetComponent<RaycastingTrfc21>(); // 6/26 Trfc Ctrl, For Cube (37)
-        raycastingTrfc22 = GameObject.Find("Cube (38)").GetComponent<RaycastingTrfc22>();
-        raycastingTrfc23 = GameObject.Find("Cube (4)").GetComponent<RaycastingTrfc23>();
-        raycastingTrfc24 = GameObject.Find("Cube (43)").GetComponent<RaycastingTrfc24>();
-
-        //raycasting4way1 = GameObject.Find("Cube (81)").GetComponent<Raycasting4way1>(); // 6/28 Trfc Ctrl, 4-way Stop
-        //raycasting4way2 = GameObject.Find("Cube (24)").GetComponent<Raycasting4way2>();
-        //raycasting4way3 = GameObject.Find("Cube (44)").GetComponent<Raycasting4way3>();
-        //raycasting4way4 = GameObject.Find("Cube (64)").GetComponent<Raycasting4way4>();
-
-        timeStamp4Way = GameObject.Find("4WayStop").GetComponent<timeStamp4Way>(); // 6/30 Trfc Ctrl Test Codes
-        timeStampTrafficLight = GameObject.Find("TrafficLight").GetComponent<TimeStampTrafficLight>(); // 7/06 Trfc Ctrl 
-
         if (this.transform.gameObject.tag == "Odd")
         {
             targetOdd = wayPointsOdd.waypoints[currentPointOdd].transform.position;
@@ -159,6 +121,44 @@ public class AI_Controller : MonoBehaviour
         }
         else //Traffic Control Test Codes 4/29/22
         {
+            raycastingTrfc = GameObject.Find("Cube (42)").GetComponent<RaycastingTrfc>(); // 6/24 Trfc Ctrl, For Cube (8)
+            raycastingTrfc2 = GameObject.Find("Cube (10)").GetComponent<RaycastingTrfc2>();
+            raycastingTrfc3 = GameObject.Find("Cube (34)").GetComponent<RaycastingTrfc3>();
+            raycastingTrfc4 = GameObject.Find("Cube (9)").GetComponent<RaycastingTrfc4>();
+
+            raycastingTrfc5 = GameObject.Find("Cube (14)").GetComponent<RaycastingTrfc5>(); // 6/25 Trfc Ctrl, For Cube (27)
+            raycastingTrfc6 = GameObject.Find("Cube (31)").GetComponent<RaycastingTrfc6>();
+            raycastingTrfc7 = GameObject.Find("Cube (73)").GetComponent<RaycastingTrfc7>();
+            raycastingTrfc8 = GameObject.Find("Cube (29)").GetComponent<RaycastingTrfc8>();
+
+            raycastingTrfc9 = GameObject.Find("Cube (19)").GetComponent<RaycastingTrfc9>(); // 6/26 Trfc Ctrl, For Cube (53)
+            raycastingTrfc10 = GameObject.Find("Cube (48)").GetComponent<RaycastingTrfc10>();
+            raycastingTrfc11 = GameObject.Find("Cube (62)").GetComponent<RaycastingTrfc11>();
+            raycastingTrfc12 = GameObject.Find("Cube (74)").GetComponent<RaycastingTrfc12>();
+
+            raycastingTrfc13 = GameObject.Find("Cube (78)").GetComponent<RaycastingTrfc13>(); // 6/26 Trfc Ctrl, For Cube (65)
+            raycastingTrfc14 = GameObject.Find("Cube (66)").GetComponent<RaycastingTrfc14>();
+            raycastingTrfc15 = GameObject.Find("Cube (58)").GetComponent<RaycastingTrfc15>();
+            raycastingTrfc16 = GameObject.Find("Cube (79)").GetComponent<RaycastingTrfc16>();
+
+            raycastingTrfc17 = GameObject.Find("Cube (70)").GetComponent<RaycastingTrfc17>(); // 6/26 Trfc Ctrl, For Cube (47)
+            raycastingTrfc18 = GameObject.Find("Cube (71)").GetComponent<RaycastingTrfc18>();
+            raycastingTrfc19 = GameObject.Find("Cube (28)").GetComponent<RaycastingTrfc19>();
+            raycastingTrfc20 = GameObject.Find("Cube (54)").GetComponent<RaycastingTrfc20>();
+
+            raycastingTrfc21 = GameObject.Find("Cube (72)").GetComponent<RaycastingTrfc21>(); // 6/26 Trfc Ctrl, For Cube (37)
+            raycastingTrfc22 = GameObject.Find("Cube (38)").GetComponent<RaycastingTrfc22>();
+            raycastingTrfc23 = GameObject.Find("Cube (4)").GetComponent<RaycastingTrfc23>();
+            raycastingTrfc24 = GameObject.Find("Cube (43)").GetComponent<RaycastingTrfc24>();
+
+            //raycasting4way1 = GameObject.Find("Cube (81)").GetComponent<Raycasting4way1>(); // 6/28 Trfc Ctrl, 4-way Stop
+            //raycasting4way2 = GameObject.Find("Cube (24)").GetComponent<Raycasting4way2>();
+            //raycasting4way3 = GameObject.Find("Cube (44)").GetComponent<Raycasting4way3>();
+            //raycasting4way4 = GameObject.Find("Cube (64)").GetComponent<Raycasting4way4>();
+
+            timeStamp4Way = GameObject.Find("4WayStop").GetComponent<timeStamp4Way>(); // 6/30 Trfc Ctrl Test Codes
+            timeStampTrafficLight = GameObject.Find("TrafficLight").GetComponent<TimeStampTrafficLight>(); // 7/06 Trfc Ctrl 
+
             targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
             Debug.Log(this.transform.gameObject.name + "'s next waypoint is " + wayPointsTrfc.waypoints[currentPointTrfc].name);
             nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name; // For debug purpose only
@@ -1935,6 +1935,14 @@ public class AI_Controller : MonoBehaviour
                                 {
                                     //currentPointTrfc = 25;
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false; // hold
+                                    if (timeStampTrafficLight.trafficLightTime < 22) // 7/28 Trfc Ctrl TEST
+                                    {
+                                        yield return new WaitForSecondsRealtime(22f - timeStampTrafficLight.trafficLightTime);
+                                    }
+                                    else
+                                    {
+                                        yield return new WaitForSecondsRealtime(44f - timeStampTrafficLight.trafficLightTime);
+                                    }
                                     straight = true;
                                     StartCoroutine(Wait(way)); // calling back coroutine
                                 }
@@ -1953,9 +1961,9 @@ public class AI_Controller : MonoBehaviour
                                         leftTurn = false;
                                         timeStampTrafficLight.at6Direction = "";
                                     }
-                                    else // oncoming traffic is not clear & if the traffic is going straight or turning right
+                                    else // oncoming traffic is not clear & if the traffic is going straight
                                     {
-                                        if (wayPointsTrfc.waypoints[18].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at18Direction != "Left")
+                                        if (wayPointsTrfc.waypoints[18].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at18Direction == "Straight")
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false; // hold
                                             yield return new WaitForSecondsRealtime(1f); // yield for total of 2 seconds
@@ -2035,6 +2043,14 @@ public class AI_Controller : MonoBehaviour
                                 else
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                                    if (timeStampTrafficLight.trafficLightTime < 22)
+                                    {
+                                        yield return new WaitForSecondsRealtime(22f - timeStampTrafficLight.trafficLightTime);
+                                    }
+                                    else
+                                    {
+                                        yield return new WaitForSecondsRealtime(44f - timeStampTrafficLight.trafficLightTime);
+                                    }
                                     straight = true;
                                     StartCoroutine(Wait(way));
                                 }
@@ -2054,7 +2070,7 @@ public class AI_Controller : MonoBehaviour
                                     }
                                     else
                                     {
-                                        if (wayPointsTrfc.waypoints[6].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at6Direction != "Left")
+                                        if (wayPointsTrfc.waypoints[6].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at6Direction == "Straight")
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                                             yield return new WaitForSecondsRealtime(1f);
@@ -2134,6 +2150,14 @@ public class AI_Controller : MonoBehaviour
                                 else
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                                    if (timeStampTrafficLight.trafficLightTime < 22)
+                                    {
+                                        yield return new WaitForSecondsRealtime(22f - timeStampTrafficLight.trafficLightTime);
+                                    }
+                                    else
+                                    {
+                                        yield return new WaitForSecondsRealtime(44f - timeStampTrafficLight.trafficLightTime);
+                                    }
                                     straight = true;
                                     StartCoroutine(Wait(way));
                                 }
@@ -2153,7 +2177,7 @@ public class AI_Controller : MonoBehaviour
                                     }
                                     else
                                     {
-                                        if (wayPointsTrfc.waypoints[46].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at46Direction != "Left")
+                                        if (wayPointsTrfc.waypoints[46].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at46Direction == "Straight")
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                                             yield return new WaitForSecondsRealtime(1f);
@@ -2233,6 +2257,14 @@ public class AI_Controller : MonoBehaviour
                                 else
                                 {
                                     wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
+                                    if (timeStampTrafficLight.trafficLightTime < 22)
+                                    {
+                                        yield return new WaitForSecondsRealtime(22f - timeStampTrafficLight.trafficLightTime);
+                                    }
+                                    else
+                                    {
+                                        yield return new WaitForSecondsRealtime(44f - timeStampTrafficLight.trafficLightTime);
+                                    }
                                     straight = true;
                                     StartCoroutine(Wait(way));
                                 }
@@ -2252,7 +2284,7 @@ public class AI_Controller : MonoBehaviour
                                     }
                                     else
                                     {
-                                        if (wayPointsTrfc.waypoints[36].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at36Direction != "Left")
+                                        if (wayPointsTrfc.waypoints[36].gameObject.GetComponent<BoxCollider>().isTrigger == false && timeStampTrafficLight.at36Direction == "Straight")
                                         {
                                             wayPointsTrfc.waypoints[way].gameObject.GetComponent<BoxCollider>().isTrigger = false;
                                             yield return new WaitForSecondsRealtime(1f);
@@ -3320,13 +3352,18 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                // 7/04 Trfc Ctrl Test Codes
-                if (currentPointTrfc >=0 || currentPointTrfc <= 87) // 7/22 Trfc Ctrl TEST
+                // 7/28 Trfc Ctrl Test Codes
+                if (currentPointTrfc >= 0 || currentPointTrfc <= 87) // 7/22 Trfc Ctrl TEST
                 {
                     targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
                     nextWaypointNameTrfc = wayPointsTrfc.waypoints[currentPointTrfc].name;
                 }
-                else
+                if (currentPointTrfc > 87)
+                {
+                    targetTrfc = wayPointsTrfc.waypoints[7].transform.position;
+                    nextWaypointNameTrfc = wayPointsTrfc.waypoints[7].name;
+                }
+                if (currentPointTrfc < 0)
                 {
                     targetTrfc = wayPointsTrfc.waypoints[0].transform.position;
                     nextWaypointNameTrfc = wayPointsTrfc.waypoints[0].name;

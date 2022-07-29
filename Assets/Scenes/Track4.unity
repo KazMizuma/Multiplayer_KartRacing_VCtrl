@@ -62625,6 +62625,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Waypoint_Trfc
       objectReference: {fileID: 0}
+    - target: {fileID: 8013186490048300376, guid: dbeeef925386f0444a873350b733401e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -163.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbeeef925386f0444a873350b733401e, type: 3}
 --- !u!1001 &3805569186388225354
@@ -63039,6 +63044,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrafficLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 3095560132796564004, guid: 87213848fdc19474daa9bb6597a46478,
+        type: 3}
+      propertyPath: m_TagString
+      value: Lights
       objectReference: {fileID: 0}
     - target: {fileID: 8886698353585062438, guid: 87213848fdc19474daa9bb6597a46478,
         type: 3}
