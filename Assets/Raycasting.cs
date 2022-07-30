@@ -424,66 +424,69 @@ public class Raycasting : MonoBehaviour
 
     private void OnDrawGizmos() // For debug purpose only, disable upon compiling!
     {
-        for (int i = 1; i < numberOfRays; i++)
+        if (RaceMonitor.racing == true) // 7/30 Trfc Ctrl TEST, avoiding NullReferenceException due to ai_controller.targetAngleTrfc not determined before Start()
         {
-            // Following vars are redundant with the ones in Update but needed to color code the rays accordingly
-            var rotation = this.transform.rotation;
-
-            var rotationFrontHalf = frontRotation.transform.rotation; // Rays for front half
-            //var rotationFrontDown = frontRotation.transform.rotation; // 5/30 Traffic Control Test Codes, casting rays downward
-            var rotationRearHalf = rearRotation.transform.rotation; // Rays for rear half
-            var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * 25 - 13, this.transform.up); // For the front and back
-
-            // 7/21 Trfc Ctrl, fixing null ref exception error
-            var rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1 / 2), this.transform.up); // 6/05 Trfc Ctrl, the front long ray that angles to targetAngleTrfc
-            //try
-            //{
-            //    rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1 / 2), this.transform.up); // 6/05 Trfc Ctrl, the front long ray that angles to targetAngleTrfc
-            //}
-            //catch (System.NullReferenceException err)
-            //{
-            //    //Debug.Log("NullReferenceException: " + err);
-            //}
-
-            //var rotationAngleAxSides = Quaternion.AngleAxis(i / (float)numberOfRays * 160 - 80, this.transform.up); // 6/23 Trfc Ctrl, For the sides
-            var rotationAngleAxFront = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, frontRotation.transform.up); // Rays for front half
-            //var rotationAngleAxFrontDown = Quaternion.AngleAxis(1, frontRotation.transform.up); // 5/30 Traffic Control Test Codes, casting rays downward
-            var rotationAngleAxRear = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, rearRotation.transform.up); // Rays for rear half
-
-            var forwardVec3 = rotation * rotationAngleAx * Vector3.forward; // Adding the rays at the front
-            var forwardVec3Trfc = rotation * rotationAngleAxTrfc * Vector3.forward; // 6/05 Trfc Ctrl
-            var backwardVec3 = rotation * rotationAngleAx * Vector3.back; // Adding the rays on the back
-            //var rightVec3 = rotation * rotationAngleAxSides * Vector3.right; // 6/23 Trfc Ctrl, Adding the rays on the right
-            //var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
-            var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
-            //var frontCubeDownVec3 = rotationFrontDown * rotationAngleAxFrontDown * Vector3.down; // 5/30 Traffic Control Test Codes, casting rays downward
-            var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
-
-            //Combining my code, color coding the rays
-            switch (i)
+            for (int i = 1; i < numberOfRays; i++)
             {
-                case int r when i < 7:
-                    Gizmos.color = Color.green; // Starting from the left, 6 on the left
-                    break;
-                case int r when i > 6 && i < 11:
-                    Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
-                    break;
-                case int r when i > 10 && i < 18:
-                    Gizmos.color = Color.red; // Ending at the right, 6 on the right
-                    break;
-                default:
-                    break;
-            }
+                // Following vars are redundant with the ones in Update but needed to color code the rays accordingly
+                var rotation = this.transform.rotation;
 
-            //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
-            Gizmos.DrawRay(this.transform.position, forwardVec3 * 5f); // Adding the rays at the front
-            Gizmos.DrawRay(this.transform.position, forwardVec3Trfc * 8f); // 6/05 Trfc Ctrl, Adding longer rays at the front
-            Gizmos.DrawRay(this.transform.position, backwardVec3 * 3.5f); // Adding the rays on the back
-            //Gizmos.DrawRay(this.transform.position, rightVec3 * 1.5f); // 6/23 Trfc Ctrl, Adding the rays on the right
-            //Gizmos.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
-            Gizmos.DrawRay(frontRotation.transform.position, frontCubeVec3 * 2f); // Rays for front half
-            //Gizmos.DrawRay(frontRotation.transform.position, frontCubeDownVec3 * 0.8f); // 5/30 Traffic Control Test Codes, casting rays downward
-            Gizmos.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
+                var rotationFrontHalf = frontRotation.transform.rotation; // Rays for front half
+                                                                          //var rotationFrontDown = frontRotation.transform.rotation; // 5/30 Traffic Control Test Codes, casting rays downward
+                var rotationRearHalf = rearRotation.transform.rotation; // Rays for rear half
+                var rotationAngleAx = Quaternion.AngleAxis(i / (float)numberOfRays * 25 - 13, this.transform.up); // For the front and back
+
+                // 7/21 Trfc Ctrl, fixing null ref exception error
+                var rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1 / 2), this.transform.up); // 6/05 Trfc Ctrl, the front long ray that angles to targetAngleTrfc
+                //try
+                //{
+                //    rotationAngleAxTrfc = Quaternion.AngleAxis(i / (float)numberOfRays * (ai_controller.targetAngleTrfc * 1 / 2), this.transform.up); // 6/05 Trfc Ctrl, the front long ray that angles to targetAngleTrfc
+                //}
+                //catch (System.NullReferenceException err)
+                //{
+                //    //Debug.Log("NullReferenceException: " + err);
+                //}
+
+                //var rotationAngleAxSides = Quaternion.AngleAxis(i / (float)numberOfRays * 160 - 80, this.transform.up); // 6/23 Trfc Ctrl, For the sides
+                var rotationAngleAxFront = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, frontRotation.transform.up); // Rays for front half
+                                                                                                                                  //var rotationAngleAxFrontDown = Quaternion.AngleAxis(1, frontRotation.transform.up); // 5/30 Traffic Control Test Codes, casting rays downward
+                var rotationAngleAxRear = Quaternion.AngleAxis(i / (float)numberOfRays * 240 - 120, rearRotation.transform.up); // Rays for rear half
+
+                var forwardVec3 = rotation * rotationAngleAx * Vector3.forward; // Adding the rays at the front
+                var forwardVec3Trfc = rotation * rotationAngleAxTrfc * Vector3.forward; // 6/05 Trfc Ctrl
+                var backwardVec3 = rotation * rotationAngleAx * Vector3.back; // Adding the rays on the back
+                                                                              //var rightVec3 = rotation * rotationAngleAxSides * Vector3.right; // 6/23 Trfc Ctrl, Adding the rays on the right
+                                                                              //var leftVec3 = rotation * rotationAngleAxSides * Vector3.left; // Adding the rays on the left
+                var frontCubeVec3 = rotationFrontHalf * rotationAngleAxFront * Vector3.forward; // Rays for front half
+                                                                                                //var frontCubeDownVec3 = rotationFrontDown * rotationAngleAxFrontDown * Vector3.down; // 5/30 Traffic Control Test Codes, casting rays downward
+                var rearCubeVec3 = rotationRearHalf * rotationAngleAxRear * Vector3.back; // Rays for rear half
+
+                //Combining my code, color coding the rays
+                switch (i)
+                {
+                    case int r when i < 7:
+                        Gizmos.color = Color.green; // Starting from the left, 6 on the left
+                        break;
+                    case int r when i > 6 && i < 11:
+                        Gizmos.color = Color.white; // Straight ahead (from relative point), 4 in the middle
+                        break;
+                    case int r when i > 10 && i < 18:
+                        Gizmos.color = Color.red; // Ending at the right, 6 on the right
+                        break;
+                    default:
+                        break;
+                }
+
+                //It's EITHER using Debug.DrawRay(), with which I can't color code properly, or Gizmos.DrawRay()
+                Gizmos.DrawRay(this.transform.position, forwardVec3 * 5f); // Adding the rays at the front
+                Gizmos.DrawRay(this.transform.position, forwardVec3Trfc * 8f); // 6/05 Trfc Ctrl, Adding longer rays at the front
+                Gizmos.DrawRay(this.transform.position, backwardVec3 * 3.5f); // Adding the rays on the back
+                                                                              //Gizmos.DrawRay(this.transform.position, rightVec3 * 1.5f); // 6/23 Trfc Ctrl, Adding the rays on the right
+                                                                              //Gizmos.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
+                Gizmos.DrawRay(frontRotation.transform.position, frontCubeVec3 * 2f); // Rays for front half
+                                                                                      //Gizmos.DrawRay(frontRotation.transform.position, frontCubeDownVec3 * 0.8f); // 5/30 Traffic Control Test Codes, casting rays downward
+                Gizmos.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
+            }
         }
     }
 }
