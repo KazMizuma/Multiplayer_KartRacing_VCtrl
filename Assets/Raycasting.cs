@@ -13,6 +13,9 @@ public class Raycasting : MonoBehaviour
 
     //public Quaternion rotationAngleAxTrfc; // 7/21 Trfc Ctrl TEST
 
+    // Trfc Ctrl TEST, avoiding NullReferenceException due to ai_controller.targetAngleTrfc not determined before Start()
+    public static bool racingRaycasting;
+
     // For AI_Controller to grab
     public bool aboutToHitAhead = false;
     public bool aboutToHitLeftAhead = false; 
@@ -50,6 +53,9 @@ public class Raycasting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 7/30 Trfc Ctrl TEST, avoiding NullReferenceException due to ai_controller.targetAngleTrfc not determined before Start()
+        racingRaycasting = false;
+
         ai_controller = this.transform.parent.GetComponent<AI_Controller>(); // To access AI_Controller, 6/05 Trfc Ctrl
     }
 
@@ -216,6 +222,9 @@ public class Raycasting : MonoBehaviour
             //Debug.DrawRay(this.transform.position, leftVec3 * 1.5f); // Adding the rays on the left
             //Debug.DrawRay(frontRotation.transform.position, frontCubeVec3 * 1.5f); // Rays for front half
             //Debug.DrawRay(rearRotation.transform.position, rearCubeVec3 * 1.5f); // Rays for rear half
+
+            // 7/30 Trfc Ctrl TEST, avoiding NullReferenceException due to ai_controller.targetAngleTrfc not determined before Start()
+            racingRaycasting = true;
 
             //Combining my code, detecting frontal collision with another car
             if (Physics.Raycast(hittingRay, out hit, 5f))
@@ -422,9 +431,14 @@ public class Raycasting : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos() // For debug purpose only, disable upon compiling!
+    private void OnApplicationQuit() // 7/30 Trfc Ctrl TEST, avoiding NullReferenceException due to ai_controller.targetAngleTrfc not determined before Start()
     {
-        if (RaceMonitor.racing == true) // 7/30 Trfc Ctrl TEST, avoiding NullReferenceException due to ai_controller.targetAngleTrfc not determined before Start()
+        racingRaycasting = false;
+    }
+
+    private void OnDrawGizmosSelected() // For debug purpose only, disable upon compiling!
+    {
+        if (racingRaycasting == true) // 7/30 Trfc Ctrl TEST, avoiding NullReferenceException due to ai_controller.targetAngleTrfc not determined before Start()
         {
             for (int i = 1; i < numberOfRays; i++)
             {

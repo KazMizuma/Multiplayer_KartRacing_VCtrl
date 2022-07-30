@@ -6,6 +6,8 @@ using UnityEngine;
 public class RaceMonitor : MonoBehaviour
 {
     public GameObject[] countDownItems;
+
+    // 7/30 Trfc Ctrl TEST
     public static bool racing = false;
 
     // Start is called before the first frame update
@@ -17,6 +19,8 @@ public class RaceMonitor : MonoBehaviour
         //}
 
         //StartCoroutine(PlayCountDown());
+
+        // 7/30 Trfc Ctrl TEST, avoiding NullReferenceException due to ai_controller.targetAngleTrfc not determined before Start()
         racing = true;
     }
 
@@ -29,6 +33,8 @@ public class RaceMonitor : MonoBehaviour
             yield return new WaitForSeconds(1);
             gameObj.SetActive(false);
         }
+
+        // 7/30 Trfc Ctrl TEST
         racing = true;
     }
 

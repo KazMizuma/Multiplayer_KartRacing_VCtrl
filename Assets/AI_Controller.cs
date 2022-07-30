@@ -169,7 +169,8 @@ public class AI_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!RaceMonitor.racing) // Checking ReceMonitor's static bool "racing" to see if its coroutine PlayCountDown() has finished running or not
+        // 7/30 Trfc Ctrl, avoiding NullReferenceException due to ai_controller.targetAngleTrfc not determined before Start()
+        if (!RaceMonitor.racing) // Checking RaceMonitor's static bool "racing" to see if its coroutine PlayCountDown() has finished running or not
         {
             return;
         }
