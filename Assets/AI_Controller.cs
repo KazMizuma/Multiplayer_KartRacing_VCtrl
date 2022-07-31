@@ -3353,7 +3353,7 @@ public class AI_Controller : MonoBehaviour
                     raycasting.atThresholdTrfc = false;
                 }
 
-                // 7/28 Trfc Ctrl Test Codes
+                // 7/28 Trfc Ctrl Test Codes, trying to prevent IndexOutOfRangeException
                 if (currentPointTrfc >= 0 || currentPointTrfc <= 87) // 7/22 Trfc Ctrl TEST
                 {
                     targetTrfc = wayPointsTrfc.waypoints[currentPointTrfc].transform.position;
